@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>06 — Metrics and Success Criteria — Eloq</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Eloq — AI English fluency coach. Pre-build plan, v2.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Eloq</div>
+  <div class="ver">Pre-build plan · v2.0<br>2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="EXEC-SUMMARY.html">Executive summary</a>
+  <a href="README.html">Overview / index</a>
+  <a href="01-product-spec.html">01 · Product spec</a>
+  <a href="02-roadmap-prioritization.html">02 · Roadmap</a>
+  <a href="03-competitive-positioning.html">03 · Competitive positioning</a>
+  <a href="04-personas-journeys.html">04 · Personas & journeys</a>
+  <a href="05-pricing.html">05 · Pricing</a>
+  <a href="06-metrics.html" class="on">06 · Metrics</a>
+  <a href="07-technical.html">07 · Technical</a>
+  <a href="08-risks-open-questions.html">08 · Risks & open questions</a>
+  <a href="09-evidence-log.html">09 · Evidence log</a>
+  <a href="10-financial-model.html">10 · Financial model</a>
+  <a href="11-experiment-backlog.html">11 · Experiment backlog</a>
+  <a href="12-launch-checklist.html">12 · Launch checklist</a>
+  <a href="13-decision-stress-tests.html">13 · Decision stress tests</a>
+  <a href="14-pronunciation-validation.html">14 · Pronunciation validation</a>
+  <a href="NEXT-14-DAYS.html">Next 14 days</a>
+  <hr>
+  <a href="https://github.com" hidden></a>
+</nav>
+<main>
+<p><strong>Version:</strong> 2.0 · 2026-11-15</p>
+<p><strong>What changed in this revision:</strong>
+1. <strong>Counter-metrics added (§2).</strong> The north star can be gamed in at least six ways; each now has a paired counter-metric with a threshold and a response.
+2. <strong>Benchmarks are sourced, not asserted.</strong> The "HelloTalk retention is ~40/20/10" claim is <strong>withdrawn</strong> — HelloTalk publishes nothing. Category benchmarks now come from RevenueCat's 2026 dataset, and the one HelloTalk-specific claim we want is gated behind a matched-cohort study (T-09).
+3. <strong>Targets are ranges with confidence intervals, not single numbers.</strong> A point estimate at n = 500 is false precision.
+4. <strong>M24 targets corrected</strong> to match the financial model ($2.0–5.4M ARR, not the v1 "$20–35M" that no scenario produced).
+5. <strong>Outcome study specified end-to-end</strong> (§6), including randomization, verification, ITT analysis, and publication rules.</p>
+<hr />
+<h2 id="1-north-star">1. North star</h2>
+<blockquote>
+<p><strong>Weekly Scored Speaking Minutes per Active Learner (WSSM)</strong></p>
+</blockquote>
+<p><em>Definition:</em> total minutes of learner speech that received a pronunciation/fluency score in a 7-day window, divided by weekly active learners (≥ 1 session in the window).</p>
+<p><strong>Why this and not DAU:</strong> DAU rewards opening the app; minutes-of-scored-speech rewards the only behavior that produces fluency. It is also hard to inflate with notifications, because the minutes have to actually be spoken.</p>
+<p><strong>Guardrails on the north star</strong> (the first line of defense against gaming):
+- Median session length stays 5–12 minutes (longer is not better; fatigue ≠ progress).
+- Correction precision stays ≥ 92%.
+- Session abandonment (started but not finished) stays &lt; 18%.</p>
+<p>But guardrails are not enough, because WSSM can still be inflated without improving anyone's English. That is what §2 is for.</p>
+<hr />
+<h2 id="2-counter-metrics-the-anti-gaming-layer">2. Counter-metrics (the anti-gaming layer)</h2>
+<p>Every metric the team is paid on will be optimized, including in ways that hurt the learner. These are the counter-metrics we report <strong>next to</strong> the north star, every week, on the same dashboard. A north-star win that comes with a counter-metric breach is not a win.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Counter-metric</th>
+<th>Definition</th>
+<th>Threshold</th>
+<th>What it prevents</th>
+<th>Response if breached</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CM-1</td>
+<td><strong>Unique-speech ratio</strong></td>
+<td>Unique scored seconds ÷ total scored seconds (audio-hash dedupe)</td>
+<td>≥ 0.85</td>
+<td>Replaying the same clip dozens of times to farm "scored minutes"</td>
+<td>Exclude duplicates from scoring and from WSSM; show the learner a re-record prompt</td>
+</tr>
+<tr>
+<td>CM-2</td>
+<td><strong>Conversation share</strong></td>
+<td>Minutes in free/scenario conversation ÷ total scored minutes</td>
+<td>≥ 60% (Plus)</td>
+<td>Farming cheap drill minutes; drills score fast and are easy to pad</td>
+<td>Rebalance the Daily Plan toward conversation; review drill scoring cost</td>
+</tr>
+<tr>
+<td>CM-3</td>
+<td><strong>Level-appropriate share</strong></td>
+<td>Share of sessions at or above the learner's current band</td>
+<td>≥ 70%</td>
+<td>Staying in A2 content because it produces high scores</td>
+<td>Cap easy-content repetition; require a stretch session per week</td>
+</tr>
+<tr>
+<td>CM-4</td>
+<td><strong>Score stability (drift)</strong></td>
+<td>Change in mean score for a fixed, human-rated gold set, month over month</td>
+<td>≤ ±2 points</td>
+<td>Score inflation from model/prompt drift</td>
+<td>Recalibrate; freeze the model version; re-run the gold set</td>
+</tr>
+<tr>
+<td>CM-5</td>
+<td><strong>Score–evidence consistency</strong></td>
+<td>Share of score movements ≥ 5 points that have a corresponding change in the correction log</td>
+<td>≥ 80%</td>
+<td>Unexplained score jumps that feel arbitrary (or are engineered)</td>
+<td>Investigate the scoring path; suppress the trend line until explained</td>
+</tr>
+<tr>
+<td>CM-6</td>
+<td><strong>Streak repair share</strong></td>
+<td>Repaired streak days ÷ total streak days</td>
+<td>≤ 35%</td>
+<td>A streak that is mostly repairs is a participation trophy, not a habit</td>
+<td>Reduce repair availability; re-anchor streaks to weekly goals</td>
+</tr>
+<tr>
+<td>CM-7</td>
+<td><strong>Notification opt-out rate</strong></td>
+<td>Opt-outs ÷ notification recipients, monthly</td>
+<td>≤ 3%</td>
+<td>Push spam inflating DAU/WAL without learning</td>
+<td>Cap at 2 pushes/day; audit copy for urgency</td>
+</tr>
+<tr>
+<td>CM-8</td>
+<td><strong>"This is wrong" rate</strong></td>
+<td>User-flagged corrections confirmed wrong ÷ total corrections</td>
+<td>≤ 3%</td>
+<td>Surfacing more (and worse) corrections to look "helpful"</td>
+<td>Roll back the model; tighten the confidence gate</td>
+</tr>
+<tr>
+<td>CM-9</td>
+<td><strong>Refund and chargeback rate</strong></td>
+<td>Refunds ÷ paid transactions, monthly</td>
+<td>≤ 4%</td>
+<td>Dark-pattern paywalls and oversold guarantees</td>
+<td>Review paywall copy and the guarantee terms</td>
+</tr>
+<tr>
+<td>CM-10</td>
+<td><strong>Post-session self-report</strong></td>
+<td>"Did this session help you say something you couldn't say before?" (sampled 10%)</td>
+<td>≥ 60% yes</td>
+<td>Minutes that feel like work but teach nothing</td>
+<td>Session design review; content quality audit</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reporting rule:</strong> the weekly review opens with the north star, then the ten counter-metrics, then revenue. In that order. If a counter-metric is red for two consecutive weeks, the growth experiment that caused it stops — regardless of its conversion lift.</p>
+<hr />
+<h2 id="3-definitions-the-ones-teams-argue-about">3. Definitions (the ones teams argue about)</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Definition</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Activated user</strong></td>
+<td>Completes ≥ 1 voice session of ≥ 3 min <strong>and</strong> receives ≥ 1 correction <strong>and</strong> reviews ≥ 5 vocabulary items, all within 24 h of signup</td>
+<td>Deliberately demanding: this is the first value moment</td>
+</tr>
+<tr>
+<td><strong>D1 / D7 / D30 retention</strong></td>
+<td>% of a signup cohort with ≥ 1 qualifying session on day 1 / within 7 days / within 30 days</td>
+<td>"Qualifying" = ≥ 3 min voice or ≥ 10 reviews</td>
+</tr>
+<tr>
+<td><strong>Weekly active learner (WAL)</strong></td>
+<td>≥ 1 qualifying session in a rolling 7 days</td>
+<td>Not "opened the app"</td>
+</tr>
+<tr>
+<td><strong>Streak-7 / Streak-30</strong></td>
+<td>% of cohort with an unbroken daily or weekly-goal streak at day 7/30</td>
+<td>Repair days count as kept if repaired within 24 h (see CM-6)</td>
+</tr>
+<tr>
+<td><strong>D35 conversion</strong></td>
+<td>Installs that become paying subscribers within 35 days ÷ installs</td>
+<td>The model's input; use this, not "conversion of MAU"</td>
+</tr>
+<tr>
+<td><strong>Paid conversion (MAU)</strong></td>
+<td>Paying subscribers / MAU</td>
+<td>Report only as a secondary view; MAU is a denominator that flatters</td>
+</tr>
+<tr>
+<td><strong>Trial → paid</strong></td>
+<td>Paid within 3 days of trial end / trials started</td>
+<td>Career trial only</td>
+</tr>
+<tr>
+<td><strong>ARPU</strong></td>
+<td>Net revenue (after store fees, refunds, tax) / paying users / month</td>
+<td>Never gross</td>
+</tr>
+<tr>
+<td><strong>Logo churn</strong></td>
+<td>Cancellations + expirations / paying users at period start</td>
+<td>Monthly; split voluntary/involuntary</td>
+</tr>
+<tr>
+<td><strong>Correction precision</strong></td>
+<td>Correct corrections / all corrections shown</td>
+<td>Sampled weekly, human-audited</td>
+</tr>
+<tr>
+<td><strong>False-correction rate</strong></td>
+<td>User-flagged "this is wrong" corrections confirmed wrong / total corrections</td>
+<td>Target &lt; 3%</td>
+</tr>
+<tr>
+<td><strong>Interview Readiness Index (IRI)</strong></td>
+<td>0–100 composite: structure, relevance, fluency, pronunciation, register</td>
+<td>Must be validated, not invented (P7)</td>
+</tr>
+<tr>
+<td><strong>CEFR agreement</strong></td>
+<td>Quadratic weighted κ between app estimate and certified examiner</td>
+<td>≥ 0.70</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-benchmarks-what-good-looks-like">4. Benchmarks: what "good" looks like</h2>
+<p><strong>First, the honest part: HelloTalk does not publish retention data, and neither does ELSA.</strong> Any claim of the form "we retain better than HelloTalk" is currently unverifiable. The only valid way to make it is a matched-cohort study we run ourselves (T-09, $12k, 12 weeks). Until then, public messaging says "designed for daily practice," not "retains better than X." That sentence replaces the v1 benchmark table's HelloTalk column.</p>
+<p>What we <em>can</em> source (RevenueCat, <em>State of Subscription Apps 2026</em>, accessed 2026-11-15):</p>
+<table>
+<thead>
+<tr>
+<th>Benchmark</th>
+<th>Value</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Freemium D35 install→paid, all categories</td>
+<td>2.1%</td>
+<td>Our base case is only slightly above this</td>
+</tr>
+<tr>
+<td>North America D35 median</td>
+<td>2.6%</td>
+<td><strong>Base-case scenario</strong></td>
+</tr>
+<tr>
+<td>NA top quartile / P90</td>
+<td>5.6% / 10.4%</td>
+<td>Wedge case at 6.0% is just above top quartile</td>
+</tr>
+<tr>
+<td>Hard-paywall D35</td>
+<td>10.7%</td>
+<td>Why we test a reverse trial (T-04)</td>
+</tr>
+<tr>
+<td>IN/SEA D35 median</td>
+<td>1.4%</td>
+<td>Tier-C expectations</td>
+</tr>
+<tr>
+<td>AI apps: revenue per payer / churn</td>
+<td>+41% / 30% faster</td>
+<td>Churn is the tax on the AI category</td>
+</tr>
+<tr>
+<td>Education Y1 realized LTV per payer</td>
+<td>$22.82</td>
+<td>Our $93 LTV is a top-quartile claim, not a neutral one</td>
+</tr>
+<tr>
+<td>Education annual-plan share</td>
+<td>59–66%</td>
+<td>Supports 60% annual mix in the model</td>
+</tr>
+<tr>
+<td>3-day trial cancellations on day 0</td>
+<td>55%</td>
+<td>Conversion is decided in the first session</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Our targets vs. those benchmarks</strong> (M12, with the basis stated):</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Category benchmark</th>
+<th>Eloq M12 target</th>
+<th>Why we think we can beat it</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D1</td>
+<td>No verified series</td>
+<td><strong>55%</strong> (CI 48–62%)</td>
+<td>Onboarding delivers a correction in &lt; 6 min; deadline-driven intent</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>D7</td>
+<td>No verified series</td>
+<td><strong>35%</strong> (CI 27–43%)</td>
+<td>Daily Plan + visible score movement; deadline countdown</td>
+<td>Medium-low</td>
+</tr>
+<tr>
+<td>D30</td>
+<td>No verified series</td>
+<td><strong>22%</strong> (CI 15–29%)</td>
+<td>Structured progression; pause instead of cancel</td>
+<td>Low-medium</td>
+</tr>
+<tr>
+<td>D35 install→paid</td>
+<td>2.6% NA median</td>
+<td><strong>2.6% base / 6.0% wedge</strong></td>
+<td>Segment-specific intent; Career SKU</td>
+<td>Low (this is the bet)</td>
+</tr>
+<tr>
+<td>Monthly churn</td>
+<td>Category RLTV implies high</td>
+<td><strong>8%</strong> (CI 6–12%)</td>
+<td>Annual plans; bounded Career usage</td>
+<td>Low-medium</td>
+</tr>
+<tr>
+<td>DAU/MAU</td>
+<td>No verified series</td>
+<td><strong>30%</strong> (CI 22–38%)</td>
+<td>Practice is a daily behaviour</td>
+<td>Medium</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How to read the confidence column:</strong> "Low" means we have no evidence yet and the target could plausibly be half. "Medium" means we have a mechanism and partial analogue evidence. Nothing here is "high" before beta data — and the plan should be sized accordingly, which is exactly what the scenario model does.</p>
+<hr />
+<h2 id="5-targets-by-phase-ranges-not-points">5. Targets by phase (ranges, not points)</h2>
+<h3 id="mvp-month-6-closed-beta-early-public">MVP (month 6, closed beta + early public)</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target</th>
+<th>Range at n ≈ 1,000 signups</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activation</td>
+<td>≥ 40%</td>
+<td>36–44%</td>
+</tr>
+<tr>
+<td>D7</td>
+<td>≥ 25%</td>
+<td>21–29%</td>
+</tr>
+<tr>
+<td>D30</td>
+<td>≥ 15%</td>
+<td>11–19%</td>
+</tr>
+<tr>
+<td>WSSM per WAL</td>
+<td>≥ 18 min</td>
+<td>15–21</td>
+</tr>
+<tr>
+<td>Session completion</td>
+<td>≥ 80%</td>
+<td>77–83%</td>
+</tr>
+<tr>
+<td>Correction precision</td>
+<td>≥ 90%</td>
+<td>gate, not estimate</td>
+</tr>
+<tr>
+<td>p50 first-audio latency</td>
+<td>≤ 1.5 s</td>
+<td>gate</td>
+</tr>
+<tr>
+<td>D35 install→paid</td>
+<td>≥ 1.8%</td>
+<td>1.3–2.5%</td>
+</tr>
+<tr>
+<td>Crash-free sessions</td>
+<td>≥ 99.5%</td>
+<td>gate</td>
+</tr>
+</tbody>
+</table>
+<h3 id="month-12">Month 12</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target</th>
+<th>Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activation</td>
+<td>≥ 50%</td>
+<td>46–54%</td>
+</tr>
+<tr>
+<td>D7 / D30</td>
+<td>35% / 22%</td>
+<td>30–40 / 18–26</td>
+</tr>
+<tr>
+<td>WSSM per WAL</td>
+<td>≥ 28 min</td>
+<td>24–32</td>
+</tr>
+<tr>
+<td>D35 install→paid</td>
+<td>≥ 2.6%</td>
+<td>2.0–3.4%</td>
+</tr>
+<tr>
+<td>Trial → paid (Career)</td>
+<td>≥ 35%</td>
+<td>28–42%</td>
+</tr>
+<tr>
+<td>Monthly churn</td>
+<td>≤ 8%</td>
+<td>6–12%</td>
+</tr>
+<tr>
+<td>ARPU (net)</td>
+<td>≥ $13.00</td>
+<td>$12–14.50</td>
+</tr>
+<tr>
+<td>LTV : CAC</td>
+<td>≥ 3.0</td>
+<td>2.2–4.2</td>
+</tr>
+<tr>
+<td>4-week score gain (20 min/day cohort)</td>
+<td>+8 points</td>
+<td>+5 to +11</td>
+</tr>
+<tr>
+<td>Interview cohort: next-stage interview ≤ 90 days</td>
+<td>≥ 35%</td>
+<td>28–42% (T-07)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="month-24">Month 24</h3>
+<p>Sized to the base case, with the wedge as upside. <strong>v1's "$20–35M ARR at M24" was not produced by any scenario in this model and has been removed.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Downside</th>
+<th>Base</th>
+<th>Wedge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAU</td>
+<td>179k</td>
+<td>179k</td>
+<td>179k</td>
+</tr>
+<tr>
+<td>Paying subscribers</td>
+<td>11.6k</td>
+<td>16.8k</td>
+<td>38.8k</td>
+</tr>
+<tr>
+<td>ARR (net revenue × 12)</td>
+<td>$2.00M</td>
+<td>$2.64M</td>
+<td>$5.36M</td>
+</tr>
+<tr>
+<td>Gross margin</td>
+<td>52.6%</td>
+<td>56.8%</td>
+<td>63.5%</td>
+</tr>
+<tr>
+<td>Cash at M24</td>
+<td>−$1.57M</td>
+<td>−$1.21M</td>
+<td>+$0.31M</td>
+</tr>
+<tr>
+<td>B2B ARR</td>
+<td>$0.56M</td>
+<td>$0.56M</td>
+<td>$0.56M</td>
+</tr>
+</tbody>
+</table>
+<p>The MAU line is identical across scenarios because installs are held constant — only conversion varies. That is deliberate: it isolates the one variable the company can actually influence in year one.</p>
+<p><strong>The constraint, stated once:</strong> break-even D35 conversion is <strong>≈4.5%</strong> (<code>10</code> §6.2). The base-case M12 target of 2.6% sits <em>below</em> break-even, which is why the meaningful gate is not "hit the target" but "get above break-even before the runway ends." Any dashboard that shows conversion without this line is lying by omission.</p>
+<hr />
+<h2 id="6-learning-outcome-measurement-end-to-end-design">6. Learning outcome measurement (end-to-end design)</h2>
+<p>This is the part most language apps fake. The design below is the one we will publish, including when it fails.</p>
+<h3 id="61-the-two-studies">6.1 The two studies</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Study A — speaking gain</strong></th>
+<th><strong>Study B — interview outcome</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Question</td>
+<td>Does 4 weeks of practice improve scored speaking?</td>
+<td>Does the program change hiring outcomes?</td>
+</tr>
+<tr>
+<td>Design</td>
+<td>Pre/post with a waitlist control</td>
+<td>Randomized encouragement design with a matched control</td>
+</tr>
+<tr>
+<td>n</td>
+<td>300 (200 treatment / 100 control)</td>
+<td>400 (200 / 200)</td>
+</tr>
+<tr>
+<td>Duration</td>
+<td>4 weeks + 30-day delayed post-test</td>
+<td>16 weeks (90-day outcome window)</td>
+</tr>
+<tr>
+<td>Primary</td>
+<td>Blind-rated intelligibility delta on standardized tasks</td>
+<td>Next-stage interview within 90 days</td>
+</tr>
+<tr>
+<td>Secondary</td>
+<td>CEFR movement, vocabulary retention, IRI delta</td>
+<td>Offer rate, time-to-offer, self-reported confidence</td>
+</tr>
+<tr>
+<td>Control activity</td>
+<td>Drills + SRS only, no voice sessions</td>
+<td>Waitlist, plus a light-content newsletter (keeps engagement comparable)</td>
+</tr>
+<tr>
+<td>Cost</td>
+<td>~$9k</td>
+<td>~$6k</td>
+</tr>
+<tr>
+<td>Owner</td>
+<td>Research (independent analyst)</td>
+<td>Research</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why a waitlist control is ethical here:</strong> the control group receives the product at the end of the study. We do not withhold treatment beyond 90 days, and the study is described as such at consent. A randomized encouragement design (randomized invitation to the intensive cohort) is used where full randomization would deny access to people who signed up specifically for it.</p>
+<h3 id="62-procedure-study-b-the-one-that-matters-commercially">6.2 Procedure (Study B, the one that matters commercially)</h3>
+<ol>
+<li><strong>Recruit</strong> from in-app users who declare an interview within 90 days and consent to follow-up. Target 500 to absorb 20% attrition.</li>
+<li><strong>Baseline</strong> within 72 h: placement, IRI, target role, JD, interview date, country, English level.</li>
+<li><strong>Randomize</strong> (stratified by level, country, and weeks-to-interview) to intensive track (≥ 5 sessions/week + 2 AI mocks) or control.</li>
+<li><strong>In-product instrumentation</strong> records sessions, mocks, drill completion, and IRI trajectory — no self-report for usage.</li>
+<li><strong>Outcome capture at day 90:</strong> did you have a next-stage interview? An offer? Verified by (a) recruiter email or calendar screenshot where consent allows, or (b) self-report plus a 20% verification subsample. Report both the verified and the full-sample estimate.</li>
+<li><strong>Analysis:</strong> intention-to-treat as primary; per-protocol as secondary. Logistic regression with pre-registered covariates. Report absolute risk difference with a 95% CI, not just a p-value.</li>
+<li><strong>Publication:</strong> method, n, attrition, effect size, CI, and limitations. Negative and null results published with the same prominence.</li>
+<li><strong>Decision use:</strong> if the treatment effect is &lt; 5 percentage points, the "get hired" claim is removed from all marketing within 30 days (T-07 kill criterion).</li>
+</ol>
+<h3 id="63-validity-guardrails">6.3 Validity guardrails</h3>
+<ul>
+<li>Pre-register the analysis plan (primary metric, covariates, exclusions) before unblinding.</li>
+<li>Blind raters to condition and to time point; randomize the order of pre/post recordings.</li>
+<li>Report attrition by arm; if differential attrition &gt; 10 points, the result is labeled "at risk of bias."</li>
+<li>Never quote a testimonial as evidence of typical results.</li>
+<li>Publish the control-group outcome too. If the control also improves 20 points, the product is not the cause.</li>
+</ul>
+<hr />
+<h2 id="7-quality-metrics-release-blockers-not-dashboards">7. Quality metrics (release blockers, not dashboards)</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Threshold</th>
+<th>Consequence if breached</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Correction precision</td>
+<td>≥ 92%</td>
+<td>Roll back the correction model version</td>
+</tr>
+<tr>
+<td>False-correction rate</td>
+<td>&lt; 3%</td>
+<td>Block release</td>
+</tr>
+<tr>
+<td>ASR WER, read speech</td>
+<td>≤ 12% overall; ≤ 18% per L1</td>
+<td>Improve model or add L1 adaptation</td>
+</tr>
+<tr>
+<td>ASR WER, spontaneous speech</td>
+<td>≤ 22%</td>
+<td>Improve endpointing/vocabulary</td>
+</tr>
+<tr>
+<td>Pronunciation–human correlation</td>
+<td>≥ 0.85 Pearson (lower CI ≥ 0.80)</td>
+<td>Do not show composite score (see <code>14</code> §6)</td>
+</tr>
+<tr>
+<td>Accent-erasure audit (AE-1…AE-6)</td>
+<td>All pass</td>
+<td>Suppress composite or recalibrate (<code>14</code> §7)</td>
+</tr>
+<tr>
+<td>p95 first-audio latency</td>
+<td>≤ 2.0 s</td>
+<td>Latency incident</td>
+</tr>
+<tr>
+<td>TTS naturalness (MOS)</td>
+<td>≥ 4.2 / 5</td>
+<td>Switch vendor for that locale</td>
+</tr>
+<tr>
+<td>Moderation recall (red-team set)</td>
+<td>≥ 95%</td>
+<td>Block release</td>
+</tr>
+<tr>
+<td>Minor-safety incidents</td>
+<td>0</td>
+<td>Immediate incident review</td>
+</tr>
+<tr>
+<td>Data-deletion SLA</td>
+<td>≤ 72 h</td>
+<td>Compliance escalation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-instrumentation">8. Instrumentation</h2>
+<p><strong>Event taxonomy</strong> (one namespace, one meaning per event):</p>
+<pre><code>app_open, onboarding_step{step,completed}, goal_set{type,deadline},
+placement_start, placement_complete{level,confidence},
+session_start{type,scenario,difficulty}, turn_end{latency_ms,asr_conf,audio_hash},
+correction_shown{type,confidence}, correction_flagged{reason},
+session_end{duration_s,words,score_delta,completed,unique_speech_s},
+report_view{section}, vocab_capture{source}, review_complete{cards,retention},
+drill_start{phoneme}, drill_complete{items,score_delta},
+interview_start{role,type}, interview_end{iri,questions},
+paywall_view{trigger}, checkout_start{plan,price,currency},
+subscribe{plan,price,currency}, cancel{reason,save_offer_shown},
+notification_sent{type}, notification_optout,
+share{surface}, referral_sent, referral_converted,
+delete_request, export_request
+</code></pre>
+<p><strong>Rules</strong>
+1. Every experiment is defined before instrumentation; no post-hoc metric selection.
+2. Client events are timestamped server-side for latency and funnel integrity.
+3. No PII in event properties; audio is referenced by opaque ID only; <code>audio_hash</code> exists solely for CM-1 dedupe.
+4. One warehouse, one definitions layer (dbt-style), one owner per metric.
+5. Dashboards are reviewed monthly; anything unused for 60 days is deleted.
+6. Counter-metrics ship in the same dashboard release as the north star. A north star without its counter-metrics does not launch.</p>
+<hr />
+<h2 id="9-experiment-cadence-and-statistical-discipline">9. Experiment cadence and statistical discipline</h2>
+<table>
+<thead>
+<tr>
+<th>Cadence</th>
+<th>What runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Weekly</td>
+<td>1 onboarding/paywall experiment, 1 content experiment; counter-metric review</td>
+</tr>
+<tr>
+<td>Bi-weekly</td>
+<td>1 model/prompt quality experiment (offline eval + small online A/B)</td>
+</tr>
+<tr>
+<td>Monthly</td>
+<td>Pricing/packaging readout; retention cohort review</td>
+</tr>
+<tr>
+<td>Quarterly</td>
+<td>Outcome cohort report; benchmark refresh; strategy review</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Power:</strong> all A/B tests are powered at 80% for a 5% relative lift on the primary metric; underpowered tests are labeled "directional" and never ship a decision on their own. Minimum runtime 7 days <strong>and</strong> ≥ 1 full weekly cycle, whichever is longer. No test is read early because it "looks done."</p>
+<hr />
+<h2 id="10-vanity-metrics-we-will-not-report">10. Vanity metrics we will not report</h2>
+<ul>
+<li>Total registered users (never a business metric).</li>
+<li>Cumulative minutes practiced (only a growth chart in disguise; also the most gameable).</li>
+<li>App store rating alone (manipulable, non-diagnostic).</li>
+<li>"Lessons completed" without a score delta.</li>
+<li>Social followers, press mentions, or awards.</li>
+<li>Any retention number that includes users who only opened the app.</li>
+<li>Any "conversion" number whose denominator is MAU rather than installs.</li>
+</ul>
+<hr />
+<h2 id="11-leading-indicators-to-watch-weekly">11. Leading indicators to watch weekly</h2>
+<ol>
+<li><strong>Time to first correction</strong> (&lt; 4 min target) — predicts D7 more strongly than any other onboarding metric.</li>
+<li><strong>Day-2 return rate</strong> — the earliest reliable signal of habit.</li>
+<li><strong>Second-session score delta</strong> — if learners do not see movement by session 2, the feedback is too vague.</li>
+<li><strong>Review-queue completion rate</strong> — if &lt; 60%, the queue is too long or too boring.</li>
+<li><strong>Paywall view → checkout start</strong> — predicts conversion 3 weeks out.</li>
+<li><strong>"This correction is wrong" rate</strong> — leading indicator of trust collapse (CM-8).</li>
+<li><strong>p95 latency</strong> — leading indicator of silent churn; users rarely complain, they leave.</li>
+<li><strong>Unique-speech ratio</strong> — leading indicator that WSSM growth is real (CM-1).</li>
+</ol>
+<hr />
+<h2 id="12-ownership-and-review">12. Ownership and review</h2>
+<table>
+<thead>
+<tr>
+<th>Metric group</th>
+<th>Owner</th>
+<th>Review</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>North star + counter-metrics</td>
+<td>Head of Product</td>
+<td>Weekly</td>
+</tr>
+<tr>
+<td>Retention cohorts</td>
+<td>Data</td>
+<td>Weekly</td>
+</tr>
+<tr>
+<td>Unit economics (COGS, ARPU, churn)</td>
+<td>Finance</td>
+<td>Monthly</td>
+</tr>
+<tr>
+<td>Quality gates</td>
+<td>ML lead</td>
+<td>Every release</td>
+</tr>
+<tr>
+<td>Outcome studies</td>
+<td>Research</td>
+<td>Quarterly</td>
+</tr>
+<tr>
+<td>Benchmark refresh</td>
+<td>Research</td>
+<td>Quarterly</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The one rule that matters:</strong> nobody owns a metric alone. The person who owns the north star does not own the counter-metrics that constrain it — those sit with Quality and Research, who have no incentive to inflate the number. That separation is the cheapest governance we can buy.</p>
+<footer>Eloq v2.0 · every figure is verified, derived, or tagged (H) with a test.
+Internal references (<code>09</code>, <code>§8.1</code>) point to other pages in this set.</footer>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>08 — Risks, Open Questions, and Validation Plan — Eloq</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Eloq — AI English fluency coach. Pre-build plan, v2.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Eloq</div>
+  <div class="ver">Pre-build plan · v2.0<br>2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="EXEC-SUMMARY.html">Executive summary</a>
+  <a href="README.html">Overview / index</a>
+  <a href="01-product-spec.html">01 · Product spec</a>
+  <a href="02-roadmap-prioritization.html">02 · Roadmap</a>
+  <a href="03-competitive-positioning.html">03 · Competitive positioning</a>
+  <a href="04-personas-journeys.html">04 · Personas & journeys</a>
+  <a href="05-pricing.html">05 · Pricing</a>
+  <a href="06-metrics.html">06 · Metrics</a>
+  <a href="07-technical.html">07 · Technical</a>
+  <a href="08-risks-open-questions.html" class="on">08 · Risks & open questions</a>
+  <a href="09-evidence-log.html">09 · Evidence log</a>
+  <a href="10-financial-model.html">10 · Financial model</a>
+  <a href="11-experiment-backlog.html">11 · Experiment backlog</a>
+  <a href="12-launch-checklist.html">12 · Launch checklist</a>
+  <a href="13-decision-stress-tests.html">13 · Decision stress tests</a>
+  <a href="14-pronunciation-validation.html">14 · Pronunciation validation</a>
+  <a href="NEXT-14-DAYS.html">Next 14 days</a>
+  <hr>
+  <a href="https://github.com" hidden></a>
+</nav>
+<main>
+<p><strong>Version:</strong> 2.0 · 2026-11-15</p>
+<p><strong>What changed in this revision:</strong>
+1. <strong>The assumptions register is closed.</strong> Every v1 unverified item is now either verified, derived, recorded as a hypothesis with a test ID, or abandoned. The canonical register is <code>09-evidence-log.md</code>; §8 here is a resolution map, not a second list.
+2. <strong>Kill criteria restated in corrected units</strong> ($0.016 per session minute, not $0.035 per "voice minute").
+3. <strong>The 60-day validation plan moved</strong> to <code>11-experiment-backlog.md</code>, where it is prioritised by information value per dollar and dated.
+4. <strong>The build-vs-license decision reversed</strong> (R1, §7): pronunciation scoring is a commodity; the moat is the loop. See <code>13</code> D2.
+5. <strong>Prices corrected</strong> throughout ($12.99 Plus, $24.99 Career).</p>
+<hr />
+<h2 id="1-risk-register">1. Risk register</h2>
+<p>Scoring: <strong>Likelihood</strong> and <strong>Impact</strong> are H/M/L. <strong>Trigger</strong> is the observable event that tells us the risk is materializing — a risk without a trigger is a worry, not a risk.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Risk</th>
+<th>L</th>
+<th>I</th>
+<th>Trigger</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>R1</td>
+<td><strong>Pronunciation score fails validation</strong> (r &lt; 0.85 vs. human raters)</td>
+<td>M</td>
+<td><strong>H</strong></td>
+<td>Week-6 spike returns r &lt; 0.75</td>
+<td>Fallback ladder in <code>14</code> §6: bands → relative feedback → remove composite. Protocol pre-registered; rater pool screened at ICC ≥ 0.75</td>
+</tr>
+<tr>
+<td>R2</td>
+<td><strong>False corrections erode trust</strong></td>
+<td>M</td>
+<td><strong>H</strong></td>
+<td>"This is wrong" rate &gt; 4% or support tickets citing bad corrections</td>
+<td>Hybrid deterministic + LLM gate at 0.8 confidence; 500-item gold set in CI; human audit 1%/week; instant rollback of prompt versions</td>
+</tr>
+<tr>
+<td>R3</td>
+<td><strong>Voice COGS make the model unviable</strong></td>
+<td>M</td>
+<td><strong>H</strong></td>
+<td>Blended cost &gt; $0.016/session-min at M9</td>
+<td>Cost levers in <code>07</code> §9; month-9 gate to reprice or re-bundle; fair-use caps; TTS caching; measured (not modelled) cost in T-11</td>
+</tr>
+<tr>
+<td>R4</td>
+<td><strong>Retention below benchmark</strong> (novelty churn)</td>
+<td><strong>H</strong></td>
+<td><strong>H</strong></td>
+<td>D7 &lt; 22% at M6</td>
+<td>Time-to-first-correction &lt; 4 min; day-2 return experiments; streak repair; weekly report card; deadline countdown</td>
+</tr>
+<tr>
+<td>R5</td>
+<td><strong>General assistants (ChatGPT/Gemini) ship a speaking coach</strong></td>
+<td><strong>H</strong></td>
+<td><strong>H</strong></td>
+<td>A major assistant launches scored pronunciation or interview prep</td>
+<td>Depth moat: validated assessment, closed-loop personalization, interview rubrics with evidence, published outcome data. Do not compete on general chat</td>
+</tr>
+<tr>
+<td>R6</td>
+<td><strong>HelloTalk or Duolingo adds AI conversation + scoring</strong></td>
+<td>M</td>
+<td>M</td>
+<td>Competitor ships a scored speaking feature</td>
+<td>They can add features quickly; they cannot copy a validated instrument or four years of outcome labels quickly. Accelerate outcome publishing and interview depth</td>
+</tr>
+<tr>
+<td>R7</td>
+<td><strong>Price resistance in Tier B/C markets</strong></td>
+<td>M</td>
+<td>M</td>
+<td>Conversion &lt; 2% in Tier C after 8 weeks</td>
+<td>PPP pricing, local rails, student annual, pack purchases instead of subscription; Tier-C ceiling at 15 min/day</td>
+</tr>
+<tr>
+<td>R8</td>
+<td><strong>ASR bias against non-native accents</strong> → unfair scores and reputational damage</td>
+<td>M</td>
+<td><strong>H</strong></td>
+<td>WER gap &gt; 10 points between L1 groups</td>
+<td>Per-L1 WER evaluation in CI; accent-robust fine-tuning; suppress scores below confidence; publish fairness results; <code>14</code> §7 audit</td>
+</tr>
+<tr>
+<td>R9</td>
+<td><strong>Minor safety incident</strong></td>
+<td>L</td>
+<td><strong>Catastrophic</strong></td>
+<td>Any report involving a user under 18</td>
+<td>16+ gate, no DMs, pods-only, 1-hour escalation SLA, external safety audit before community launch</td>
+</tr>
+<tr>
+<td>R10</td>
+<td><strong>Interview simulator is judged worse than a ChatGPT prompt</strong></td>
+<td>M</td>
+<td><strong>H</strong></td>
+<td>&lt; 30% of testers prefer it in blind comparison</td>
+<td>Follow-up probing, rubric with evidence quotes, JD tailoring, pressure mode, human-reviewed mock as the premium anchor (T-02)</td>
+</tr>
+<tr>
+<td>R11</td>
+<td><strong>Regulatory exposure</strong> (EU AI Act, GDPR, voice data)</td>
+<td>M</td>
+<td>M</td>
+<td>Regulator inquiry or app-store policy change</td>
+<td>AI disclosure at first use; no voice biometrics; DPIA; regional processing; legal review per market</td>
+</tr>
+<tr>
+<td>R12</td>
+<td><strong>Content production slower than roadmap</strong></td>
+<td><strong>H</strong></td>
+<td>M</td>
+<td>&lt; 8 scenarios ready at M4</td>
+<td>LLM-assisted authoring + human review; 5-scenario MVP if needed; license vetted content</td>
+</tr>
+<tr>
+<td>R13</td>
+<td><strong>Key hire failure</strong> (speech ML, conversation design)</td>
+<td>M</td>
+<td><strong>H</strong></td>
+<td>Roles unfilled by week 8</td>
+<td>Contract specialists for the spike; advisor with L2 pronunciation publications; reduce scope to drill-only</td>
+</tr>
+<tr>
+<td>R14</td>
+<td><strong>Seasonality of interview demand</strong></td>
+<td><strong>H</strong></td>
+<td>M</td>
+<td>Revenue dips &gt; 25% in off-season months</td>
+<td>Student segment, workplace track, annual plans, B2B contracts, pause instead of cancel</td>
+</tr>
+<tr>
+<td>R15</td>
+<td><strong>Data breach / audio leak</strong></td>
+<td>L</td>
+<td><strong>H</strong></td>
+<td>Any unauthorized access</td>
+<td>Encryption, short retention, least privilege, pen test pre-launch, incident runbook, cyber insurance</td>
+</tr>
+<tr>
+<td>R16</td>
+<td><strong>Comparative advertising challenge</strong></td>
+<td>L</td>
+<td>M</td>
+<td>Cease-and-desist or ad-platform rejection</td>
+<td>Factual, dated, substantiated claims; legal review; neutral framing where required (<code>03</code> §8.3)</td>
+</tr>
+<tr>
+<td>R17</td>
+<td><strong>Ethical: learners form dependent relationships with the tutor</strong></td>
+<td>M</td>
+<td>M</td>
+<td>Session lengths climbing, distress signals, press coverage</td>
+<td>No companion framing, no romantic persona, session caps, "this is practice, not a relationship" framing, off-ramps to humans</td>
+</tr>
+<tr>
+<td>R18</td>
+<td><strong>Accent erasure</strong> — the product teaches learners their identity is a defect</td>
+<td>M</td>
+<td><strong>H</strong></td>
+<td>AE-1 or AE-4 fails (<code>14</code> §7); press or community criticism</td>
+<td>Intelligibility-based rubric; accent-erasure acceptance criteria as release gates; no "native" strings (AE-5)</td>
+</tr>
+<tr>
+<td>R19</td>
+<td><strong>Founder/team over-indexes on features, under-indexes on outcomes</strong></td>
+<td>M</td>
+<td>M</td>
+<td>Roadmap slips toward social features</td>
+<td>North star is scored speaking minutes; quarterly outcome cohort is a board-level commitment; counter-metrics (§2 of <code>06</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-the-four-risks-that-can-kill-the-company">2. The four risks that can kill the company</h2>
+<p>Everything above matters; these are existential.</p>
+<ol>
+<li><strong>R3 — unit economics.</strong> If all-in voice cost does not fall below ~$0.016/session-minute, the freemium model compresses: at the fair-use ceiling, Plus is already margin-negative at launch. Mitigation is a hard M9 gate with pre-approved fallbacks (raise price, cut free minutes, or move to credits). Do not "wait and see."</li>
+<li><strong>R1/R2 — assessment credibility.</strong> The entire positioning is "measurable feedback." One viral screenshot of a wrong correction or a nonsense score undoes a year of marketing. Hence CI gates, rollback, and conservative confidence thresholds.</li>
+<li><strong>R9 — minor safety.</strong> A single serious incident ends the student segment, invites regulation, and poisons the brand. Community launch is gated on an external safety audit, not a date.</li>
+<li><strong>R18 — accent erasure.</strong> This is new on the existential list, and it deserves to be. If the score punishes Vietnamese final consonants or Spanish epenthesis because they are not "native," we are selling shame with a progress bar. That is a press story, a regulator story, and a moral failure in one. The acceptance criteria in <code>14</code> §7 are the control.</li>
+</ol>
+<hr />
+<h2 id="3-open-questions-with-owners-and-deadlines">3. Open questions (with owners and deadlines)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Why it matters</th>
+<th>How to answer</th>
+<th>Deadline</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q1</td>
+<td>Which launch market first: Vietnam, Brazil, or India?</td>
+<td>Determines content, payment rails, influencer strategy, CAC</td>
+<td>20 interviews per market; waitlist conversion test with $500 of ads per market</td>
+<td>2027-02-05</td>
+</tr>
+<tr>
+<td>Q2</td>
+<td>Is the pronunciation composite credible enough to gate the paywall?</td>
+<td>If not, pricing must lean on interview prep</td>
+<td>Validation study (<code>14</code>) + 20 user trust interviews</td>
+<td>2027-05-14</td>
+</tr>
+<tr>
+<td>Q3</td>
+<td>Do learners prefer Coach mode (interruptions) or Flow mode (deferred feedback)?</td>
+<td>Core UX and pedagogy</td>
+<td>In-app A/B with D7 and score-delta endpoints</td>
+<td>2027-03-15</td>
+</tr>
+<tr>
+<td>Q4</td>
+<td>Will job seekers pay $24.99 without a human in the loop?</td>
+<td>Career tier is the margin engine</td>
+<td>Fake-door test (<code>T-05</code>) + 15 pricing interviews</td>
+<td>2027-02-05</td>
+</tr>
+<tr>
+<td>Q5</td>
+<td>Should the free tier include unlimited text chat?</td>
+<td>COGS vs. habit formation</td>
+<td>Cohort test: unlimited text vs. 50 messages/day</td>
+<td>2027-08-01</td>
+</tr>
+<tr>
+<td>Q6</td>
+<td>Is 16–17 worth the compliance burden in year 1?</td>
+<td>Safety risk vs. student funnel</td>
+<td>Legal cost estimate; parental-consent conversion data</td>
+<td>2027-04-16</td>
+</tr>
+<tr>
+<td>Q7</td>
+<td>Build or license interview question banks?</td>
+<td>Content speed vs. differentiation</td>
+<td>Vendor demos; cost per role pack</td>
+<td>2027-06-01</td>
+</tr>
+<tr>
+<td>Q8</td>
+<td>Does the community layer need to exist at all?</td>
+<td>Could be a distraction from the wedge</td>
+<td>Survey: % who cite "meeting people" as a top-3 reason to stay</td>
+<td>2028-06-01</td>
+</tr>
+<tr>
+<td>Q9</td>
+<td>What is the real "better than HelloTalk" retention delta?</td>
+<td>Central marketing claim</td>
+<td>Matched-cohort panel study, third-party run (T-09)</td>
+<td>2028-02-01</td>
+</tr>
+<tr>
+<td>Q10</td>
+<td>Can we legitimately map scores to IELTS/TOEFL bands?</td>
+<td>Huge marketing upside, high misrepresentation risk</td>
+<td>Correlation study vs. official scores, n ≥ 100</td>
+<td>2028-09-01</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-validation-plan-pointer">4. Validation plan (pointer)</h2>
+<p>The v1 60-day plan is now <code>11-experiment-backlog.md</code>. It keeps the same four gates, dated and with owners:</p>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Date</th>
+<th>Pass condition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 — Economics</td>
+<td>2027-01-08</td>
+<td>Voice cost ≤ $0.018/session-min measured; no launch L1 &gt; 25% WER</td>
+</tr>
+<tr>
+<td>2 — Wedge</td>
+<td>2027-02-05</td>
+<td>Job-seeker CPA ≤ student CPA; Career price confirmed at a fake door</td>
+</tr>
+<tr>
+<td>3 — Product</td>
+<td>2027-02-26</td>
+<td>Interview sim ≥ 55% blind preference vs a strong general-assistant prompt</td>
+</tr>
+<tr>
+<td>4 — Go/no-go</td>
+<td>2027-03-05</td>
+<td>Model re-run on real numbers; build or re-scope, in writing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cost of the whole plan:</strong> ~$31k cash, ~6 engineer-weeks, 8 weeks. It retires the three biggest unknowns before a line of production UI is written.</p>
+<hr />
+<h2 id="5-kill-criteria-pre-committed-so-we-do-not-rationalize">5. Kill criteria (pre-committed, so we do not rationalize)</h2>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Threshold</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activation after 2 onboarding iterations</td>
+<td>&lt; 30%</td>
+<td>Stop paid acquisition; rebuild first session</td>
+</tr>
+<tr>
+<td>D30 at month 9</td>
+<td>&lt; 10%</td>
+<td>Re-scope to interview-only product or shut down consumer</td>
+</tr>
+<tr>
+<td>Pronunciation validity after 2 attempts</td>
+<td>r &lt; 0.80</td>
+<td>Remove composite score entirely; pivot messaging to structured practice</td>
+</tr>
+<tr>
+<td>All-in voice cost at month 9</td>
+<td>&gt; $0.020/session-min</td>
+<td>Reprice, cut free minutes, or move to credits</td>
+</tr>
+<tr>
+<td>D35 install→paid at month 9</td>
+<td>&lt; 1.8%</td>
+<td>The freemium model is not converting; switch to reverse trial or hard paywall, or re-scope</td>
+</tr>
+<tr>
+<td>CAC payback</td>
+<td>&gt; 18 months for 2 consecutive quarters</td>
+<td>Shift to organic/referral-only growth</td>
+</tr>
+<tr>
+<td>Interview sim blind preference vs ChatGPT</td>
+<td>&lt; 30%</td>
+<td>Do not launch the Career tier; stay consumer-only</td>
+</tr>
+<tr>
+<td>Outcome study effect</td>
+<td>treatment ≤ control + 5pp</td>
+<td>Remove "get hired" from positioning</td>
+</tr>
+<tr>
+<td>Any confirmed minor-safety incident</td>
+<td>—</td>
+<td>Immediate community freeze + external audit</td>
+</tr>
+<tr>
+<td>Any AE-1/AE-4 failure after one remediation attempt</td>
+<td>—</td>
+<td>Suppress composite score; publish the failure</td>
+</tr>
+</tbody>
+</table>
+<p>Writing these down before launch is the point. Post-hoc thresholds always move.</p>
+<hr />
+<h2 id="6-ethical-commitments">6. Ethical commitments</h2>
+<p>These are constraints on the business, not marketing copy:</p>
+<ol>
+<li><strong>No manufactured urgency.</strong> Deadlines in the product come from the user's real interview date.</li>
+<li><strong>No dependency by design.</strong> No romantic or companion framing, no "I missed you," no emotional manipulation in notifications. Session-length caps exist partly for this reason.</li>
+<li><strong>No accent shame.</strong> We score intelligibility. We will not tell a learner they "sound wrong" for having an accent. Testable criteria: <code>14</code> §7.</li>
+<li><strong>No fake progress.</strong> Scores are traceable to evidence; uncertain scores are hidden; we publish our error rates.</li>
+<li><strong>No selling voice data.</strong> Not to advertisers, not to model vendors, not "anonymized."</li>
+<li><strong>Minors are not a growth channel.</strong> If the 16–17 segment cannot be served safely, we will not serve it.</li>
+<li><strong>Honest limits.</strong> We prepare for exams; we do not certify. We estimate CEFR; we do not award it. We say so on the same screen as the number.</li>
+<li><strong>Publish the null result.</strong> If the outcome study shows no effect, it gets published with the same prominence as a win.</li>
+</ol>
+<hr />
+<h2 id="7-decision-log">7. Decision log</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Decision</th>
+<th>Rationale</th>
+<th>Owner</th>
+<th>Revisit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2026-11-15</td>
+<td>English-only at launch</td>
+<td>Depth over breadth</td>
+<td>CPO</td>
+<td>M18</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>Voice is metered, feedback is not</td>
+<td>COGS + trust</td>
+<td>CPO/CFO</td>
+<td>M9</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>No 1:1 stranger chat, ever</td>
+<td>Safety is the brand</td>
+<td>CEO</td>
+<td>Never</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>Interview simulator is Phase 2 but strategically forced</td>
+<td>Wedge + margin</td>
+<td>CPO</td>
+<td>M9</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>Community gated on external safety audit</td>
+<td>Existential risk</td>
+<td>CEO</td>
+<td>At audit</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td><strong>License pronunciation scoring; build the calibration and error-memory loop in-house</strong></td>
+<td>Scoring is a commodity (Speechace, Azure); the loop is the moat (<code>13</code> D2)</td>
+<td>CTO</td>
+<td>M12, with four flip conditions</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>Plus at $12.99 / $79.99 (parity with HelloTalk VIP)</td>
+<td>Same price, different product; covers median-usage COGS</td>
+<td>CEO</td>
+<td>After T-13</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>Career at $24.99; human mock is a $49 add-on</td>
+<td>One included human review per 90 days would cut Career margin from 52% to 11%</td>
+<td>CEO</td>
+<td>After T-05</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>16+ only at launch</td>
+<td>Compliance capacity</td>
+<td>CEO/Legal</td>
+<td>M12</td>
+</tr>
+<tr>
+<td>2026-11-15</td>
+<td>Free tier at 3×5 min/week, ~20 min/MAU utilisation</td>
+<td>Free COGS stays below revenue per free MAU at base conversion</td>
+<td>CPO</td>
+<td>M9 (see <code>13</code> D1)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-v1-assumptions-register-resolution-map">8. v1 assumptions register — resolution map</h2>
+<p>Every v1 unverified item, and where it went. Nothing was deleted; each is verified, corrected, downgraded to a dated hypothesis, or abandoned.</p>
+<table>
+<thead>
+<tr>
+<th>v1 assumption</th>
+<th>v1 status</th>
+<th>v2 resolution</th>
+<th>Evidence / test</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HelloTalk pricing and feature set</td>
+<td>unverified</td>
+<td><strong>Verified</strong> — $12.99/mo, $79.99/yr, 70M+ learners, 260+ languages, 13+</td>
+<td>S1, S2 (accessed 2026-11-15)</td>
+<td><code>09</code> C1–C6, <code>03</code> §1–2</td>
+</tr>
+<tr>
+<td>HelloTalk/category retention (D1/D7/D30)</td>
+<td>unverified</td>
+<td><strong>Abandoned as a HelloTalk claim.</strong> No public data. Category conversion benchmarks verified; retention measured on our own beta</td>
+<td>S10; T-08; T-09</td>
+<td><code>09</code> C7, B10, B11; <code>06</code> §4</td>
+</tr>
+<tr>
+<td>Voice COGS $0.051 → $0.021/min</td>
+<td>unverified</td>
+<td><strong>Corrected</strong> to $0.018 → $0.010 per <em>session</em> minute (duty-cycle error of ~2.2×)</td>
+<td>K1–K5; T-11</td>
+<td><code>05</code> §4, <code>10</code> §1</td>
+</tr>
+<tr>
+<td>Conversion 5–8% of MAU</td>
+<td>unverified</td>
+<td><strong>Replaced</strong> by benchmarked D35 scenarios 1.8% / 2.6% / 6.0%; break-even ≈ 4.5%</td>
+<td>S10; T-01, T-04</td>
+<td><code>05</code> §5, <code>10</code> §6.2</td>
+</tr>
+<tr>
+<td>Paid churn 5.5%/mo</td>
+<td>unverified</td>
+<td><strong>Revised</strong> to 8%/mo, with sensitivity at 5/8/12/20%</td>
+<td>S10; T-06</td>
+<td><code>09</code> M5, <code>10</code> §6.1</td>
+</tr>
+<tr>
+<td>Interview cohort outcome ≥ 45%</td>
+<td>unverified</td>
+<td><strong>Downgraded</strong> to hypothesis (≥ 35% target) with a pre-registered 200/200 study</td>
+<td>T-07</td>
+<td><code>06</code> §6, <code>09</code> M4</td>
+</tr>
+<tr>
+<td>Market size ~80M serviceable</td>
+<td>unverified</td>
+<td><strong>Downgraded</strong> to hypothesis; must be rebuilt bottom-up before any deck uses it</td>
+<td>T-14</td>
+<td><code>09</code> M1</td>
+</tr>
+<tr>
+<td>CAC $6–45 by channel</td>
+<td>unverified</td>
+<td><strong>Downgraded</strong> to hypothesis; live channel test, $8k</td>
+<td>T-03</td>
+<td><code>09</code> K9, <code>05</code> §5</td>
+</tr>
+<tr>
+<td>CEFR estimate κ ≥ 0.70</td>
+<td>unverified</td>
+<td><strong>Reclassified</strong> as a commitment (release gate), not a forecast</td>
+<td>P2</td>
+<td><code>06</code> §7</td>
+</tr>
+<tr>
+<td>"Better retention than HelloTalk"</td>
+<td>implied</td>
+<td><strong>Abandoned as a public claim</strong> until a matched cohort exists</td>
+<td>T-09</td>
+<td><code>03</code> §3, <code>09</code> §5</td>
+</tr>
+<tr>
+<td>In-house pronunciation scoring is the moat</td>
+<td>implicit</td>
+<td><strong>Reversed.</strong> Scoring is commodity; license it, own the loop</td>
+<td>C11, S6, S7</td>
+<td><code>03</code> §9, <code>13</code> D2</td>
+</tr>
+<tr>
+<td>Speak pricing</td>
+<td>unverified</td>
+<td><strong>Abandoned</strong> — pricing page 404 on 2026-11-15; do not name a price</td>
+<td>C10</td>
+<td><code>09</code> C10</td>
+</tr>
+<tr>
+<td>ELSA positioning</td>
+<td>not stated</td>
+<td><strong>Corrected</strong> — ELSA ships interview coaching + CEFR mapping at $19.99/$99.99; we are not first</td>
+<td>S5</td>
+<td><code>03</code> §4, <code>09</code> C9</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rule:</strong> nothing marked H in <code>09</code> goes into a public comparison page, an investor deck, or an ad without the tag converting to V. A claim that changes price or feature status reverts to H the day it is found stale.</p>
+<footer>Eloq v2.0 · every figure is verified, derived, or tagged (H) with a test.
+Internal references (<code>09</code>, <code>§8.1</code>) point to other pages in this set.</footer>
+</main>
+</div>
+</body>
+</html>

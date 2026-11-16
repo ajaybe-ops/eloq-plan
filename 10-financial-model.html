@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10 — Financial Model — Eloq</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Eloq — AI English fluency coach. Pre-build plan, v2.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Eloq</div>
+  <div class="ver">Pre-build plan · v2.0<br>2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="EXEC-SUMMARY.html">Executive summary</a>
+  <a href="README.html">Overview / index</a>
+  <a href="01-product-spec.html">01 · Product spec</a>
+  <a href="02-roadmap-prioritization.html">02 · Roadmap</a>
+  <a href="03-competitive-positioning.html">03 · Competitive positioning</a>
+  <a href="04-personas-journeys.html">04 · Personas & journeys</a>
+  <a href="05-pricing.html">05 · Pricing</a>
+  <a href="06-metrics.html">06 · Metrics</a>
+  <a href="07-technical.html">07 · Technical</a>
+  <a href="08-risks-open-questions.html">08 · Risks & open questions</a>
+  <a href="09-evidence-log.html">09 · Evidence log</a>
+  <a href="10-financial-model.html" class="on">10 · Financial model</a>
+  <a href="11-experiment-backlog.html">11 · Experiment backlog</a>
+  <a href="12-launch-checklist.html">12 · Launch checklist</a>
+  <a href="13-decision-stress-tests.html">13 · Decision stress tests</a>
+  <a href="14-pronunciation-validation.html">14 · Pronunciation validation</a>
+  <a href="NEXT-14-DAYS.html">Next 14 days</a>
+  <hr>
+  <a href="https://github.com" hidden></a>
+</nav>
+<main>
+<p><strong>Version:</strong> 2.0 · 2026-11-15</p>
+<p><strong>Files:</strong> <code>10-financial-model.csv</code> (monthly P&amp;L, M0–M24, four scenario runs), <code>10-financial-model-inputs.csv</code> (every input with evidence status), <code>build_model.py</code> (reproducible generator — edit inputs, re-run, no spreadsheet drift).</p>
+<p><strong>This is a planning instrument, not a forecast.</strong> Its job is to show which assumptions are load-bearing and what happens when they break. Three of them are decisive: D35 conversion, paid churn, and voice cost per session minute.</p>
+<hr />
+<h2 id="1-three-corrections-to-the-v1-model">1. Three corrections to the v1 model</h2>
+<p>The first version of this plan was internally consistent but wrong in three places. Each correction is documented because each one changes a decision.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>v1</th>
+<th>v2</th>
+<th>Why it changed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Voice cost <strong>$0.051/min</strong>, falling to $0.021</td>
+<td><strong>$0.018/session-min</strong>, falling to $0.010</td>
+<td>v1 charged a full minute of ASR <em>and</em> a full minute of TTS for every session minute. In a real conversation the learner speaks ~55% of the time and the tutor ~45%. Pricing both at 100% duty overstates COGS by ~2.2×. Verified vendor rates (S8): ASR $0.0048/min, TTS $0.015–0.030/1k chars.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Plus <strong>$9.99/mo</strong></td>
+<td><strong>$12.99/mo, $79.99/yr</strong></td>
+<td>Price parity with HelloTalk VIP (S2, $12.99/$79.99) turns the comparison into "same price, and it answers." It also covers the COGS of a 300-min/month user.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Churn <strong>5.5%/mo</strong>, conversion 5–8% of MAU</td>
+<td>Churn <strong>8%/mo</strong>, D35 <strong>1.8% / 2.6% / 6.0%</strong></td>
+<td>RevenueCat SOSA 2026: freemium D35 median 2.1%, NA median 2.6%, top quartile 5.6%; AI apps churn ~30% faster; Education Y1 realized LTV/payer $22.82 (S10). v1's conversion and retention were both optimistic by roughly 2–3×.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Net effect:</strong> the business is <em>more</em> viable on gross margin than v1 claimed (COGS was overstated) but <em>less</em> viable on growth and retention (conversion was overstated). The wedge case becomes the whole ballgame.</p>
+<hr />
+<h2 id="2-scenario-definitions">2. Scenario definitions</h2>
+<table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Downside</th>
+<th>Base</th>
+<th>Wedge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D35 install→paid</td>
+<td>1.8%</td>
+<td>2.6%</td>
+<td>6.0%</td>
+</tr>
+<tr>
+<td>Source</td>
+<td>Below category median</td>
+<td>NA median (S10)</td>
+<td>Just above top quartile (S10)</td>
+</tr>
+<tr>
+<td>Churn</td>
+<td>8%/mo</td>
+<td>8%/mo</td>
+<td>8%/mo</td>
+</tr>
+<tr>
+<td>Install growth</td>
+<td>8%/mo → 5%/mo</td>
+<td>same</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Voice cost</td>
+<td>$0.018 → $0.010</td>
+<td>same</td>
+<td>same</td>
+</tr>
+</tbody>
+</table>
+<p>Everything except D35 is held constant, so the table isolates one question: <strong>can this product convert at above-category-median rates?</strong></p>
+<hr />
+<h2 id="3-headline-results">3. Headline results</h2>
+<table>
+<thead>
+<tr>
+<th>Month</th>
+<th>Metric</th>
+<th>Downside</th>
+<th>Base</th>
+<th>Wedge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>M6</strong></td>
+<td>Paid subs</td>
+<td>1,281</td>
+<td>1,850</td>
+<td>4,270</td>
+</tr>
+<tr>
+<td></td>
+<td>Net revenue</td>
+<td>$12.3k</td>
+<td>$17.8k</td>
+<td>$41.0k</td>
+</tr>
+<tr>
+<td></td>
+<td>Gross margin</td>
+<td>−64%</td>
+<td>−30%</td>
+<td>+15%</td>
+</tr>
+<tr>
+<td><strong>M12</strong></td>
+<td>Paid subs</td>
+<td>4,307</td>
+<td>6,221</td>
+<td>14,355</td>
+</tr>
+<tr>
+<td></td>
+<td>Net revenue (ARR)</td>
+<td>$41k ($0.49M)</td>
+<td>$59k ($0.71M)</td>
+<td>$137k ($1.64M)</td>
+</tr>
+<tr>
+<td></td>
+<td>Gross margin</td>
+<td>1.7%</td>
+<td>19.5%</td>
+<td>42.3%</td>
+</tr>
+<tr>
+<td><strong>M18</strong></td>
+<td>Paid subs</td>
+<td>7,770</td>
+<td>11,224</td>
+<td>25,901</td>
+</tr>
+<tr>
+<td></td>
+<td>Net revenue (ARR)</td>
+<td>$82k ($0.98M)</td>
+<td>$117k ($1.40M)</td>
+<td>$266k ($3.19M)</td>
+</tr>
+<tr>
+<td></td>
+<td>Gross margin</td>
+<td>34.6%</td>
+<td>45.1%</td>
+<td>58.9%</td>
+</tr>
+<tr>
+<td><strong>M24</strong></td>
+<td>Paid subs</td>
+<td>11,625</td>
+<td>16,792</td>
+<td>38,750</td>
+</tr>
+<tr>
+<td></td>
+<td>Net revenue (ARR)</td>
+<td>$167k ($2.00M)</td>
+<td>$220k ($2.64M)</td>
+<td>$446k ($5.36M)</td>
+</tr>
+<tr>
+<td></td>
+<td>Gross margin</td>
+<td>52.6%</td>
+<td>56.8%</td>
+<td>63.5%</td>
+</tr>
+<tr>
+<td></td>
+<td>Cash</td>
+<td><strong>−$1.57M</strong></td>
+<td><strong>−$1.21M</strong></td>
+<td><strong>+$0.31M</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>EBITDA-positive month</td>
+<td>never</td>
+<td>never</td>
+<td>M24</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Reading it honestly</strong></p>
+<ul>
+<li>At category-median conversion (base), the company needs a <strong>Series A around M14–M15</strong> or it runs out of money at M18. The product is a decent $2.64M-ARR business at M24 — not venture-scale on its own.</li>
+<li>At wedge conversion (6%), the company is <strong>self-funding on a $4M seed</strong>, reaches $5.36M ARR and 63% gross margin at M24, and is EBITDA-positive by M24. That is a credible Series A story.</li>
+<li>At downside conversion, it never works. Kill or re-scope by M18 (see kill criteria, <code>08</code> §5).</li>
+</ul>
+<p><strong>The plan therefore does not have a "base case" it can coast on.</strong> It has one thesis — job seekers convert at 2–3× category rates because they have a deadline and an income-linked payoff — and the entire company either proves it in the first nine months or changes shape.</p>
+<hr />
+<h2 id="4-the-cost-gate">4. The cost gate</h2>
+<p>The month-9 gate from v1 is retained but restated in corrected units: <strong>all-in voice cost must be ≤ $0.016 per session minute by M9.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>M12 gross margin</th>
+<th>M24 gross margin</th>
+<th>Cash-out month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base, gate passed ($0.013 → $0.010)</td>
+<td>19.5%</td>
+<td>56.8%</td>
+<td>M18</td>
+</tr>
+<tr>
+<td>Base, gate failed (floor $0.016)</td>
+<td>2.2%</td>
+<td>32.9%</td>
+<td>M17</td>
+</tr>
+</tbody>
+</table>
+<p>A failed gate costs ~9 points of gross margin at M12 and ~24 points at M24, and pulls cash-out forward one month. It does not kill the company by itself — but combined with base-case conversion it removes any path to a Series A.</p>
+<p><strong>Gate fallbacks, pre-approved:</strong> (a) move Plus to $14.99 with a 300-minute bundle; (b) cut free voice to 1 session/week; (c) move to a credits model for voice. Decide at M9 with data, not at M14 in a panic.</p>
+<hr />
+<h2 id="5-unit-economics">5. Unit economics</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Downside</th>
+<th>Base</th>
+<th>Wedge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blended ARPU (net, M24)</td>
+<td>$14.32</td>
+<td>$13.09</td>
+<td>$11.52</td>
+</tr>
+<tr>
+<td>Blended CAC (M1–M12)</td>
+<td>$42.23</td>
+<td>$29.24</td>
+<td>$12.67</td>
+</tr>
+<tr>
+<td>Gross-margin LTV (ARPU × 57% ÷ 8%)</td>
+<td>$102</td>
+<td>$93</td>
+<td>$82</td>
+</tr>
+<tr>
+<td><strong>LTV : CAC</strong></td>
+<td><strong>2.4</strong></td>
+<td><strong>3.2</strong></td>
+<td><strong>6.5</strong></td>
+</tr>
+<tr>
+<td>CAC payback (months)</td>
+<td>5.2</td>
+<td>3.9</td>
+<td>1.9</td>
+</tr>
+</tbody>
+</table>
+<p><em>LTV uses a 57% steady-state gross margin and 8% monthly churn. At category-median retention the LTV falls to ~$40 and every ratio collapses — see §6.</em></p>
+<hr />
+<h2 id="6-sensitivity-what-actually-moves-the-outcome">6. Sensitivity: what actually moves the outcome</h2>
+<h3 id="61-churn-the-second-most-important-assumption">6.1 Churn (the second-most important assumption)</h3>
+<p>Gross-margin LTV and LTV:CAC at $29 CAC, $13.09 ARPU, 57% GM:</p>
+<table>
+<thead>
+<tr>
+<th>Monthly churn</th>
+<th>Avg paid life</th>
+<th>GM LTV</th>
+<th>LTV:CAC</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5%</td>
+<td>20 mo</td>
+<td>$149</td>
+<td>5.1</td>
+<td>Healthy</td>
+</tr>
+<tr>
+<td><strong>8% (base)</strong></td>
+<td><strong>12.5 mo</strong></td>
+<td><strong>$93</strong></td>
+<td><strong>3.2</strong></td>
+<td><strong>Acceptable</strong></td>
+</tr>
+<tr>
+<td>12%</td>
+<td>8.3 mo</td>
+<td>$62</td>
+<td>2.1</td>
+<td>Marginal</td>
+</tr>
+<tr>
+<td>20%</td>
+<td>5 mo</td>
+<td>$37</td>
+<td>1.3</td>
+<td>Unviable</td>
+</tr>
+</tbody>
+</table>
+<p>RevenueCat's Education Y1 realized LTV of <strong>$22.82/payer</strong> (S10) implies the <em>category median</em> is far below even the 20%-churn row. Our $93 LTV is therefore a <strong>top-quartile claim</strong>, not a neutral assumption. It has to be earned with annual plans, the career wedge, and post-offer retention — and it is tested at T-06.</p>
+<h3 id="62-conversion">6.2 Conversion</h3>
+<table>
+<thead>
+<tr>
+<th>D35</th>
+<th>Paid at M24</th>
+<th>ARR M24</th>
+<th>Cash at M24</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.8%</td>
+<td>11.6k</td>
+<td>$2.0M</td>
+<td>−$1.57M</td>
+</tr>
+<tr>
+<td>2.6%</td>
+<td>16.8k</td>
+<td>$2.64M</td>
+<td>−$1.21M</td>
+</tr>
+<tr>
+<td>4.0%</td>
+<td>~26k</td>
+<td>~$3.6M</td>
+<td>~−$0.35M (est.)</td>
+</tr>
+<tr>
+<td>6.0%</td>
+<td>38.8k</td>
+<td>$5.36M</td>
+<td>+$0.31M</td>
+</tr>
+</tbody>
+</table>
+<p>The break-even conversion, holding everything else constant, is <strong>≈4.5%</strong>. That is the number to put on the wall: <em>we need to convert at roughly twice the category median, or this is a different company.</em></p>
+<h3 id="63-free-tier-generosity">6.3 Free-tier generosity</h3>
+<p>Free voice minutes per MAU is the largest controllable cost line. At 20 min/MAU and $0.013/min, free users cost $0.26/month and generate $0.81 in revenue per free MAU (base, M12) — positive. At 60 min/MAU (the v1 allowance), free cost rises to $0.78 and the model goes underwater at every conversion level below ~4%.</p>
+<p><strong>Design implication:</strong> free tier stays at 3 sessions/week × 5 minutes, with average utilisation near 20 minutes/month. If utilisation climbs above 35 minutes, either tighten the cap or raise conversion — do not let it drift.</p>
+<hr />
+<h2 id="7-runway-and-financing">7. Runway and financing</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Base</th>
+<th>Wedge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Seed</td>
+<td>$4.0M</td>
+<td>$4.0M</td>
+</tr>
+<tr>
+<td>Pre-launch spend (M0)</td>
+<td>$0.85M</td>
+<td>$0.85M</td>
+</tr>
+<tr>
+<td>Minimum cash</td>
+<td>−$1.21M (M24)</td>
+<td>+$0.30M (M18 trough)</td>
+</tr>
+<tr>
+<td>Cash-out</td>
+<td>M18</td>
+<td>never</td>
+</tr>
+<tr>
+<td>Financing need</td>
+<td>$6–8M Series A by M15, or $1.5M bridge</td>
+<td>Optional Series A at M18–20 on strength</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Triggers, written in advance:</strong></p>
+<ul>
+<li><strong>M9:</strong> if D35 &lt; 3.0% and paid churn &gt; 10%, start the Series A process <em>and</em> cut paid acquisition by 50%.</li>
+<li><strong>M12:</strong> if wedge indicators are absent, move to the "cash-efficient variant" — cut opex to $140k/mo, drop the community phase, sell packs and B2B only.</li>
+<li><strong>M15:</strong> if no term sheet and cash &lt; $900k, execute the pre-approved bridge plan (12-month extension, 15% opex cut, freeze hiring).</li>
+</ul>
+<hr />
+<h2 id="8-what-the-model-deliberately-does-not-include">8. What the model deliberately does not include</h2>
+<table>
+<thead>
+<tr>
+<th>Excluded</th>
+<th>Why</th>
+<th>Impact if included</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Enterprise/B2B sales cost</td>
+<td>No sales team in model; B2B assumed to start at M16</td>
+<td>B2B revenue is optimistic without CAC — see the note below</td>
+</tr>
+<tr>
+<td>Human-reviewed mock interviews</td>
+<td>Sold as a $49 add-on (57% margin), not a subscription entitlement</td>
+<td>Excluded to avoid double-counting; including one per 90 days as a bundle would cut Career margin from 52% to 11% (<code>05</code> §4.3)</td>
+</tr>
+<tr>
+<td>Content production beyond M12</td>
+<td>60 scenarios, 5 packs</td>
+<td>+$150–250k one-time</td>
+</tr>
+<tr>
+<td>Refunds and chargebacks</td>
+<td>2–4% of revenue typical</td>
+<td>−2 to −4% revenue</td>
+</tr>
+<tr>
+<td>Tax, VAT/GST, app-store currency effects</td>
+<td>Jurisdiction-dependent</td>
+<td>−3 to −8% net revenue</td>
+</tr>
+<tr>
+<td>Fraud / free-trial abuse</td>
+<td>Mitigated but not free</td>
+<td>−1 to −2% revenue</td>
+</tr>
+</tbody>
+</table>
+<p>Adding all of these moves M24 gross margin down roughly 5 points and pushes the base-case cash-out earlier by ~1 month. The conclusions do not change; the margin of safety shrinks.</p>
+<h3 id="81-the-b2b-line-is-the-models-most-optimistic-assumption">8.1 The B2B line is the model's most optimistic assumption</h3>
+<p>The B2B line assumes <strong>200 seats at M16, growing 55% per month to ~6,660 seats by M24</strong> — $46.6k/month, or <strong>$0.56M ARR</strong>, at $7/seat/month and <strong>with zero sales cost</strong>. That is not a forecast; it is a placeholder for "B2B exists." It is also 21% of M24 net revenue and, because no COGS is allocated to it, it contributes at 100% gross margin.</p>
+<p>Removing B2B entirely drops base M24 gross margin from <strong>56.8% to 45.2%</strong> ($173.2k/month revenue against $94.9k of COGS) and does not change the cash-out month. It does remove the line that makes the base case look like a venture-scale business at M24. Neither the seat ramp nor the zero-CAC assumption has any evidence behind it: <code>05</code> §9 lists three pilots, none signed, and <code>08</code> §4 carries B2B as an open risk. <strong>Treat B2B as upside, not base</strong> — the frozen scenario totals above include it, so every reader should mentally subtract it when judging the base case.</p>
+<hr />
+<h2 id="9-how-to-use-this-file">9. How to use this file</h2>
+<ol>
+<li>Change an input in <code>build_model.py</code> (one constant at the top).</li>
+<li>Run <code>python build_model.py</code>.</li>
+<li>The CSVs regenerate; the scenario table in this document must be updated by hand in the same commit (or the doc is marked stale).</li>
+</ol>
+<p><strong>Rule:</strong> any pricing, COGS, or funnel number quoted in <code>01</code>, <code>05</code>, or <code>EXEC-SUMMARY.md</code> must match this model. If it does not, the model wins and the prose is wrong.</p>
+<footer>Eloq v2.0 · every figure is verified, derived, or tagged (H) with a test.
+Internal references (<code>09</code>, <code>§8.1</code>) point to other pages in this set.</footer>
+</main>
+</div>
+</body>
+</html>

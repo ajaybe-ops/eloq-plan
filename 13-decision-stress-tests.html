@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>13 — Decision Stress Tests — Eloq</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Eloq — AI English fluency coach. Pre-build plan, v2.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Eloq</div>
+  <div class="ver">Pre-build plan · v2.0<br>2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="EXEC-SUMMARY.html">Executive summary</a>
+  <a href="README.html">Overview / index</a>
+  <a href="01-product-spec.html">01 · Product spec</a>
+  <a href="02-roadmap-prioritization.html">02 · Roadmap</a>
+  <a href="03-competitive-positioning.html">03 · Competitive positioning</a>
+  <a href="04-personas-journeys.html">04 · Personas & journeys</a>
+  <a href="05-pricing.html">05 · Pricing</a>
+  <a href="06-metrics.html">06 · Metrics</a>
+  <a href="07-technical.html">07 · Technical</a>
+  <a href="08-risks-open-questions.html">08 · Risks & open questions</a>
+  <a href="09-evidence-log.html">09 · Evidence log</a>
+  <a href="10-financial-model.html">10 · Financial model</a>
+  <a href="11-experiment-backlog.html">11 · Experiment backlog</a>
+  <a href="12-launch-checklist.html">12 · Launch checklist</a>
+  <a href="13-decision-stress-tests.html" class="on">13 · Decision stress tests</a>
+  <a href="14-pronunciation-validation.html">14 · Pronunciation validation</a>
+  <a href="NEXT-14-DAYS.html">Next 14 days</a>
+  <hr>
+  <a href="https://github.com" hidden></a>
+</nav>
+<main>
+<p><strong>Version:</strong> 2.0 · 2026-11-15</p>
+<p><strong>Purpose:</strong> three decisions carry most of the plan's risk. Each is written here with the strongest case <em>against</em> it, the rebuttal, the evidence that would flip it, and the cost of being wrong. If a decision cannot survive this format, it should not survive the plan.</p>
+<p><strong>How to read:</strong> the "steelman" is not a formality. It is the best version of the argument the person across the table will make. If the rebuttal is weaker than the steelman, the decision changes — that is the point of writing it down.</p>
+<hr />
+<h2 id="d1-free-tier-shaped-by-voice-economics-vs-a-marketing-led-tier">D1 — Free tier shaped by voice economics vs. a marketing-led tier</h2>
+<p><strong>Current position:</strong> free tier is metered on voice (3 sessions/week × 5 minutes, ~20 minutes per MAU per month), unmetered on feedback, text, drills, and review. The cap exists because voice is the only genuinely expensive unit in the product.</p>
+<h3 id="steelman-against-it">Steelman against it</h3>
+<p>Conversion, not COGS, is the binding constraint. The model's base case converts at 2.6% — category median. Break-even is ~4.5%. If the free tier is the top of the funnel, then making it <em>smaller</em> to protect a cost line that is already only ~$0.26 per free MAU is optimizing the wrong variable. A generous free tier:</p>
+<ul>
+<li>lifts activation and word-of-mouth, which are the only cheap acquisition channels we have;</li>
+<li>matches what users expect from Duolingo (functionally unlimited practice) and from HelloTalk (free human chat);</li>
+<li>creates the habituation that makes a paywall convert at all — a 20-minute-per-month user never forms the habit that justifies $12.99;</li>
+<li>and voice costs are falling, not rising: ElevenLabs already advertises ~$0.05/minute at scale and Deepgram's ASR is $0.0048/minute. The cost curve argues for buying growth now.</li>
+</ul>
+<p>There is also a positioning cost: a free tier that visibly runs out in 15 minutes reads as a demo, and "demo" is exactly the frame we are trying to escape.</p>
+<h3 id="rebuttal">Rebuttal</h3>
+<p>The steelman is right about conversion and wrong about the mechanism. The evidence (RevenueCat SOSA 2026) says freemium converts at 2.1% D35 versus 10.7% for hard paywalls, and that 55% of 3-day trial cancellations happen on <strong>day 0</strong>. Conversion is decided in the first session, not by the size of the monthly allowance. Giving away more voice does not fix a first session that fails to demonstrate value; it just makes each failure more expensive.</p>
+<p>Second, the arithmetic is unforgiving at the margin:</p>
+<table>
+<thead>
+<tr>
+<th>Free minutes / MAU / month</th>
+<th>Free COGS at $0.013/min</th>
+<th>Revenue per free MAU (base, M12)</th>
+<th>Net</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20 (current)</td>
+<td>$0.26</td>
+<td>$0.81</td>
+<td><strong>+$0.55</strong></td>
+</tr>
+<tr>
+<td>35</td>
+<td>$0.46</td>
+<td>$0.81</td>
+<td>+$0.35</td>
+</tr>
+<tr>
+<td>60 (v1 allowance)</td>
+<td>$0.78</td>
+<td>$0.81</td>
+<td><strong>+$0.03</strong> — underwater below ~4% conversion</td>
+</tr>
+</tbody>
+</table>
+<p>At 60 minutes the free tier is only viable if we convert at better than 4%, i.e. only if the wedge thesis is <em>already proven</em>. That is a bet placed with the money we need to survive until the proof. And the cost is not trivial at scale: each extra 10 free minutes per MAU costs ~$0.13/MAU/month, which at 180k MAU is ~$280k/year — roughly two engineers.</p>
+<p>Third, "generous like Duolingo" ignores that Duolingo's free tier is generous in <em>cheap</em> units (text, static content, ads). Our expensive unit is the one thing that cannot be given away at Duolingo's economics.</p>
+<h3 id="what-would-flip-it">What would flip it</h3>
+<p>Flip toward a more generous tier if <strong>all three</strong> hold at the M9 review:</p>
+<ol>
+<li>free-tier utilisation stays <strong>below 25 minutes/MAU</strong> (people do not use what we give them, so the cap is not the constraint);</li>
+<li>D35 conversion at the current cap is <strong>≥ 4.0%</strong> (we are near break-even and can afford the subsidy);</li>
+<li>the T-04 reverse-trial arm shows <strong>no</strong> D30 retention advantage (generosity is not the retention lever either).</li>
+</ol>
+<p>Then raise the cap to 45 minutes/MAU and re-run the model. Partial evidence is not enough — condition 1 alone would mean the cap is irrelevant rather than wrong.</p>
+<h3 id="cost-of-being-wrong">Cost of being wrong</h3>
+<ul>
+<li><strong>Too stingy (our risk):</strong> conversion plateaus at 2.6%, ARR at M24 is $2.64M, cash-out at M18, and the company needs a Series A on a non-venture outcome. That is the base case in <code>10</code>, and it is the most likely failure mode in this plan.</li>
+<li><strong>Too generous (the alternative):</strong> at M24 scale (161,880 free MAU), raising the allowance from 20 to 60 minutes raises free voice COGS from ~$32k to ~$97k/month at the optimized $0.010/session-minute. Gross margin at M24 falls from 56.8% to <strong>~27%</strong>, and the M24 cash position moves from −$1.21M to roughly −$1.6M. Painful and hard to reverse once users have the habit — which is why the stingy error is worse: closing the cap is a config change, but a permanently subsidised free tier is a business model. T-15 measures the actual utilisation response before either number is trusted.</li>
+</ul>
+<p><strong>Current call:</strong> metered voice, generous feedback. Confidence: <strong>medium-high</strong> on the mechanism, <strong>low</strong> on the exact number (20 minutes). Review at M9 with T-04 and T-08 data.</p>
+<hr />
+<h2 id="d2-in-house-pronunciation-scoring-vs-licensing-a-best-in-class-api">D2 — In-house pronunciation scoring vs. licensing a best-in-class API</h2>
+<p><strong>Current position (revised in this pass):</strong> <strong>license</strong> the acoustic scoring layer (Speechace, Azure Pronunciation Assessment, or equivalent) for the MVP; build in-house only the parts that are not commodity — L1-conditioned calibration, the error-memory loop, the drill-selection policy, and the interview rubric that turns a score into an action. Revisit a full in-house model at M12+ only if the economics or the latency budget demand it.</p>
+<p><strong>This is a change from v1</strong>, which called in-house GOP scoring the moat. The evidence that forced the change: phoneme-level pronunciation scoring is sold as an API (Speechace) and shipped as a platform add-on (Azure, including prosody). It is a commodity input, not a moat. Treating it as the moat would have meant spending two quarters rebuilding something we can rent for cents and defending a position that is already occupied.</p>
+<h3 id="steelman-for-building-in-house-against-the-current-position">Steelman for building in-house (against the current position)</h3>
+<ul>
+<li><strong>Cost at scale.</strong> At M24 the model implies ~8M session minutes/month. A scoring API at even $0.005/minute is ~$40k/month, ~$0.5M/year — more than two engineers, forever, with no asset at the end.</li>
+<li><strong>Latency and control.</strong> Pronunciation feedback has to arrive inside the conversation turn. A third-party hop adds 150–400 ms and a failure mode we cannot fix at 2 a.m.</li>
+<li><strong>Differentiation.</strong> If everyone can rent the same scorer, then the score is table stakes — and the only way to differentiate on <em>scoring</em> is to own a model tuned on our own L1 data. Renting guarantees we are one of many.</li>
+<li><strong>Data rights.</strong> Vendor terms often restrict using audio to train models, or charge for it. The data flywheel (below) may be the actual moat, and renting can starve it.</li>
+<li><strong>Vendor risk.</strong> A single API price change or deprecation can reprice the whole business overnight. We saw the category move fast in 2026 alone.</li>
+</ul>
+<h3 id="rebuttal_1">Rebuttal</h3>
+<p>Every point above is about <em>what we might need at scale</em>. The decision in front of us is <em>what we need to launch</em>. Building a scorer that reaches r ≥ 0.85 against human raters, across six L1s, is a 9–15 month program with a real chance of failing (see <code>08</code> R1 and doc <code>14</code>). Licensing gets us a validated, published methodology in weeks, which means we learn whether the <em>product</em> works before spending a year on the <em>model</em>.</p>
+<p>On differentiation: the steelman concedes the key point — if the scorer is rentable, it is not the moat. The moat has to be the closed loop: what we do with the score (which drill, which scenario, which correction, in what order, for this learner, this week), the longitudinal error memory, and the outcome data that proves the loop works. Those are ours whether or not we rent the acoustic layer. A competitor can rent the same scorer and still not have the loop, the content, or the evidence.</p>
+<p>On cost: at the steelman's $0.005/minute, $0.5M/year is ~19% of M24 net revenue — which is exactly why that comparison is the wrong one. The model actually carries <strong>$0.0012–0.002 per session-minute</strong> for licensed scoring: roughly $125–210k/year at M24 volume, <strong>5–8% of net revenue</strong> (11–14% at launch pricing before optimization), and that line falls as vendors compete. Two engineers building and maintaining a scorer cost more than that in year one, before any accuracy is proven. If a vendor ever demands $0.008/minute — ~$70k/month, ~32% of ARR — building becomes the cheaper option, and that is the flip threshold.</p>
+<p>On data rights: this is the one argument that survives, and it is a contract problem, not a build problem. Negotiate training rights explicitly, or run a parallel data-collection pipeline that logs consented audio for future model work without depending on vendor terms.</p>
+<h3 id="what-would-flip-it_1">What would flip it</h3>
+<p>Flip to in-house if, at the M12 review, <strong>any two</strong> of the following hold:</p>
+<ol>
+<li>licensing cost <strong>&gt; $0.008 per session minute</strong> at projected volume (i.e. &gt; ~$70k/month at M24 scale), with no contractual path down;</li>
+<li>measured p95 scoring latency <strong>&gt; 350 ms</strong> added to the turn, and no vendor edge/embedded option;</li>
+<li>the vendor cannot deliver <strong>L1-conditioned calibration</strong> or per-L1 error norms, and our own calibration layer cannot compensate (r drops below 0.80 for two launch L1s);</li>
+<li>we cannot obtain <strong>training rights</strong> on our own audio, blocking the data flywheel.</li>
+</ol>
+<p>A single condition is not enough — each is survivable on its own (renegotiate, cache, calibrate externally, collect separately).</p>
+<h3 id="what-an-in-house-build-would-now-have-to-prove">What an in-house build would now have to prove</h3>
+<p>The moat thesis has already flipped in principle (<code>03</code> §9): the acoustic layer is commodity, the loop is ours. So an in-house scorer is no longer justified as "the moat" — it can only be justified as <strong>a cheaper, better component</strong>. The bar is explicit:</p>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Threshold to justify building</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accuracy lift over licensed</td>
+<td><strong>r ≥ 0.90</strong> overall, and ≥ 0.85 for every launch L1 (licensed baseline: 0.85 / 0.75)</td>
+<td>A 5-point accuracy gain is the minimum that changes what the product can claim</td>
+</tr>
+<tr>
+<td>Subgroup spread</td>
+<td>Best–worst L1 gap ≤ 0.05 (licensed: ≤ 0.10)</td>
+<td>The only defensible reason to own the model is fairness the vendor cannot deliver</td>
+</tr>
+<tr>
+<td>Fully loaded cost</td>
+<td>≤ <strong>$0.006/session-min</strong> by M18, including 2 FTE and GPU</td>
+<td>Below the low end of licensing ($0.003–0.008), or it is a cost <em>increase</em></td>
+</tr>
+<tr>
+<td>Time to gate</td>
+<td>Prototype r ≥ 0.85 within 6 months, or the program stops</td>
+<td>The launch cannot wait 15 months for a component</td>
+</tr>
+<tr>
+<td>Data rights</td>
+<td>Unrestricted training rights on consented audio</td>
+<td>Otherwise the flywheel is rented, not owned</td>
+</tr>
+</tbody>
+</table>
+<p><strong>It loses on this comparison if</strong> r &lt; 0.85 at month 6, or fully loaded cost &gt; $0.008/session-min at M18, or the L1 spread is no better than the vendor's. In that case we keep licensing, and the engineering time goes to the loop — which is where the actual differentiation lives.</p>
+<h3 id="cost-of-being-wrong_1">Cost of being wrong</h3>
+<ul>
+<li><strong>If we license and should have built:</strong> we pay ~$0.13–0.21M/year at current vendor rates (up to ~$0.5M at the steelman's $0.005/minute), carry vendor dependency, and are 6–9 months behind on a proprietary model. Recoverable; the switch can start at any time with the data we have been collecting.</li>
+<li><strong>If we build and should have licensed:</strong> we spend ~$180–250k in engineering, delay launch by 4–6 months (~$400k burn), and may still fail the r ≥ 0.85 gate with no fallback — because the fallback (license) is now a rushed integration under deadline pressure. This is the asymmetric error, and it is the error v1 was steering into.</li>
+</ul>
+<p><strong>Current call:</strong> license now, build the loop. Confidence: <strong>high</strong> on the direction, <strong>medium</strong> on the specific vendor. Review at M12 with the four flip conditions above.</p>
+<hr />
+<h2 id="d3-job-seeker-wedge-vs-student-first">D3 — Job-seeker wedge vs. student-first</h2>
+<p><strong>Current position:</strong> job seekers first (M0–12), students second (M12–24), B2B last.</p>
+<h3 id="steelman-for-student-first">Steelman for student-first</h3>
+<ul>
+<li><strong>Size and reach.</strong> HelloTalk's actual base is broad and young; students are the largest addressable pool of English learners, they are cheap to reach on campus and short-form video, and they bring friends (the referral loop works when your cohort is co-located).</li>
+<li><strong>Longer lifetime.</strong> A student who starts at 19 can pay for four years. A job seeker churns when they get the offer — often within 90 days. Student-first maximizes LTV, which the model needs: Education-category annual-plan share is 59–66%, and students are the ones who buy annual.</li>
+<li><strong>Cheaper content.</strong> Campus and general-English scenarios are reusable and less research-intensive than role-specific interview content (which needs per-role JDs, rubrics, and hiring-manager review). Interview content is expensive to keep current.</li>
+<li><strong>Lower price sensitivity risk.</strong> Parents pay; student pricing is an accepted category norm; and the $49.99 student annual has a clean story.</li>
+<li><strong>The competitor evidence cuts both ways.</strong> ELSA already ships an Interview Coach at $19.99. If a well-funded pronunciation incumbent already owns "career English," attacking there is a frontal assault; students are the softer flank.</li>
+</ul>
+<h3 id="rebuttal_2">Rebuttal</h3>
+<p>The student-first case is a <em>better business at scale</em> and a <em>worse business to start</em>. Three reasons:</p>
+<ol>
+<li><strong>Deadline creates conversion.</strong> The entire financial model turns on D35 conversion above ~4.5% — roughly twice the category median. Students convert on aspiration; job seekers convert on a dated event with an income-linked payoff. T-01 exists to test exactly this, and if it fails, D3 flips (see below). We should not assume it; we should test it in two weeks for $2.5k.</li>
+<li><strong>The outcome is measurable in 90 days.</strong> "Did you get the interview?" is verifiable. "Did your English improve this semester?" is not — which means the student-first version of this company cannot produce the one asset that makes the marketing defensible (T-07).</li>
+<li><strong>Price anchors differ.</strong> $12.99 against "one hour of a tutor" is a hard sell to a student; $24.99 against "$100–300 per mock interview" is an easy sell to someone with an interview in three weeks. The Career tier is where gross margin is healthiest (bounded usage, deadline-driven churn that ends in a good story rather than a refund).</li>
+</ol>
+<p>On ELSA: shipping an Interview Coach is not the same as owning career outcomes. ELSA's positioning is still pronunciation-first with a career vertical; its pricing ($19.99/$99.99) leaves the premium interview-outcome tier open, and its content is not built around a specific JD and a specific interview date. The existence of a competitor validates the wedge; it does not close it. But it does mean we cannot claim to be first, and <code>03</code> is corrected accordingly.</p>
+<h3 id="what-would-flip-it_2">What would flip it</h3>
+<p>Flip to student-first if, at Gate 2 (2027-02-05):</p>
+<ol>
+<li><strong>T-01:</strong> job-seeker CPA <strong>&gt; 1.5×</strong> student CPA, <strong>and</strong> the share of job-seeker signups with an interview within 60 days is <strong>&lt; 25%</strong> (the urgency is not there); <strong>or</strong></li>
+<li><strong>T-05:</strong> Career fake-door take-rate <strong>&lt; 8%</strong> at $24.99 while a $12.99 student offer clears 15%; <strong>or</strong></li>
+<li><strong>T-02:</strong> fewer than <strong>30%</strong> of blind testers prefer our interview sim to a strong general-assistant prompt (the product does not exist yet).</li>
+</ol>
+<p>Any one of these is sufficient, because each independently breaks the "job seekers convert 2–3× better" premise that the model depends on.</p>
+<h3 id="cost-of-being-wrong_2">Cost of being wrong</h3>
+<ul>
+<li><strong>Wedge is wrong (we chose job seekers):</strong> ~$250k of interview content and rubric work is stranded (partially reusable as workplace content), the Career tier launches late or not at all, conversion stays at 1.8–2.6%, ARR at M24 is $2.0–2.6M, and cash-out arrives at M17–18. We would be a small consumer subscription business with an expensive content library — survivable only by cutting to a 6-person team.</li>
+<li><strong>Student-first is wrong (we had chosen it):</strong> lower ARPU, worse conversion, no outcome study, and a positioning that competes head-on with Duolingo's free tier and HelloTalk's free chat. The failure mode is not bankruptcy; it is irrelevance — a nice app with no evidence and no pricing power.</li>
+<li><strong>Both wrong:</strong> the honest third outcome is that neither segment converts above 4%, in which case the correct move is the <code>08</code> §5 kill criterion (re-scope to interview-only or shut down consumer) rather than a third repositioning.</li>
+</ul>
+<p><strong>Current call:</strong> job seekers first, with student content shipped early enough to serve the overflow. Confidence: <strong>medium</strong>. This is the least-evidenced of the three decisions and the one T-01/T-05/T-02 exist to settle — before launch, not after.</p>
+<hr />
+<h2 id="appendix-decisions-we-did-not-flag-and-why">Appendix — decisions we did not flag, and why</h2>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Why it is not contested</th>
+<th>Revisit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>English-only at launch</td>
+<td>Depth over breadth; every added language multiplies content, ASR eval, and support</td>
+<td>M18, only after retention is proven</td>
+</tr>
+<tr>
+<td>No 1:1 stranger chat, ever</td>
+<td>It is the safety moat and the brand; the cost (slower organic growth) is accepted</td>
+<td>Never</td>
+</tr>
+<tr>
+<td>16+ minimum age</td>
+<td>Serving minors requires consent infrastructure and a safety team we do not have</td>
+<td>After external safety audit</td>
+</tr>
+<tr>
+<td>Feedback is never metered</td>
+<td>Metering feedback converts the free tier into a demo and destroys trust in the score</td>
+<td>Never</td>
+</tr>
+<tr>
+<td>Community gated on external audit</td>
+<td>One incident is existential; the audit is cheaper than the incident</td>
+<td>At audit completion</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The pattern:</strong> the decisions we do not stress-test are the ones where the cost of being wrong is catastrophic and the cost of the constraint is merely slow. Everything else gets a steelman.</p>
+<footer>Eloq v2.0 · every figure is verified, derived, or tagged (H) with a test.
+Internal references (<code>09</code>, <code>§8.1</code>) point to other pages in this set.</footer>
+</main>
+</div>
+</body>
+</html>

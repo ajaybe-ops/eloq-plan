@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>11 — Experiment Backlog — Eloq</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Eloq — AI English fluency coach. Pre-build plan, v2.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Eloq</div>
+  <div class="ver">Pre-build plan · v2.0<br>2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="EXEC-SUMMARY.html">Executive summary</a>
+  <a href="README.html">Overview / index</a>
+  <a href="01-product-spec.html">01 · Product spec</a>
+  <a href="02-roadmap-prioritization.html">02 · Roadmap</a>
+  <a href="03-competitive-positioning.html">03 · Competitive positioning</a>
+  <a href="04-personas-journeys.html">04 · Personas & journeys</a>
+  <a href="05-pricing.html">05 · Pricing</a>
+  <a href="06-metrics.html">06 · Metrics</a>
+  <a href="07-technical.html">07 · Technical</a>
+  <a href="08-risks-open-questions.html">08 · Risks & open questions</a>
+  <a href="09-evidence-log.html">09 · Evidence log</a>
+  <a href="10-financial-model.html">10 · Financial model</a>
+  <a href="11-experiment-backlog.html" class="on">11 · Experiment backlog</a>
+  <a href="12-launch-checklist.html">12 · Launch checklist</a>
+  <a href="13-decision-stress-tests.html">13 · Decision stress tests</a>
+  <a href="14-pronunciation-validation.html">14 · Pronunciation validation</a>
+  <a href="NEXT-14-DAYS.html">Next 14 days</a>
+  <hr>
+  <a href="https://github.com" hidden></a>
+</nav>
+<main>
+<p><strong>Version:</strong> 2.0 · 2026-11-15</p>
+<p><strong>Supersedes:</strong> the 60-day validation plan in <code>08</code> §4 (that plan is now the first two columns of this one).
+<strong>Rule of this document:</strong> a test exists only if it changes a decision. If the result — either way — would not change what we build, price, or fund, it is not on this list. Vanity research is how seed-stage teams burn a quarter.</p>
+<hr />
+<h2 id="1-how-these-are-ranked">1. How these are ranked</h2>
+<p>Information value per dollar:</p>
+<pre><code>IV/$  ≈  P(result changes decision) × cost of being wrong  ÷  cost of test
+</code></pre>
+<p>That formula puts free engineering spikes above paid media tests, and it puts the wedge-defining tests above everything. The ranking below is the order to <em>start</em> them, not the order to finish them — several run in parallel.</p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>ID</th>
+<th>Test</th>
+<th>Decision it unblocks</th>
+<th>Cost</th>
+<th>Weeks</th>
+<th>Why here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>T-11</td>
+<td>Voice cost per session minute</td>
+<td>Whether Plus at $12.99 has a margin at all</td>
+<td>$0</td>
+<td>3</td>
+<td>Cheapest test with the largest effect on the model</td>
+</tr>
+<tr>
+<td>2</td>
+<td>T-12</td>
+<td>ASR WER by L1 accent</td>
+<td>Which L1s we launch; whether scores can be shown</td>
+<td>$0</td>
+<td>3</td>
+<td>Blocks the product's core promise</td>
+</tr>
+<tr>
+<td>3</td>
+<td>T-10</td>
+<td>Human rater cost</td>
+<td>Whether the validation study is affordable</td>
+<td>$0 (quotes)</td>
+<td>1</td>
+<td>Gates T-07 and doc <code>14</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>T-01</td>
+<td>Job seeker vs student conversion</td>
+<td>The wedge itself</td>
+<td>$2.5k</td>
+<td>2</td>
+<td>The entire financial model rests on this</td>
+</tr>
+<tr>
+<td>5</td>
+<td>T-14</td>
+<td>Bottom-up market size</td>
+<td>Whether the TAM story survives diligence</td>
+<td>$0</td>
+<td>2</td>
+<td>Free, and it removes a public-claim risk</td>
+</tr>
+<tr>
+<td>6</td>
+<td>T-05</td>
+<td>Will job seekers pay $24.99?</td>
+<td>Career tier price</td>
+<td>$1k</td>
+<td>2</td>
+<td>Price is hard to change after launch</td>
+</tr>
+<tr>
+<td>7</td>
+<td>T-02</td>
+<td>Interview sim vs ChatGPT prompt</td>
+<td>Whether the Career tier has a product</td>
+<td>$1.5k</td>
+<td>3</td>
+<td>Kills or funds the wedge</td>
+</tr>
+<tr>
+<td>8</td>
+<td>T-04</td>
+<td>Reverse trial vs metered free</td>
+<td>Free-tier architecture</td>
+<td>$0 (product)</td>
+<td>6</td>
+<td>8 weeks of build if wrong</td>
+</tr>
+<tr>
+<td>9</td>
+<td>T-08</td>
+<td>Our real D1/D7/D30</td>
+<td>All retention targets</td>
+<td>$0</td>
+<td>8</td>
+<td>Needs beta traffic; cannot run earlier</td>
+</tr>
+<tr>
+<td>10</td>
+<td><strong>T-15</strong></td>
+<td><strong>Free-tier generosity: 60 vs 20 min/MAU</strong></td>
+<td><strong>Whether the cap is a growth constraint or a cost control</strong></td>
+<td><strong>$0 (product)</strong></td>
+<td><strong>8</strong></td>
+<td><strong>Load-bearing: at 60 min the free tier is underwater below ~4% conversion</strong></td>
+</tr>
+<tr>
+<td>11</td>
+<td>T-13</td>
+<td>$12.99 vs $9.99</td>
+<td>Plus price</td>
+<td>$0</td>
+<td>4</td>
+<td>Only matters after activation works</td>
+</tr>
+<tr>
+<td>12</td>
+<td><strong>T-16</strong></td>
+<td><strong>D35 calibration: is reality downside, base, or wedge?</strong></td>
+<td><strong>Whether to raise, hold, or cut the growth plan</strong></td>
+<td><strong>$0</strong></td>
+<td><strong>12</strong></td>
+<td><strong>The model's three scenarios become distinguishable only with live cohorts</strong></td>
+</tr>
+<tr>
+<td>13</td>
+<td>T-03</td>
+<td>Real CAC by channel</td>
+<td>Paid acquisition budget</td>
+<td>$8k</td>
+<td>4</td>
+<td>Expensive; needs a working funnel first</td>
+</tr>
+<tr>
+<td>14</td>
+<td>T-06</td>
+<td>Real paid churn</td>
+<td>LTV and runway</td>
+<td>$0</td>
+<td>12</td>
+<td>Needs 3 months of live cohorts</td>
+</tr>
+<tr>
+<td>15</td>
+<td>T-07</td>
+<td>Do learners get interviews?</td>
+<td>The outcome claim</td>
+<td>$6k</td>
+<td>16</td>
+<td>Longest lead time; start recruiting early</td>
+</tr>
+<tr>
+<td>16</td>
+<td>T-09</td>
+<td>Matched cohort vs language exchange</td>
+<td>Whether we may say "better than HelloTalk"</td>
+<td>$12k</td>
+<td>12</td>
+<td>Marketing claim only; nothing else depends on it</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total to retire the top nine unknowns: ≈ $5.0k in cash plus ~6 engineer-weeks.</strong> The two expensive tests (T-07, T-09) are deferred because nothing in the build depends on them — only the marketing does, and marketing can wait for evidence instead of preceding it.</p>
+<hr />
+<h2 id="2-test-cards">2. Test cards</h2>
+<h3 id="t-11-real-voice-cost-per-session-minute">T-11 — Real voice cost per session minute</h3>
+<ul>
+<li><strong>Hypothesis:</strong> all-in incremental cost ≤ $0.018 per learner session minute at launch, ≤ $0.010 by M13.</li>
+<li><strong>Method:</strong> instrument 200 real sessions on the production stack (streaming ASR, LLM turn generation, TTS, pronunciation scoring). Log per-turn audio seconds, characters synthesized, tokens, GPU-seconds. Reconcile against vendor invoices, not estimates.</li>
+<li><strong>Primary metric:</strong> $ per session minute, with p50/p90 across session types (drill, conversation, interview).</li>
+<li><strong>MDE:</strong> ±$0.003 — this is a measurement, not an A/B, so the bar is invoice reconciliation within 15%.</li>
+<li><strong>Sample:</strong> 200 sessions / ≥ 2,000 learner-minutes / 3 device classes / 2 networks.</li>
+<li><strong>Duration:</strong> 3 weeks. <strong>Cost:</strong> $0 cash (vendor credits).</li>
+<li><strong>Owner:</strong> Eng lead (infra).</li>
+<li><strong>Kill:</strong> p50 &gt; $0.025 → cut free minutes before launch and re-run pricing (T-13).</li>
+<li><strong>Scale:</strong> ≤ $0.018 → proceed to launch pricing; publish the unit-cost table internally as the canonical figure.</li>
+<li><strong>Note:</strong> this test exists because v1 was wrong by 2.2× on this exact number. Do not accept a spreadsheet answer.</li>
+</ul>
+<h3 id="t-12-asr-word-error-rate-by-l1-accent">T-12 — ASR word error rate by L1 accent</h3>
+<ul>
+<li><strong>Hypothesis:</strong> WER ≤ 12% read / ≤ 22% spontaneous overall, and no launch L1 worse than 25%.</li>
+<li><strong>Method:</strong> 300 utterances (6 L1s × 50), read + spontaneous, transcribed by two humans, scored against vendor ASR. Stratify by CEFR band (A2, B1, B2+).</li>
+<li><strong>Primary metric:</strong> WER per L1 with 95% CI; secondary: substitution patterns that indicate accent bias rather than learner error.</li>
+<li><strong>MDE:</strong> detect a 5-point WER gap between L1 groups (n=50/L1 gives ±~7 points; report as directional per L1 and pooled).</li>
+<li><strong>Sample:</strong> 300 utterances, 2 human transcripts each.</li>
+<li><strong>Duration:</strong> 3 weeks. <strong>Cost:</strong> $0 cash beyond staff time (recordings from beta).</li>
+<li><strong>Owner:</strong> ML lead.</li>
+<li><strong>Kill:</strong> any proposed launch L1 &gt; 25% WER → drop that L1 from launch, or suppress scoring for it (feedback only).</li>
+<li><strong>Scale:</strong> all six L1s under 22% spontaneous → keep six-language onboarding support.</li>
+<li><strong>Note:</strong> fairness is a release gate, not a nice-to-have (<code>08</code> R8). Also check whether errors cluster on <em>intelligible</em> L1 variants — that is the accent-erasure risk in doc <code>14</code> §6.</li>
+</ul>
+<h3 id="t-10-human-rater-cost-and-availability">T-10 — Human rater cost and availability</h3>
+<ul>
+<li><strong>Hypothesis:</strong> qualified raters (SLP, ESL teacher, phonetics-trained) available at ≤ $22/hr, with ≥ 12 qualified candidates in 2 weeks.</li>
+<li><strong>Method:</strong> three recruiter/marketplace quotes; screen six candidates on a 20-utterance calibration set; measure inter-rater agreement on the screen.</li>
+<li><strong>Primary metric:</strong> cost per rated utterance-minute; ICC on the screen set.</li>
+<li><strong>MDE:</strong> n/a (sourcing test).</li>
+<li><strong>Sample:</strong> 3 quotes, 6 screened raters.</li>
+<li><strong>Duration:</strong> 1 week. <strong>Cost:</strong> $0 (quotes) + ~$200 screening.</li>
+<li><strong>Owner:</strong> Research.</li>
+<li><strong>Kill:</strong> &gt; $30/hr or ICC &lt; 0.70 on screen → change rubric granularity (rate intelligibility + prosody only, drop segmental counts) before committing to the main study.</li>
+<li><strong>Scale:</strong> ≤ $22/hr and ICC ≥ 0.80 → book the 600-utterance study described in <code>14</code>.</li>
+</ul>
+<h3 id="t-01-do-job-seekers-convert-better-than-students">T-01 — Do job seekers convert better than students?</h3>
+<ul>
+<li><strong>Hypothesis:</strong> cost per activated signup is lower for job-seeker messaging than student messaging, and job seekers reach paywall view at ≥ 1.5× the rate.</li>
+<li><strong>Method:</strong> two landing pages (identical product pitch, different promise and creative), identical spend, geo-matched. Job seeker angle: "interview in English in 8 weeks." Student angle: "speak up in seminars."</li>
+<li><strong>Primary metric:</strong> cost per verified waitlist signup (email + goal + deadline).</li>
+<li><strong>MDE:</strong> 30% relative difference in signup rate at 80% power.</li>
+<li><strong>Sample:</strong> 800 visitors per arm (≈1,600 total).</li>
+<li><strong>Duration:</strong> 2 weeks. <strong>Cost:</strong> $2.5k media + $0 (page build reuses onboarding).</li>
+<li><strong>Owner:</strong> Growth.</li>
+<li><strong>Kill:</strong> job-seeker CPA &gt; 1.5× student CPA <strong>and</strong> job-seeker "interview within 60 days" share &lt; 25% → wedge is wrong; re-plan around student-first (see <code>13</code> D3).</li>
+<li><strong>Scale:</strong> job-seeker CPA ≤ student CPA → lock the wedge, fund interview content first.</li>
+<li><strong>Note:</strong> this is the single most consequential test in the plan. The model's break-even conversion (~4.5%) assumes the wedge converts at 2–3× category rates.</li>
+</ul>
+<h3 id="t-14-bottom-up-market-size">T-14 — Bottom-up market size</h3>
+<ul>
+<li><strong>Hypothesis:</strong> serviceable obtainable market ≥ 20M learners across five launch countries, reachable at ≤ $45 CAC.</li>
+<li><strong>Method:</strong> desk research — tertiary enrollment, English-requirement exam volumes (IELTS/TOEFL/PTE), outbound job-seeker counts, smartphone penetration, app-store category revenue. Build from country-level counts upward; do not use an analyst headline.</li>
+<li><strong>Primary metric:</strong> SAM (learners with a dated English-speaking goal) and SOM (reachable at target CAC).</li>
+<li><strong>MDE:</strong> n/a. <strong>Sample:</strong> 5 countries, 3 sources each, all dated.</li>
+<li><strong>Duration:</strong> 2 weeks. <strong>Cost:</strong> $0.</li>
+<li><strong>Owner:</strong> Strategy.</li>
+<li><strong>Kill:</strong> SOM &lt; 20M → the "venture-scale" story is dead; plan a profitable niche instead and say so in the deck.</li>
+<li><strong>Scale:</strong> SOM ≥ 40M → unlock the higher-growth hiring plan in <code>10</code> §7.</li>
+</ul>
+<h3 id="t-05-will-job-seekers-pay-2499">T-05 — Will job seekers pay $24.99?</h3>
+<ul>
+<li><strong>Hypothesis:</strong> ≥ 8% of qualified job-seeker visitors take a $24.99/mo or $149.99/yr Career offer at a fake door.</li>
+<li><strong>Method:</strong> fake-door pricing page after a 3-question qualification (target role, interview date, current level). Price shown; click-through to a waitlist with "we'll email you when Career opens." No charge.</li>
+<li><strong>Primary metric:</strong> qualified visitor → pricing-page CTA rate.</li>
+<li><strong>MDE:</strong> 4 percentage points around a 10% baseline.</li>
+<li><strong>Sample:</strong> 1,000 qualified visitors (≈450/arm if testing $24.99 vs $19.99).</li>
+<li><strong>Duration:</strong> 2 weeks. <strong>Cost:</strong> $1k media.</li>
+<li><strong>Owner:</strong> Growth + PM.</li>
+<li><strong>Kill:</strong> &lt; 8% take-rate at $24.99 with $19.99 ≥ 8% → launch at $19.99 and cut Career COGS (drop the human mock).</li>
+<li><strong>Scale:</strong> ≥ 12% at $24.99 → keep price, and test $29.99 in the same design next quarter.</li>
+<li><strong>Caveat:</strong> fake doors overstate intent. Treat the <em>relative</em> gap between price points as the signal, not the absolute rate.</li>
+</ul>
+<h3 id="t-02-interview-simulator-vs-a-chatgpt-prompt">T-02 — Interview simulator vs a ChatGPT prompt</h3>
+<ul>
+<li><strong>Hypothesis:</strong> ≥ 55% of blind testers prefer our interview session to a well-prompted general assistant for interview practice.</li>
+<li><strong>Method:</strong> 30 job seekers, within-subject, order-randomized, same role and same JD. Blind scoring by the participant on: realism, usefulness of feedback, confidence for the real interview, likelihood to use again. Then a think-aloud on why.</li>
+<li><strong>Primary metric:</strong> forced-choice preference; secondary: rubric-with-evidence quality rating.</li>
+<li><strong>MDE:</strong> 20 points above 50% (n=30 gives ~80% power for 70/30).</li>
+<li><strong>Sample:</strong> 30 completed paired sessions (recruit 45).</li>
+<li><strong>Duration:</strong> 3 weeks. <strong>Cost:</strong> $1.5k incentives.</li>
+<li><strong>Owner:</strong> PM (product research).</li>
+<li><strong>Kill:</strong> &lt; 30% prefer ours → do not launch Career in M9; stay consumer Plus and re-scope the wedge.</li>
+<li><strong>Scale:</strong> ≥ 55% and ≥ 40% say "materially more useful" → Career launches on schedule.</li>
+<li><strong>Note:</strong> the comparison must use a <em>strong</em> ChatGPT prompt (role, JD, STAR, feedback at end), not a strawman. A win against a bad prompt is worthless.</li>
+</ul>
+<h3 id="t-04-reverse-trial-vs-metered-free-tier">T-04 — Reverse trial vs metered free tier</h3>
+<ul>
+<li><strong>Hypothesis:</strong> a 14-day full-access reverse trial produces higher D30 paid conversion than the 3×5-minute metered free tier, without wrecking D30 retention of non-converters.</li>
+<li><strong>Method:</strong> two-arm in-app test at first session. Arm A: metered free (current). Arm B: 14 days of Plus, then fall back to metered free (not locked out). Both arms see identical paywall creative after the trial.</li>
+<li><strong>Primary metric:</strong> D35 install → paid (the model's actual input), reported with D30 retention as a co-primary.</li>
+<li><strong>MDE:</strong> +1.0pp absolute on a 3% base; co-primary D30 retention +5pp on 15%.</li>
+<li><strong>Sample:</strong> 2,300 installs per arm for the paid endpoint; 400/arm for the retention endpoint. Run to the larger.</li>
+<li><strong>Duration:</strong> 6 weeks (4 weeks to accrue installs + 35-day maturity). <strong>Cost:</strong> $0 cash, ~3 engineer-weeks.</li>
+<li><strong>Owner:</strong> Growth + Eng.</li>
+<li><strong>Kill:</strong> trial arm D35 paid not ≥ +1pp absolute → stay metered, stop testing trial length.</li>
+<li><strong>Scale:</strong> trial arm wins on both endpoints → adopt reverse trial at M9 and re-run the cost model with the new free-minute profile.</li>
+<li><strong>Evidence basis:</strong> RevenueCat SOSA 2026 — hard paywalls convert ~5× better at D35 (10.7% vs 2.1%), and 17+ day trials convert 42.5% vs 25.5% for short trials. Those are category numbers, not ours; this test is how we find out if they transfer.</li>
+</ul>
+<h3 id="t-08-our-real-d1-d7-d30">T-08 — Our real D1 / D7 / D30</h3>
+<ul>
+<li><strong>Hypothesis:</strong> D1 ≥ 55%, D7 ≥ 35%, D30 ≥ 22% (the M12 targets, measured early to avoid a late surprise).</li>
+<li><strong>Method:</strong> cohort instrumentation from day one of beta; no retroactive definitions. Report by acquisition channel and by persona (self-declared goal).</li>
+<li><strong>Primary metric:</strong> D7 qualifying-session retention.</li>
+<li><strong>MDE:</strong> descriptive with ±3pp CI at n=1,000 signups.</li>
+<li><strong>Sample:</strong> 1,000 beta signups minimum.</li>
+<li><strong>Duration:</strong> 8 weeks. <strong>Cost:</strong> $0.</li>
+<li><strong>Owner:</strong> Data.</li>
+<li><strong>Kill:</strong> D7 &lt; 22% after two onboarding iterations → <code>08</code> §5 kill criteria fire; stop paid acquisition.</li>
+<li><strong>Scale:</strong> D7 ≥ 30% in beta → proceed to public launch and start T-03.</li>
+<li><strong>Note:</strong> this is the test that decides whether the retention targets in <code>06</code> are real or aspirational. Publish the number internally even when it is bad.</li>
+</ul>
+<h3 id="t-15-free-tier-generosity-60-vs-20-minutes-per-mau-load-bearing">T-15 — Free-tier generosity: 60 vs 20 minutes per MAU (load-bearing)</h3>
+<ul>
+<li><strong>Hypothesis:</strong> raising the free allowance from 20 to 60 minutes per MAU does <strong>not</strong> lift D35 install→paid by ≥ 1pp, and does raise free COGS by ~$0.50/MAU.</li>
+<li><strong>Why it is load-bearing:</strong> the model shows free-tier cost is the largest controllable COGS line. At 20 min/MAU the free user costs ~$0.26/month against ~$0.81 revenue per free MAU at M12 (base) — positive. At 60 min it costs ~$0.78, which is underwater at any conversion below ~4.0%. The cap is either a growth lever or a cost control, and we do not know which.</li>
+<li><strong>Method:</strong> two-arm in-app test at onboarding, 8 weeks. Arm A: 3×5 min/week (current, ~20 min/MAU average). Arm B: 3×20 min/week (allows ~60 min/MAU utilisation). Identical paywall, onboarding, and content. Measure both conversion and actual utilisation (many users will not use the extra minutes, which is the point).</li>
+<li><strong>Primary metric:</strong> D35 install→paid. Co-primary: free COGS per MAU (from T-11's production instrumentation).</li>
+<li><strong>MDE:</strong> +0.8pp absolute on a 2.6% base (powered at n ≈ 5,800 installs per arm — run as a rolling sequential read at 8 weeks and label directional if underpowered).</li>
+<li><strong>Sample:</strong> as many installs as 8 weeks of beta+launch traffic provides; minimum 2,500/arm.</li>
+<li><strong>Duration:</strong> 8 weeks. <strong>Cost:</strong> $0 cash, ~1 engineer-week.</li>
+<li><strong>Owner:</strong> Growth + Finance.</li>
+<li><strong>Kill:</strong> Arm B lifts D35 by &lt; 0.8pp <strong>or</strong> raises free COGS per MAU by more than $0.30 without a conversion lift → keep 20 minutes; the cap is not the constraint.</li>
+<li><strong>Scale:</strong> Arm B lifts D35 by ≥ 1.5pp and utilisation stays &lt; 35 min/MAU → move to 45 min/MAU and re-run the model (<code>13</code> D1 flip condition requires all three conditions, not just this one).</li>
+<li><strong>Maps to:</strong> D1 (free tier), K5 (voice COGS), <code>10</code> §6.3.</li>
+</ul>
+<h3 id="t-13-1299-vs-999">T-13 — $12.99 vs $9.99</h3>
+<ul>
+<li><strong>Hypothesis:</strong> $12.99 produces equal or higher revenue per visitor than $9.99 despite lower conversion.</li>
+<li><strong>Method:</strong> geo-matched price test on the paywall, monthly plans only, 50/50. Annual untouched.</li>
+<li><strong>Primary metric:</strong> net revenue per paywall view over 35 days.</li>
+<li><strong>MDE:</strong> 20% relative on revenue per visitor.</li>
+<li><strong>Sample:</strong> 3,000 paywall views per arm (may be underpowered early; if so, label directional and decide on the larger of the two effects).</li>
+<li><strong>Duration:</strong> 4 weeks. <strong>Cost:</strong> $0.</li>
+<li><strong>Owner:</strong> Growth.</li>
+<li><strong>Kill:</strong> revenue per visitor worse at $12.99 by &gt; 10% → move Plus to $9.99 and re-run the model at the lower ARPU.</li>
+<li><strong>Scale:</strong> $12.99 ≥ $9.99 → keep parity with HelloTalk VIP; use "same price as HelloTalk, and it answers" in creative.</li>
+<li><strong>Note:</strong> never run this while T-04 is live — price and paywall structure interact.</li>
+</ul>
+<h3 id="t-16-d35-calibration-downside-base-or-wedge-load-bearing">T-16 — D35 calibration: downside, base, or wedge? (load-bearing)</h3>
+<ul>
+<li><strong>Hypothesis:</strong> our D35 install→paid settles in the base band (2.2–3.0%), not the downside (&lt; 2.0%) and not the wedge (&gt; 5.5%).</li>
+<li><strong>Why it is load-bearing:</strong> D35 is the only variable that separates the three financial scenarios. Holding everything else constant, 1.8% produces a $2.0M ARR business that runs out of cash at M17; 2.6% produces $2.64M and cash-out at M18; 6.0% produces $5.36M and a self-funding company. Nothing else in the model moves the outcome as much.</li>
+<li><strong>Method:</strong> rolling cohort measurement on 90-day maturity, segmented by acquisition channel, persona (self-declared goal), and market. No A/B — this is a measurement with a pre-registered decision rule. Report a 4-week rolling estimate with a 95% CI and a 12-week smoothed estimate.</li>
+<li><strong>Primary metric:</strong> D35 install→paid.</li>
+<li><strong>MDE:</strong> distinguish 2.6% from 3.4% at 80% power with n ≈ 4,600 installs per read (≈8 weeks at launch volume).</li>
+<li><strong>Sample:</strong> all installs, minimum 10,000 by M9.</li>
+<li><strong>Duration:</strong> 12 weeks (rolling). <strong>Cost:</strong> $0.</li>
+<li><strong>Owner:</strong> Growth + Data.</li>
+<li><strong>Decision rule (pre-registered):</strong></li>
+<li><strong>&lt; 1.8% at M9</strong> → downside confirmed. Execute the <code>08</code> §5 kill path: cut paid acquisition 50%, start the cash-efficient variant, and plan a bridge or re-scope.</li>
+<li><strong>1.8–3.0%</strong> → base confirmed. Proceed to Series A at M14–15 with the $2.64M-ARR story and the wedge as upside, not as the plan.</li>
+<li><strong>3.0–5.5%</strong> → between base and wedge. Extend the wedge tests (T-01, T-05) and hold hiring flat until the band resolves.</li>
+<li><strong>&gt; 5.5%</strong> → wedge confirmed. Raise the growth plan, increase paid spend, and re-run the model on the new D35.</li>
+<li><strong>Kill:</strong> n/a — this is a calibration test, not a feature test; the decision rule above is the kill/scale logic.</li>
+<li><strong>Maps to:</strong> B1–B3, M5, <code>10</code> §6.2, <code>13</code> D3.</li>
+</ul>
+<h3 id="t-03-real-cac-by-channel">T-03 — Real CAC by channel</h3>
+<ul>
+<li><strong>Hypothesis:</strong> blended CAC ≤ $29 with at least one channel ≤ $15 at scale.</li>
+<li><strong>Method:</strong> $8k across short-form video, search, and one community/creator channel; separate landing pages and promo codes per channel; 8-week attribution window.</li>
+<li><strong>Primary metric:</strong> CAC per activated user and per paid subscriber, by channel, with CI.</li>
+<li><strong>MDE:</strong> distinguish $15 from $30 CAC at n≈200 installs per channel.</li>
+<li><strong>Sample:</strong> ~600 installs total, ≥ 150 per channel.</li>
+<li><strong>Duration:</strong> 4 weeks spend + 4 weeks maturity. <strong>Cost:</strong> $8k.</li>
+<li><strong>Owner:</strong> Growth.</li>
+<li><strong>Kill:</strong> blended CAC &gt; $60, or no channel &lt; $45 → paid acquisition is not a growth engine; shift to organic/referral and re-plan the hiring plan.</li>
+<li><strong>Scale:</strong> one channel ≤ $20 CAC with payback &lt; 6 months → double spend there and only there.</li>
+</ul>
+<h3 id="t-06-real-paid-churn">T-06 — Real paid churn</h3>
+<ul>
+<li><strong>Hypothesis:</strong> blended monthly churn ≤ 8%, with annual plans ≤ 3%.</li>
+<li><strong>Method:</strong> cohort survival analysis on live subscribers; separate monthly and annual; separate Career and Plus; exclude involuntary churn from the product-quality read but include it in the LTV read.</li>
+<li><strong>Primary metric:</strong> monthly logo churn at 90 days of cohort age.</li>
+<li><strong>MDE:</strong> ±2pp at n=500 paid.</li>
+<li><strong>Sample:</strong> 500 paid subscribers, 3 months.</li>
+<li><strong>Duration:</strong> 12 weeks. <strong>Cost:</strong> $0.</li>
+<li><strong>Owner:</strong> Finance + Data.</li>
+<li><strong>Kill:</strong> &gt; 12%/mo → LTV:CAC falls below 2 at current CAC; stop paid acquisition and fix onboarding before scaling.</li>
+<li><strong>Scale:</strong> ≤ 6%/mo → the base-case LTV in <code>10</code> §5 is conservative; revisit the Series A timing.</li>
+<li><strong>Context:</strong> RevenueCat's Education Y1 realized LTV of $22.82/payer implies category churn is much worse than our 8% assumption. Assume we are wrong until T-06 says otherwise.</li>
+</ul>
+<h3 id="t-07-do-learners-get-interviews-outcome-study">T-07 — Do learners get interviews? (outcome study)</h3>
+<ul>
+<li><strong>Hypothesis:</strong> ≥ 35% of the interview cohort reaches a next-stage interview within 90 days, vs ≤ 20% in a matched control.</li>
+<li><strong>Method:</strong> 200 treatment / 200 control (waitlist or drills-only), matched on target role, country, English level, and interview timeline. Pre-registered analysis. Outcome verified by screenshot or recruiter email where the participant consents; otherwise self-report with a 20% verification subsample.</li>
+<li><strong>Primary metric:</strong> next-stage interview within 90 days.</li>
+<li><strong>MDE:</strong> 10pp absolute (35% vs 25% → n≈220/arm at 80% power; 200/arm detects ~11pp).</li>
+<li><strong>Sample:</strong> 200 per arm, recruit 500 to absorb attrition.</li>
+<li><strong>Duration:</strong> 16 weeks. <strong>Cost:</strong> $6k incentives.</li>
+<li><strong>Owner:</strong> Research.</li>
+<li><strong>Kill:</strong> treatment ≤ control + 5pp → the outcome claim is dead; stop using "get hired" in positioning and lead with measured speaking gain.</li>
+<li><strong>Scale:</strong> ≥ 35% and ≥ 10pp over control → publish it. This is the only marketing asset a competitor cannot copy.</li>
+</ul>
+<h3 id="t-09-matched-cohort-vs-language-exchange-users">T-09 — Matched cohort vs language-exchange users</h3>
+<ul>
+<li><strong>Hypothesis:</strong> our D30 retained-practice rate exceeds a matched language-exchange cohort by ≥ 10pp.</li>
+<li><strong>Method:</strong> third-party panel (or disclosed survey with app-usage self-report) matched on country, age, English level, and goal. Same measurement window, same definition of "practice session."</li>
+<li><strong>Primary metric:</strong> D30 retained practice.</li>
+<li><strong>MDE:</strong> 10pp at n=300/arm.</li>
+<li><strong>Sample:</strong> 300 per arm.</li>
+<li><strong>Duration:</strong> 12 weeks. <strong>Cost:</strong> $12k.</li>
+<li><strong>Owner:</strong> Research.</li>
+<li><strong>Kill:</strong> no measurable delta → permanently retire "retains better than HelloTalk" and keep the reliability/structure message.</li>
+<li><strong>Scale:</strong> ≥ 10pp → publish methodology and use it in comparison pages, with legal review.</li>
+</ul>
+<hr />
+<h2 id="3-eight-week-schedule">3. Eight-week schedule</h2>
+<table>
+<thead>
+<tr>
+<th>Week</th>
+<th>Running</th>
+<th>Milestone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>T-10 quotes, T-11 instrumentation, T-14 desk research</td>
+<td>Rater vendor chosen; cost instrumentation live</td>
+</tr>
+<tr>
+<td>2</td>
+<td>T-11 sessions, T-12 recordings, T-01 landing pages live</td>
+<td>First cost number (provisional)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>T-11 close, T-12 scoring, T-01 read</td>
+<td><strong>Gate 1:</strong> voice cost ≤ $0.018 and no L1 &gt; 25% WER, or re-scope</td>
+</tr>
+<tr>
+<td>4</td>
+<td>T-05 fake door, T-02 recruiting, T-04 design</td>
+<td>Price point shortlisted</td>
+</tr>
+<tr>
+<td>5</td>
+<td>T-05 read, T-02 sessions, T-04 build</td>
+<td><strong>Gate 2:</strong> Career price and wedge confirmed</td>
+</tr>
+<tr>
+<td>6</td>
+<td>T-02 read, T-04 launch, T-08 baseline</td>
+<td><strong>Gate 3:</strong> interview sim beats a strong prompt, or Career is cut</td>
+</tr>
+<tr>
+<td>7</td>
+<td>T-04 accruing, T-08 accruing, T-13 prep</td>
+<td>Beta retention read (provisional)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>All reads, model re-run, go/no-go memo</td>
+<td><strong>Gate 4:</strong> build the MVP on these numbers, or re-scope</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Gate rule:</strong> a gate is a written memo with the number, the CI, and the decision. No gate is passed verbally, and no gate is re-run without changing the design first.</p>
+<p><strong>Post-launch additions:</strong> T-15 (free-tier generosity) and T-16 (D35 calibration) begin at public launch (M6). They need live cohorts, so no amount of pre-launch spending accelerates them — which is why the pre-launch plan is engineered to be cheap and fast rather than exhaustive.</p>
+<hr />
+<h2 id="4-sample-size-method-so-nobody-has-to-trust-the-numbers-above">4. Sample-size method (so nobody has to trust the numbers above)</h2>
+<p>Two-proportion tests, two-sided α = 0.05, power = 80%:</p>
+<pre><code>n per arm = 7.84 × p(1 − p) / MDE²
+</code></pre>
+<p>where <code>p</code> is the baseline rate and <code>MDE</code> is the absolute difference to detect. Examples:</p>
+<table>
+<thead>
+<tr>
+<th>Baseline</th>
+<th>MDE</th>
+<th>n per arm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10%</td>
+<td>3pp</td>
+<td>784</td>
+</tr>
+<tr>
+<td>15%</td>
+<td>5pp</td>
+<td>392</td>
+</tr>
+<tr>
+<td>30%</td>
+<td>7pp</td>
+<td>660</td>
+</tr>
+<tr>
+<td>3%</td>
+<td>1pp</td>
+<td>2,233</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Caveats we will state in every readout:</strong> these are planning numbers, not promises; multiple comparisons inflate false positives (we pre-register one primary metric per test); and any test that lands under its planned n is labeled <strong>directional</strong> and cannot on its own trigger a pricing or positioning change.</p>
+<hr />
+<h2 id="5-tests-we-are-deliberately-not-running">5. Tests we are deliberately not running</h2>
+<table>
+<thead>
+<tr>
+<th>Not running</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Brand awareness / perception tracking</td>
+<td>Meaningless at pre-launch scale; expensive; changes nothing</td>
+</tr>
+<tr>
+<td>Feature-preference surveys ("would you use X?")</td>
+<td>People are bad at predicting their own behavior; fake doors and usage data are cheaper and truer</td>
+</tr>
+<tr>
+<td>Competitor NPS</td>
+<td>We cannot sample their users credibly; would produce a number we could not defend</td>
+</tr>
+<tr>
+<td>Price ladder beyond three points</td>
+<td>Diminishing information; confuses the read</td>
+</tr>
+<tr>
+<td>A/B tests on the north star directly</td>
+<td>It is an outcome, not a lever; test the levers (activation, session length, drill completion)</td>
+</tr>
+<tr>
+<td>"Will AI replace tutors?"</td>
+<td>Strategy essay, not an experiment</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-governance">6. Governance</h2>
+<ol>
+<li><strong>One primary metric per test.</strong> Secondary metrics are reported, never used to declare a win.</li>
+<li><strong>Pre-register</strong> the hypothesis, the metric, the MDE, and the stopping rule before launch. Store it in the test log with a date.</li>
+<li><strong>No peeking-then-stopping.</strong> Interim reads are for safety (crash rate, abuse), not for significance.</li>
+<li><strong>Results land in <code>09-evidence-log.md</code></strong> — the claim register is the single source of truth. A test that closes without updating the register did not happen.</li>
+<li><strong>Kill criteria are pre-committed</strong> and may only be changed with a written reason and a new date.</li>
+<li><strong>Every test has one owner</strong> who is accountable for the readout, not for the outcome being favorable.</li>
+</ol>
+<footer>Eloq v2.0 · every figure is verified, derived, or tagged (H) with a test.
+Internal references (<code>09</code>, <code>§8.1</code>) point to other pages in this set.</footer>
+</main>
+</div>
+</body>
+</html>

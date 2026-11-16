@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eloq — Executive Summary — Eloq</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Eloq — AI English fluency coach. Pre-build plan, v2.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Eloq</div>
+  <div class="ver">Pre-build plan · v2.0<br>2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="EXEC-SUMMARY.html" class="on">Executive summary</a>
+  <a href="README.html">Overview / index</a>
+  <a href="01-product-spec.html">01 · Product spec</a>
+  <a href="02-roadmap-prioritization.html">02 · Roadmap</a>
+  <a href="03-competitive-positioning.html">03 · Competitive positioning</a>
+  <a href="04-personas-journeys.html">04 · Personas & journeys</a>
+  <a href="05-pricing.html">05 · Pricing</a>
+  <a href="06-metrics.html">06 · Metrics</a>
+  <a href="07-technical.html">07 · Technical</a>
+  <a href="08-risks-open-questions.html">08 · Risks & open questions</a>
+  <a href="09-evidence-log.html">09 · Evidence log</a>
+  <a href="10-financial-model.html">10 · Financial model</a>
+  <a href="11-experiment-backlog.html">11 · Experiment backlog</a>
+  <a href="12-launch-checklist.html">12 · Launch checklist</a>
+  <a href="13-decision-stress-tests.html">13 · Decision stress tests</a>
+  <a href="14-pronunciation-validation.html">14 · Pronunciation validation</a>
+  <a href="NEXT-14-DAYS.html">Next 14 days</a>
+  <hr>
+  <a href="https://github.com" hidden></a>
+</nav>
+<main>
+<p><strong>One page. Sendable today.</strong> Version 2.0 · 2026-11-16 · Confidential</p>
+<hr />
+<h2 id="what-it-is">What it is</h2>
+<p>Eloq is an AI English fluency coach for people with a dated, high-stakes English event: a job interview, a first job, a semester abroad. It gives them a real conversation on demand, phoneme-level pronunciation feedback, an error-memory-driven review queue, and a weekly measure of whether they are actually getting better.</p>
+<p>The benchmark is HelloTalk. HelloTalk is a 70M-user language-exchange network whose supply is volunteers' free time. It is genuinely good at friendship and cultural exchange. It cannot guarantee a partner, a curriculum, or a measurement — because its core loop depends on strangers showing up.</p>
+<h2 id="thesis">Thesis</h2>
+<ol>
+<li><strong>Reliability beats randomness.</strong> A partner gives you an hour a week when they feel like it. A coach is there at 2 a.m., corrected, without judgment.</li>
+<li><strong>Structure beats conversation.</strong> Guided scenarios, CEFR progression, and a daily plan outperform unstructured chat for people with a deadline.</li>
+<li><strong>Proof beats promises.</strong> A score you can trend, a report card you can show, and a published validation study are the trust assets in a category built on vibes.</li>
+</ol>
+<h2 id="wedge">Wedge</h2>
+<p><strong>Job seekers preparing for English-language interviews.</strong> They have a deadline, a budget, and an outcome we can point at ("I got the interview"). Consumers pay for outcomes, not features. The wedge is tested for $2.5k before a line of production UI is written (T-01), because the entire financial model depends on job seekers converting at 2–3× category rates.</p>
+<h2 id="moat-honest-verdict">Moat — honest verdict</h2>
+<p><strong>Phoneme-level pronunciation scoring is not a moat.</strong> It is sold as an API (Speechace) and shipped as a platform add-on (Azure). Our v1 plan called it the moat; that was wrong, and the plan now says so.</p>
+<p>What can be defensible, in order of strength:</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Acoustic scoring</td>
+<td>Commodity — license it</td>
+</tr>
+<tr>
+<td>Closed-loop personalization (which drill, which scenario, in what order)</td>
+<td>Plausible, unproven</td>
+</tr>
+<tr>
+<td>Interview content depth (roles, JDs, rubrics with evidence)</td>
+<td>Medium — copyable slowly</td>
+</tr>
+<tr>
+<td><strong>Longitudinal outcome data (practice → interview → offer)</strong></td>
+<td><strong>The only asset that cannot be bought</strong> — and we have zero of it today</td>
+</tr>
+<tr>
+<td>Switching costs (error history, review state, mock recordings)</td>
+<td>Modest; not yet measured</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Three-year narrative:</strong> Year 1, validity and content. Year 2, 5,000+ learners with 90-day outcome labels plus career-center distribution. Year 3, the Interview Readiness Index becomes the reference standard career centers cite. That is a plausible flywheel, not a proven one — and if validation fails and the outcome study is null, the fallback is assessment/credentialing sold to institutions, which is a smaller, slower, better-margin business (<code>03</code> §9.8).</p>
+<h2 id="unit-economics">Unit economics</h2>
+<p>Prices: <strong>Plus $12.99/mo · $79.99/yr</strong> (parity with HelloTalk VIP) · <strong>Career $24.99/mo · $149.99/yr</strong> (anchored under ELSA at $19.99/mo and far under a $100–300 human mock).</p>
+<p>Corrected voice cost: <strong>$0.018 per learner session minute at launch → $0.010 by M13</strong> (v1 overstated this by ~2.2× by charging 100% ASR and 100% TTS duty on the same minute). Month-9 gate: <strong>≤ $0.016</strong>.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Downside</th>
+<th>Base</th>
+<th>Wedge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D35 install → paid</td>
+<td>1.8%</td>
+<td><strong>2.6%</strong> (NA median)</td>
+<td><strong>6.0%</strong> (just above top quartile)</td>
+</tr>
+<tr>
+<td>ARR at M24</td>
+<td>$2.00M</td>
+<td><strong>$2.64M</strong></td>
+<td><strong>$5.36M</strong></td>
+</tr>
+<tr>
+<td>Gross margin M24</td>
+<td>52.6%</td>
+<td><strong>56.8%</strong></td>
+<td><strong>63.5%</strong></td>
+</tr>
+<tr>
+<td>Cash at M24</td>
+<td>−$1.57M</td>
+<td><strong>−$1.21M</strong></td>
+<td><strong>+$0.31M</strong></td>
+</tr>
+<tr>
+<td>LTV : CAC</td>
+<td>2.4</td>
+<td><strong>3.2</strong></td>
+<td><strong>6.5</strong></td>
+</tr>
+<tr>
+<td>Cash-out</td>
+<td>M17</td>
+<td><strong>M18</strong></td>
+<td>never</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Break-even D35 conversion is ≈4.5%</strong> — roughly twice the category median. There is no comfortable base case. The company either proves the wedge converts above 4.5% in the first nine months or changes shape.</p>
+<p><strong>Model caveat we disclose rather than bury:</strong> the base case includes a B2B line (200 seats at M16 ramping to ~6,660 by M24, $0.56M ARR, no sales cost). Strip it out and base M24 gross margin falls from 56.8% to 45.2%. Treat B2B as upside; the consumer thesis has to stand without it (<code>10</code> §8.1).</p>
+<h2 id="milestones">Milestones</h2>
+<table>
+<thead>
+<tr>
+<th>When</th>
+<th>Milestone</th>
+<th>Gate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M0 (Dec 2026)</td>
+<td>Seed close, build starts</td>
+<td>Team of 8; cost instrumentation specced</td>
+</tr>
+<tr>
+<td>M3 (Feb 2027)</td>
+<td>Wedge + product gates</td>
+<td>T-01 job-seeker CPA ≤ student; T-02 interview sim ≥ 55% preference</td>
+</tr>
+<tr>
+<td>M6 (Jun 2027)</td>
+<td>Public MVP</td>
+<td>Activation ≥ 40%, D7 ≥ 25%, crash-free ≥ 99.5%</td>
+</tr>
+<tr>
+<td>M9 (Sep 2027)</td>
+<td>Cost gate + D35 read</td>
+<td>Voice ≤ $0.016/session-min; D35 ≥ 1.8% or kill path</td>
+</tr>
+<tr>
+<td>M12 (Dec 2027)</td>
+<td>Series A point</td>
+<td>ARR ~$0.7M (base), D35 ≥ 2.6%, churn ≤ 8%</td>
+</tr>
+<tr>
+<td>M24 (Dec 2028)</td>
+<td>Scale or re-scope</td>
+<td>$2.64M base / $5.36M wedge ARR; GM ≥ 55%</td>
+</tr>
+</tbody>
+</table>
+<h2 id="top-three-risks">Top three risks</h2>
+<ol>
+<li><strong>Conversion.</strong> If D35 stalls at 2.6%, cash runs out at M18 and the Series A has no story. Trigger: D35 &lt; 1.8% at M9. Response: cut paid acquisition 50%, execute the cash-efficient variant, plan a bridge or re-scope. Tested by T-16, pre-empted by T-01.</li>
+<li><strong>Credibility.</strong> One viral nonsense score or wrong correction undoes a year of marketing. Trigger: r &lt; 0.85, false-correction rate &gt; 3%, or an accent-erasure audit failure. Response: ship bands instead of a number, or remove the composite score and re-position around structured practice.</li>
+<li><strong>Unit cost.</strong> If voice cost stalls above $0.020/session-minute, Plus is margin-negative at the fair-use ceiling. Trigger: month-9 gate missed. Response: reprice, cut free minutes, or move to credits — decided at M9, not M14.</li>
+</ol>
+<p>(A fourth, gating constraint: <strong>minor safety.</strong> No community layer until an external safety audit passes. One incident is existential.)</p>
+<h2 id="the-ask">The ask</h2>
+<p><strong>$4.0M seed for 18 months of runway.</strong> Use of funds: ~$0.85M pre-launch build and data collection, ~$1.6M engineering and content through M12, ~$1.1M growth experiments, ~$0.45M legal/safety/infrastructure.</p>
+<p>What it buys: the two studies that make the company defensible — a published pronunciation validation (r ≥ 0.85, per-L1) and a 400-person interview-outcome study with a control group — plus enough traffic to know whether the wedge converts above 4.5%.</p>
+<p><strong>What we are not claiming:</strong> we have no users, no retention data, and no validated score yet. Every competitor comparison is dated and sourced in <code>09-evidence-log.md</code>; every unverified number is tagged (H) with the test that would settle it. The plan is designed to be falsified cheaply, and the kill criteria are written down before launch.</p>
+<footer>Eloq v2.0 · every figure is verified, derived, or tagged (H) with a test.
+Internal references (<code>09</code>, <code>§8.1</code>) point to other pages in this set.</footer>
+</main>
+</div>
+</body>
+</html>

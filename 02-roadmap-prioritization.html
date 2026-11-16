@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>02 — Feature Prioritization and Roadmap — Eloq</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Eloq — AI English fluency coach. Pre-build plan, v2.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Eloq</div>
+  <div class="ver">Pre-build plan · v2.0<br>2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="EXEC-SUMMARY.html">Executive summary</a>
+  <a href="README.html">Overview / index</a>
+  <a href="01-product-spec.html">01 · Product spec</a>
+  <a href="02-roadmap-prioritization.html" class="on">02 · Roadmap</a>
+  <a href="03-competitive-positioning.html">03 · Competitive positioning</a>
+  <a href="04-personas-journeys.html">04 · Personas & journeys</a>
+  <a href="05-pricing.html">05 · Pricing</a>
+  <a href="06-metrics.html">06 · Metrics</a>
+  <a href="07-technical.html">07 · Technical</a>
+  <a href="08-risks-open-questions.html">08 · Risks & open questions</a>
+  <a href="09-evidence-log.html">09 · Evidence log</a>
+  <a href="10-financial-model.html">10 · Financial model</a>
+  <a href="11-experiment-backlog.html">11 · Experiment backlog</a>
+  <a href="12-launch-checklist.html">12 · Launch checklist</a>
+  <a href="13-decision-stress-tests.html">13 · Decision stress tests</a>
+  <a href="14-pronunciation-validation.html">14 · Pronunciation validation</a>
+  <a href="NEXT-14-DAYS.html">Next 14 days</a>
+  <hr>
+  <a href="https://github.com" hidden></a>
+</nav>
+<main>
+<p><strong>Version:</strong> 2.0 · 2026-11-15</p>
+<p><strong>What changed in this revision:</strong> Career tier price reference updated to $24.99; pronunciation feasibility gate restated against the 600-utterance protocol in <code>14</code> (r ≥ 0.85 with a fallback ladder, not a binary); human-reviewed mocks repositioned from a Phase 3 marketplace to a $49 add-on at Career launch. RICE scores and phase boundaries are unchanged.</p>
+<h2 id="1-prioritization-framework">1. Prioritization framework</h2>
+<p>We use <strong>RICE</strong> as the default, with one documented override: <em>strategic wedge features</em>. RICE measures value to current users and systematically undervalues features that create a new market or a defensible position — for Eloq, the interview simulator is exactly that. Any override is written down with its reason, so the process stays honest.</p>
+<pre><code>RICE = (Reach × Impact × Confidence) / Effort
+Reach      = % of the 12-month target user base the feature touches per quarter
+Impact     = 3 massive · 2 high · 1 medium · 0.5 low · 0.25 minimal
+Confidence = 100% (data) · 80% (strong signal) · 50% (hypothesis)
+Effort     = person-weeks, including design, QA, and instrumentation
+</code></pre>
+<h2 id="2-rice-scoring-v1-candidates">2. RICE scoring (v1 candidates)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Feature</th>
+<th>Reach</th>
+<th>Impact</th>
+<th>Conf.</th>
+<th>Effort</th>
+<th>RICE</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Daily Plan + streaks + review queue</td>
+<td>95</td>
+<td>2</td>
+<td>85%</td>
+<td>6</td>
+<td><strong>26.9</strong></td>
+<td>MVP</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Correction engine (grammar/lexis/register)</td>
+<td>100</td>
+<td>3</td>
+<td>80%</td>
+<td>10</td>
+<td><strong>24.0</strong></td>
+<td>MVP</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Vocabulary capture + FSRS</td>
+<td>80</td>
+<td>2</td>
+<td>90%</td>
+<td>8</td>
+<td><strong>18.0</strong></td>
+<td>MVP</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Voice tutor + 12 scenarios</td>
+<td>100</td>
+<td>3</td>
+<td>90%</td>
+<td>16</td>
+<td><strong>16.9</strong></td>
+<td>MVP</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Progress analytics v1 + weekly report</td>
+<td>90</td>
+<td>2</td>
+<td>70%</td>
+<td>9</td>
+<td><strong>14.0</strong></td>
+<td>MVP</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Pronunciation feedback v1 (word-level)</td>
+<td>90</td>
+<td>3</td>
+<td>60%</td>
+<td>14</td>
+<td><strong>11.6</strong></td>
+<td>MVP (score labeled beta)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Interview simulator</td>
+<td>35</td>
+<td>3</td>
+<td>65%</td>
+<td>18</td>
+<td><strong>3.8</strong></td>
+<td>Phase 2 + <strong>strategic override</strong></td>
+</tr>
+<tr>
+<td>8</td>
+<td>Offline mode (lessons, SRS, drills)</td>
+<td>30</td>
+<td>1</td>
+<td>80%</td>
+<td>10</td>
+<td><strong>2.4</strong></td>
+<td>Phase 2</td>
+</tr>
+<tr>
+<td>9</td>
+<td>B2B career-center dashboard</td>
+<td>10</td>
+<td>3</td>
+<td>70%</td>
+<td>14</td>
+<td><strong>1.5</strong></td>
+<td>Phase 3</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Video delivery analysis</td>
+<td>15</td>
+<td>2</td>
+<td>50%</td>
+<td>12</td>
+<td><strong>1.3</strong></td>
+<td>Phase 3</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Community practice pods</td>
+<td>25</td>
+<td>2</td>
+<td>45%</td>
+<td>30</td>
+<td><strong>0.8</strong></td>
+<td>Phase 3</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Human coach marketplace</td>
+<td>12</td>
+<td>2</td>
+<td>55%</td>
+<td>26</td>
+<td><strong>0.5</strong></td>
+<td>Phase 4</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why the interview simulator overrides its score:</strong> RICE reach is computed against the full learner base, but interview prep is the <em>entry point</em> for the highest-LTV segment and the only feature with a defensible, outcome-based marketing claim. It also anchors the $24.99 Career tier, which is what makes the unit economics work. Decision owner: Head of Product; review at M9.</p>
+<p><strong>Why pronunciation v1 is in the MVP despite moderate RICE:</strong> it is the single clearest proof that we are not "another chat wrapper." Without it, the product is a subset of ChatGPT voice. It ships as a beta score with explicit uncertainty labeling, which is acceptable; shipping it <em>silently wrong</em> is not.</p>
+<h2 id="3-phase-0-foundations-weeks-06-pre-mvp">3. Phase 0 — Foundations (weeks 0–6, pre-MVP)</h2>
+<table>
+<thead>
+<tr>
+<th>Workstream</th>
+<th>Deliverable</th>
+<th>Exit criterion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio pipeline spike</td>
+<td>End-to-end loop: capture → streaming ASR → LLM → streaming TTS</td>
+<td>p50 round-trip ≤ 1.5 s on a mid-range Android over 4G</td>
+</tr>
+<tr>
+<td>Pronunciation feasibility</td>
+<td>Licensed scoring API + L1 calibration vs. 100 human-rated utterances</td>
+<td>r ≥ 0.80 to proceed to the full 600-utterance study; below 0.75, ship bands only (<code>14</code> §6)</td>
+</tr>
+<tr>
+<td>Correction quality</td>
+<td>Hybrid checker (deterministic + LLM) on 500 gold sentences</td>
+<td>Precision ≥ 90%, recall ≥ 60%</td>
+</tr>
+<tr>
+<td>Safety baseline</td>
+<td>Age gate, consent, PII redaction, report flow</td>
+<td>Legal sign-off</td>
+</tr>
+<tr>
+<td>Content</td>
+<td>12 scenarios authored and playtested</td>
+<td>5 learners complete each with ≤ 1 dead-end</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Gate:</strong> if the pronunciation spike returns r &lt; 0.75, the MVP ships <em>drill-only</em> pronunciation (no composite score), and the score moves to Phase 2. This decision is made at week 6, not at launch.</p>
+<h2 id="4-phase-1-mvp-months-16-proof-of-feedback">4. Phase 1 — MVP (months 1–6): "Proof of feedback"</h2>
+<p><strong>Goal:</strong> a learner can have a real conversation tonight, get corrected, and see a number move within 7 days.</p>
+<table>
+<thead>
+<tr>
+<th>Included</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Voice + text tutor; 12 scenarios at build, 24 by public launch</td>
+<td>5 CEFR bands × roleplay variants</td>
+</tr>
+<tr>
+<td>Correction engine, Flow/Coach modes</td>
+<td>Report card at session end</td>
+</tr>
+<tr>
+<td>Pronunciation v1</td>
+<td>Word-level heatmap, accuracy/fluency/completeness, drills for top 3 weak words</td>
+</tr>
+<tr>
+<td>Vocabulary capture + FSRS, Core 2k pack</td>
+<td>Long-press capture, own-audio cards</td>
+</tr>
+<tr>
+<td>Daily Plan, streak + weekly goal, review queue</td>
+<td>8–12 min/day</td>
+</tr>
+<tr>
+<td>Progress v1</td>
+<td>Estimated CEFR, 4 skill bars, weekly report card</td>
+</tr>
+<tr>
+<td>Accounts, subscriptions, paywall</td>
+<td>Free/Plus; Career tier visible but "coming soon"</td>
+</tr>
+<tr>
+<td>Safety &amp; privacy v1</td>
+<td>Moderation, 30-day audio retention, delete-all, export</td>
+</tr>
+<tr>
+<td>Onboarding + 3-min placement</td>
+<td>Placement drives initial CEFR band</td>
+</tr>
+</tbody>
+</table>
+<p><strong>MVP success criteria (measured at week 12 of general availability)</strong>
+- Activation (first session with ≥ 1 correction + 5 reviews in 24 h): ≥ 45%
+- D7 ≥ 28%, D30 ≥ 15%
+- Weekly speaking minutes/WAU ≥ 18
+- Correction precision ≥ 92%; false-positive rate &lt; 5%
+- Paid conversion ≥ 2.5% of MAU (early signal; full target in <code>06-metrics.md</code>)</p>
+<p><strong>What we deliberately excluded and why:</strong> community (safety infra not ready), interview sim (needs the conversation engine to be stable first), offline (cost without evidence of need), video (privacy burden), multiple languages (dilutes English quality).</p>
+<h2 id="5-phase-2-expansion-months-612-the-career-wedge">5. Phase 2 — Expansion (months 6–12): "The career wedge"</h2>
+<p><strong>Goal:</strong> become the default interview-prep tool for English-speaking job seekers, and turn a good product into a paid one.</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Rationale</th>
+<th>Key risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Interview simulator v1</strong></td>
+<td>Owns the wedge; justifies $24.99; generates the outcome data we market on</td>
+<td>Question realism; must beat "ChatGPT interview prompt"</td>
+</tr>
+<tr>
+<td><strong>JD tailoring</strong></td>
+<td>Paste a job description → role-specific questions and vocabulary</td>
+<td>Hallucinated company facts — constrain to the JD text</td>
+</tr>
+<tr>
+<td><strong>Pronunciation v2</strong></td>
+<td>Phoneme detail, intonation overlay, prosody drills, L1-aware thresholds</td>
+<td>Requires the validation study to hold per-L1</td>
+</tr>
+<tr>
+<td><strong>Study plans</strong></td>
+<td>Goal + deadline → 2/4/8-week plan with weekly checkpoints</td>
+<td>Plan quality vs. over-scheduling</td>
+</tr>
+<tr>
+<td><strong>Offline drills + SRS</strong></td>
+<td>Commute and low-connectivity markets</td>
+<td>Sync conflicts</td>
+</tr>
+<tr>
+<td><strong>Packs</strong></td>
+<td>Interview, Business, Tech, Healthcare, Campus</td>
+<td>Content production cost</td>
+</tr>
+<tr>
+<td><strong>Analytics v2</strong></td>
+<td>Interview Readiness Index, error trends, "can-do" milestones</td>
+<td>Over-claiming precision</td>
+</tr>
+<tr>
+<td><strong>Referral</strong></td>
+<td>"Give a week, get a week"</td>
+<td>Fraud</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exit criteria for Phase 2:</strong> interview-sim cohort shows ≥ 8-point Interview Readiness gain over 3 weeks; Career tier ≥ 25% of new subscriptions; D30 ≥ 22%.</p>
+<h2 id="6-phase-3-community-and-institutions-months-1218">6. Phase 3 — Community and institutions (months 12–18)</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Rationale</th>
+<th>Guardrail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Practice Pods (AI-facilitated, 4–6 learners)</td>
+<td>Captures HelloTalk's belonging appeal without stranger DMs</td>
+<td>Age-banded; moderated; recording consent</td>
+</tr>
+<tr>
+<td>Moderated voice rooms</td>
+<td>Social retention for students</td>
+<td>24/7 moderation + 1-tap report with audio buffer</td>
+</tr>
+<tr>
+<td>B2B career-center console</td>
+<td>University pilot revenue; cohort reporting</td>
+<td>FERPA/GDPR compliance; no individual audio to institutions</td>
+</tr>
+<tr>
+<td>Human-reviewed mock interview (marketplace)</td>
+<td>High-value upsell; validates AI scoring against humans</td>
+<td>Vetted reviewers; rubric-calibrated</td>
+</tr>
+<tr>
+<td>Video delivery analysis</td>
+<td>Interview realism</td>
+<td>On-device only; explicit consent per session</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Community is gated on a safety review</strong>, not a date. Prerequisites: moderation vendor SLA, human escalation rota, minor-safety audit, incident response runbook with a 1-hour acknowledgement target.</p>
+<h2 id="7-phase-4-scale-months-1830">7. Phase 4 — Scale (months 18–30)</h2>
+<ul>
+<li>Additional L1s (Indonesian, Japanese, Korean, Turkish, French) — UI, hints, glosses only; tutor stays English.</li>
+<li>Enterprise L&amp;D tier with SSO, SCIM, admin analytics.</li>
+<li>Public API / LMS integrations (Canvas, Moodle).</li>
+<li>On-device small model for offline free conversation (cost + privacy win).</li>
+<li>Credential partnerships: preparation tracks mapped to IELTS/TOEFL/TOEIC band ranges (never issuing certificates ourselves).</li>
+</ul>
+<h2 id="8-what-we-cut-if-capacity-drops-30">8. What we cut if capacity drops 30%</h2>
+<p>In order, cut from the bottom:</p>
+<ol>
+<li>Video delivery analysis (Phase 3 → keep deferred)</li>
+<li>Offline free conversation (keep drills + SRS only)</li>
+<li>Healthcare pack (highest content cost, smallest early segment)</li>
+<li>Practice Pods (defer to Phase 4; community is not required for the wedge)</li>
+<li>Free-talk mode (scenarios only — sharper pedagogy, cheaper inference)</li>
+</ol>
+<p><strong>Never cut:</strong> correction quality, pronunciation validation, safety, onboarding, or the weekly report. These are the product.</p>
+<h2 id="9-dependency-map">9. Dependency map</h2>
+<pre><code>Audio pipeline ──► Voice tutor ──► Scenarios ──► Interview sim
+       │                │              │
+       └──► ASR ──► Pronunciation ─────┘
+                          │
+Correction engine ◄───────┘
+       │
+       └──► Error bank ──► Review queue ──► Daily Plan ──► Streaks
+                                  │
+Vocabulary capture ──► FSRS ──────┘
+                                  │
+                          Progress analytics ──► Report card ──► Referral
+Safety &amp; privacy ──► (blocks) Community pods
+Payments ──► (blocks) Premium launch
+</code></pre>
+<h2 id="10-timeline-and-team">10. Timeline and team</h2>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Window</th>
+<th>Team (FTE)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>W0–6</td>
+<td>1 PM, 1 designer, 2 backend, 1 mobile, 1 ML, 0.5 content lead</td>
+</tr>
+<tr>
+<td>1 (MVP)</td>
+<td>M1–6</td>
+<td>+1 mobile, +1 ML (speech), +1 content, 0.5 QA, 0.5 T&amp;S</td>
+</tr>
+<tr>
+<td>2</td>
+<td>M6–12</td>
+<td>+1 growth, +1 content (interview), +1 data/analytics, 1 QA</td>
+</tr>
+<tr>
+<td>3</td>
+<td>M12–18</td>
+<td>+2 T&amp;S moderators, +1 B2B eng, +1 partnerships</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Critical path:</strong> audio latency → correction quality → pronunciation validity → interview sim. Everything else can slip; these four cannot.</p>
+<h2 id="11-milestones-with-gono-go-criteria">11. Milestones with go/no-go criteria</h2>
+<table>
+<thead>
+<tr>
+<th>Milestone</th>
+<th>Date</th>
+<th>Go criteria</th>
+<th>No-go action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M0 Prototype</td>
+<td>W6</td>
+<td>Latency p50 ≤ 1.5 s; pronunciation r ≥ 0.75</td>
+<td>Drill-only pronunciation; re-plan MVP</td>
+</tr>
+<tr>
+<td>M1 Closed beta (300 users)</td>
+<td>M4</td>
+<td>≥ 40% return in week 2; correction precision ≥ 90%</td>
+<td>Fix quality before scaling spend</td>
+</tr>
+<tr>
+<td>M2 Public MVP</td>
+<td>M6</td>
+<td>Activation ≥ 40%; D7 ≥ 25%</td>
+<td>Hold paid marketing; iterate onboarding</td>
+</tr>
+<tr>
+<td>M3 Career launch</td>
+<td>M10</td>
+<td>Interview sim NPS ≥ 40; ≥ 30% of testers say "better than ChatGPT"</td>
+<td>Reposition or rebuild sim</td>
+</tr>
+<tr>
+<td>M4 Community pilot</td>
+<td>M15</td>
+<td>Safety audit passed; 0 critical incidents in 8-week pilot</td>
+<td>Indefinite deferral</td>
+</tr>
+</tbody>
+</table>
+<footer>Eloq v2.0 · every figure is verified, derived, or tagged (H) with a test.
+Internal references (<code>09</code>, <code>§8.1</code>) point to other pages in this set.</footer>
+</main>
+</div>
+</body>
+</html>

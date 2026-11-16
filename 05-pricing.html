@@ -1,0 +1,697 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>05 — Pricing and Monetization — Eloq</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Eloq — AI English fluency coach. Pre-build plan, v2.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Eloq</div>
+  <div class="ver">Pre-build plan · v2.0<br>2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="EXEC-SUMMARY.html">Executive summary</a>
+  <a href="README.html">Overview / index</a>
+  <a href="01-product-spec.html">01 · Product spec</a>
+  <a href="02-roadmap-prioritization.html">02 · Roadmap</a>
+  <a href="03-competitive-positioning.html">03 · Competitive positioning</a>
+  <a href="04-personas-journeys.html">04 · Personas & journeys</a>
+  <a href="05-pricing.html" class="on">05 · Pricing</a>
+  <a href="06-metrics.html">06 · Metrics</a>
+  <a href="07-technical.html">07 · Technical</a>
+  <a href="08-risks-open-questions.html">08 · Risks & open questions</a>
+  <a href="09-evidence-log.html">09 · Evidence log</a>
+  <a href="10-financial-model.html">10 · Financial model</a>
+  <a href="11-experiment-backlog.html">11 · Experiment backlog</a>
+  <a href="12-launch-checklist.html">12 · Launch checklist</a>
+  <a href="13-decision-stress-tests.html">13 · Decision stress tests</a>
+  <a href="14-pronunciation-validation.html">14 · Pronunciation validation</a>
+  <a href="NEXT-14-DAYS.html">Next 14 days</a>
+  <hr>
+  <a href="https://github.com" hidden></a>
+</nav>
+<main>
+<p><strong>Version:</strong> 2.0 · 2026-11-15</p>
+<p><strong>What changed in this revision:</strong>
+1. <strong>Plus moved $9.99 → $12.99/mo, $69.99 → $79.99/yr</strong> — exact parity with HelloTalk VIP (verified $12.99/$79.99, S2). <strong>Career moved $19.99 → $24.99/mo, $149 → $149.99/yr.</strong>
+2. <strong>Voice COGS corrected from $0.051 to $0.018 per session minute.</strong> v1 charged a full minute of ASR <em>and</em> a full minute of TTS for every minute of conversation. Duty cycles are ~55% learner speech / ~45% tutor speech. The old number overstated cost by ~2.2×, which made the whole pricing section pessimistic in the wrong direction.
+3. <strong>Conversion replaced</strong> by benchmarked D35 scenarios (1.8% / 2.6% / 6.0%) instead of "5–8% of MAU." Break-even is <strong>≈4.5%</strong>.
+4. <strong>Churn moved 5.5% → 8%/month</strong>, consistent with AI-app churn penalties and Education-category realized LTV.
+5. <strong>Human-reviewed mock moved from 1/month to 1 per 90-day interview cycle</strong> — at $24.99, a monthly human review is a structural loss.</p>
+<p>Every number here reconciles to <code>10-financial-model.csv</code>. If prose and model disagree, the model wins.</p>
+<hr />
+<h2 id="1-the-pricing-problem-stated-honestly">1. The pricing problem, stated honestly</h2>
+<p>Voice AI is expensive per minute in a way text AI is not — but less expensive than v1 believed. At the corrected launch cost of <strong>$0.018 per learner session minute</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Line item</th>
+<th>Usage</th>
+<th>Monthly COGS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free user, allowance fully used (60 min)</td>
+<td>60 min × $0.018</td>
+<td>$1.08</td>
+</tr>
+<tr>
+<td>Free user, average utilisation (20 min)</td>
+<td>20 min × $0.018</td>
+<td>$0.36</td>
+</tr>
+<tr>
+<td>Plus, median (300 min)</td>
+<td>300 × $0.018</td>
+<td>$5.40</td>
+</tr>
+<tr>
+<td>Plus, at fair-use ceiling (600 min)</td>
+<td>600 × $0.018</td>
+<td>$10.80</td>
+</tr>
+<tr>
+<td>Career, median (400 min)</td>
+<td>400 × $0.018</td>
+<td>$7.20</td>
+</tr>
+<tr>
+<td>Human-reviewed mock (add-on)</td>
+<td>45-min review, ~$18 cost</td>
+<td>sold at $49</td>
+</tr>
+</tbody>
+</table>
+<p>At $12.99/month (≈$7.82 net of the 15% store fee, blended across annual/monthly), a median Plus user is <strong>+31% gross margin at launch</strong> and +62% after optimization. That is a viable business on the paid side. It was not true at v1's $0.051 assumption, and the correction matters: it means the constraint is <strong>conversion</strong>, not COGS.</p>
+<p><strong>The pricing rule is unchanged:</strong> <em>give away unlimited cheap practice, meter the expensive practice, never meter the feedback.</em> Drills, SRS, text chat, and corrections cost cents per month. Real-time voice is the scarce resource. Metering voice while keeping feedback free means the free tier still teaches — it just talks less.</p>
+<hr />
+<h2 id="2-tiers">2. Tiers</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Free</strong></th>
+<th><strong>Plus</strong></th>
+<th><strong>Career</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Price (US)</td>
+<td>$0</td>
+<td><strong>$12.99/mo · $79.99/yr</strong></td>
+<td><strong>$24.99/mo · $149.99/yr</strong></td>
+</tr>
+<tr>
+<td>Annual effective</td>
+<td>—</td>
+<td>$6.67/mo (49% off monthly)</td>
+<td>$12.50/mo (50% off monthly)</td>
+</tr>
+<tr>
+<td>Voice conversations</td>
+<td>3/week, ≤ 5 min each</td>
+<td>Unlimited, fair use 20 min/day (median use ~10)</td>
+<td>Unlimited, fair use 30 min/day (median ~13)</td>
+</tr>
+<tr>
+<td>Text chat with tutor</td>
+<td>Unlimited (fair use)</td>
+<td>Unlimited</td>
+<td>Unlimited</td>
+</tr>
+<tr>
+<td>Scenarios</td>
+<td>12 core</td>
+<td>All (12 at launch → 60+ by M12)</td>
+<td>All + interview library</td>
+</tr>
+<tr>
+<td>Corrections + explanations</td>
+<td>✅ (never metered)</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Pronunciation score</td>
+<td>Word-level</td>
+<td>Full: phoneme, prosody, trends</td>
+<td>Full + delivery analysis</td>
+</tr>
+<tr>
+<td>Pronunciation drills</td>
+<td>✅ unlimited</td>
+<td>✅ + adaptive programs</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Vocabulary (SRS)</td>
+<td>20 reviews/day · Core 2k</td>
+<td>60/day · all base packs</td>
+<td>Unlimited · all packs</td>
+</tr>
+<tr>
+<td>Daily Plan</td>
+<td>✅</td>
+<td>✅ + personalized study plan</td>
+<td>✅ + deadline countdown plan</td>
+</tr>
+<tr>
+<td>Progress analytics</td>
+<td>7-day history, CEFR estimate</td>
+<td>Full history, per-skill, per-phoneme</td>
+<td>+ Interview Readiness Index</td>
+</tr>
+<tr>
+<td>Weekly Report Card</td>
+<td>Basic</td>
+<td>Full + shareable</td>
+<td>Full + shareable</td>
+</tr>
+<tr>
+<td>Interview simulator (AI)</td>
+<td>1 taster (10 min)</td>
+<td>2/month</td>
+<td>Unlimited + pressure mode + JD tailoring</td>
+</tr>
+<tr>
+<td>Human-reviewed mock</td>
+<td>—</td>
+<td>—</td>
+<td><strong>$49 add-on</strong> (45-min review, 48-h turnaround)</td>
+</tr>
+<tr>
+<td>Offline mode</td>
+<td>—</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Video delivery analysis</td>
+<td>—</td>
+<td>—</td>
+<td>✅ (on-device)</td>
+</tr>
+<tr>
+<td>Support</td>
+<td>Community</td>
+<td>Email, 48 h</td>
+<td>Priority, 12 h</td>
+</tr>
+<tr>
+<td>Multiple profiles</td>
+<td>1</td>
+<td>1</td>
+<td>3 (e.g., shared device)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>One-time packs</strong> (available to any tier; subscribers get 20% off)</p>
+<table>
+<thead>
+<tr>
+<th>Pack</th>
+<th>Price</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interview Sprint (21 days)</td>
+<td>$29</td>
+<td>21 guided sessions, 6 AI mocks, STAR drills, salary negotiation, 400-word interview lexicon</td>
+</tr>
+<tr>
+<td>Business English</td>
+<td>$39</td>
+<td>Meetings, email, presentations, disagreement, small talk, 500 words</td>
+</tr>
+<tr>
+<td>Tech English</td>
+<td>$29</td>
+<td>Standups, code review, incident calls, system design narration</td>
+</tr>
+<tr>
+<td>Healthcare Communication</td>
+<td>$49</td>
+<td>Patient intake, handoff, empathy, plain-language explanation (reviewed by clinicians)</td>
+</tr>
+<tr>
+<td>Campus &amp; Study Abroad</td>
+<td>$19</td>
+<td>Seminars, group projects, office hours, dorm life</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Institutional</strong></p>
+<table>
+<thead>
+<tr>
+<th>Plan</th>
+<th>Price</th>
+<th>Includes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Campus Career Center</td>
+<td>$7–9/seat/mo (min 150 seats)</td>
+<td>Cohort dashboard, assignment of interview tracks, aggregate outcomes, SSO, no individual audio access</td>
+</tr>
+<tr>
+<td>Bootcamp / Staffing</td>
+<td>$12–18/seat/mo</td>
+<td>White-label option, placement-rate reporting, API</td>
+</tr>
+</tbody>
+</table>
+<p>Model ACV for a 200-seat career center at $7/seat: <strong>$16.8k/yr</strong>. That is the B2B line in <code>10</code>, and it is a hypothesis (three pilots, no signed contracts).</p>
+<hr />
+<h2 id="3-why-these-prices-and-these-limits">3. Why these prices and these limits</h2>
+<p><strong>Price parity with HelloTalk is the point.</strong> At $12.99/$79.99, the comparison stops being "cheaper, probably worse" and becomes "same price, and it answers at 2 a.m." A lower price would also signal a smaller product and leave COGS headroom thin at the 600-minute ceiling. Parity is the strongest available anchor, and it is verified rather than assumed.</p>
+<p><strong>Freemium, not a free trial — but that is now a tested assumption, not a belief.</strong> The 7-day-trial critique still stands (spike, cliff, and 55% of 3-day trial cancellations happen on day 0 per RevenueCat). But RevenueCat also shows hard paywalls converting at 10.7% D35 vs 2.1% for freemium. That gap is large enough that we test the reverse trial (T-04) instead of assuming our way past it. The free tier ships; the trial is measured against it.</p>
+<p><strong>Free voice stays at 3 × 5 minutes/week.</strong> It is enough to prove the product and feel the constraint, and average utilisation (~20 min/MAU) keeps free COGS at ~$0.26/MAU/month against ~$0.81 revenue per free MAU at M12 (base). At 60 minutes of <em>utilisation</em> the free tier goes underwater below ~4% conversion — see <code>13</code> D1 for the flip condition.</p>
+<p><strong>Unlimited text chat on Free</strong> is deliberate. Text is cheap, it teaches, and it gives the free user a reason to open the app on the three days they cannot speak. It also supplies the writing signal for the CEFR estimate.</p>
+<p><strong>Corrections are never metered.</strong> Charging for feedback would make the free tier a demo rather than a tool, and it would communicate that the core value is a commodity. The free tier's job is to make the learner <em>trust the feedback</em>; the paid tier's job is to give them <em>more reps</em>.</p>
+<p><strong>Career at $24.99</strong> is anchored against a human interview coach ($100–300 per mock), not against HelloTalk. It is priced <em>above</em> Plus because it sells a different unit: readiness for a dated event. It sits above ELSA's $19.99/mo (verified, S5), which is deliberate — we are not claiming to be the cheaper pronunciation app, we are claiming to be the interview-outcome product.</p>
+<p><strong>Fair use, not "unlimited."</strong> All paid voice plans carry a published ceiling (20/30 min per day) with graceful degradation — a warning at 80%, then a switch to text + drills for the rest of the day, never a hard lock mid-conversation. This protects margin from the 2% of users who would otherwise consume 10× the median. At the ceiling, Plus is margin-negative at launch ($10.80 COGS vs $7.82 net revenue) and only breaks even after cost optimization — which is exactly why the ceiling exists and why it is enforced.</p>
+<p><strong>Packs exist because content has a shelf life and a buyer.</strong> A learner preparing for a specific interview will pay $29 once; they will not pay $24.99/month for a year. Packs convert the deadline-driven segment without polluting the subscription, and they carry ~91% margin at launch (~95% after cost optimization — see §4.2).</p>
+<p><strong>The human mock is a $49 add-on, not a subscription entitlement.</strong> A 45-minute human review costs ~$18 fully loaded. At $24.99/month (≈$14.87 net), one per month would consume more than the entire net revenue of the plan; one per 90-day cycle would still cost ~$6/month, or 40% of Career revenue. The add-on preserves the trust anchor at a 63% margin, and it is still one-sixth of what a human interview coach charges. Bundling it would have been the same class of error as v1's COGS: a number that looks generous until it is multiplied by the user base.</p>
+<hr />
+<h2 id="4-unit-economics">4. Unit economics</h2>
+<h3 id="41-cost-per-learner-session-minute">4.1 Cost per learner session minute</h3>
+<p>A "session minute" is a minute of conversation, not a minute of audio. In a real exchange the learner speaks ~55% of the time and the tutor ~45%. v1 priced both at 100% duty — the single largest error in the first version of this plan.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Launch (M1)</th>
+<th>Optimized (M13)</th>
+<th>Lever</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Streaming ASR (55% duty)</td>
+<td>$0.0026</td>
+<td>$0.0020</td>
+<td>Shorter-turn model, on-device VAD, no re-transcription</td>
+</tr>
+<tr>
+<td>TTS (~45% duty, blended Aura-1/2)</td>
+<td>$0.0081</td>
+<td>$0.0040</td>
+<td>Phrase caching, streaming, cheaper voice for drills, barge-in cut-off</td>
+</tr>
+<tr>
+<td>LLM (dialogue + scoring prompts)</td>
+<td>$0.0050</td>
+<td>$0.0025</td>
+<td>Model routing, prompt caching, capped context, 1–2 sentence turns</td>
+</tr>
+<tr>
+<td>Pronunciation scoring (licensed)</td>
+<td>$0.0020</td>
+<td>$0.0012</td>
+<td>Batch/async, on-device for drills, renegotiated rate</td>
+</tr>
+<tr>
+<td>Transport, storage, infra</td>
+<td>$0.0003</td>
+<td>$0.0003</td>
+<td>Compression, 30-day retention</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>$0.0180</strong></td>
+<td><strong>$0.0100</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Vendor basis: Deepgram streaming ASR $0.0048/min (Nova-3); TTS $0.015/1k chars (Aura-1) to $0.030/1k (Aura-2); ElevenLabs Business ≈$0.165/1k chars quoted as a premium alternative (<code>09</code> K1–K2). LLM and scoring are hypotheses until T-11 reconciles an invoice.</p>
+<h3 id="42-per-user-monthly-economics">4.2 Per-user monthly economics</h3>
+<p>Net revenue is after the 15% store commission (Apple Small Business Program / Google first $1M), blended at a 60% annual-plan mix.</p>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Minutes/mo</th>
+<th>Voice COGS launch → optimized</th>
+<th>Net revenue</th>
+<th>Gross margin launch → optimized</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free (allowance used)</td>
+<td>60</td>
+<td>$1.08 → $0.60</td>
+<td>$0</td>
+<td>Subsidized</td>
+</tr>
+<tr>
+<td>Free (average utilisation)</td>
+<td>20</td>
+<td>$0.36 → $0.20</td>
+<td>$0</td>
+<td>Subsidized; covered by paid mix</td>
+</tr>
+<tr>
+<td><strong>Plus, median</strong></td>
+<td>300</td>
+<td>$5.40 → $3.00</td>
+<td><strong>$7.82</strong></td>
+<td><strong>31% → 62%</strong></td>
+</tr>
+<tr>
+<td>Plus, at ceiling</td>
+<td>600</td>
+<td>$10.80 → $6.00</td>
+<td>$7.82</td>
+<td><strong>−38% → 23%</strong></td>
+</tr>
+<tr>
+<td><strong>Career, median</strong></td>
+<td>400</td>
+<td>$7.20 → $4.00</td>
+<td><strong>$14.87</strong></td>
+<td><strong>52% → 73%</strong></td>
+</tr>
+<tr>
+<td>Human mock add-on (one-off)</td>
+<td>45-min review</td>
+<td>$18.00</td>
+<td>$41.65 (net of fee)</td>
+<td><strong>57%</strong></td>
+</tr>
+<tr>
+<td>Pack (one-time, ~120 min)</td>
+<td>120</td>
+<td>$2.16 → $1.20</td>
+<td>$24.65 (net)</td>
+<td><strong>91% → 95%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>What this table says</strong></p>
+<ol>
+<li>The paid business works at launch on median usage. It did not at v1's COGS — that was a modelling error, not a strategic finding.</li>
+<li><strong>Heavy users are the risk.</strong> At the fair-use ceiling, Plus is negative before optimization. Enforcement of the ceiling and a design that makes a 7-minute focused session feel complete are therefore revenue features, not nanny features.</li>
+<li><strong>Career carries the margin</strong>, which is why the wedge matters financially and not just strategically.</li>
+<li><strong>Human review is a product, not a perk.</strong> Selling it at $49 keeps a 57% margin; bundling it would have cut Career margin from 52% to 11% at launch.</li>
+</ol>
+<h3 id="43-what-would-change-if-human-review-were-included">4.3 What would change if human review were included</h3>
+<p>Including one human review per 90-day cycle would add ~$6/user/month to Career COGS: Career margin falls from 52% to 11% at launch (73% to 33% optimized), and at M24 scale it would remove roughly $32k/month of gross profit, taking blended gross margin from 56.8% to ~42%. The model excludes it deliberately and <code>10</code> §8 discloses the omission. If a future test shows the add-on suppresses Career conversion, the correct fix is a higher Career price — not a free review.</p>
+<hr />
+<h2 id="5-funnel-conversion-and-ltv">5. Funnel, conversion, and LTV</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Install → registered</td>
+<td>65%</td>
+<td>H (own beta; industry 55–70%)</td>
+</tr>
+<tr>
+<td>Registered → activated (1 session + 1 correction + 5 reviews)</td>
+<td>45%</td>
+<td>H (MVP target)</td>
+</tr>
+<tr>
+<td>Install → paywall view, within 35 days</td>
+<td>27%</td>
+<td>H</td>
+</tr>
+<tr>
+<td><strong>Implied paywall view → paid</strong></td>
+<td><strong>downside 6.7% · base 9.6% · wedge 22%</strong></td>
+<td>D from D35 ÷ paywall reach</td>
+</tr>
+<tr>
+<td><strong>D35 install → paid</strong></td>
+<td><strong>1.8% / 2.6% / 6.0%</strong></td>
+<td>V benchmark (S10) for base; hypothesis for wedge</td>
+</tr>
+<tr>
+<td>Paid mix Plus : Career</td>
+<td>90 : 10 at M1 → 68 : 32 by M12</td>
+<td>H</td>
+</tr>
+<tr>
+<td>Blended ARPU (net, M24)</td>
+<td>$14.32 / $13.09 / $11.52</td>
+<td>D from model</td>
+</tr>
+<tr>
+<td>Monthly paid churn</td>
+<td>8%</td>
+<td>H (M5)</td>
+</tr>
+<tr>
+<td><strong>LTV (ARPU × 57% GM ÷ 8%)</strong></td>
+<td><strong>$102 / $93 / $82</strong></td>
+<td>D</td>
+</tr>
+<tr>
+<td><strong>Blended CAC (M1–M12)</strong></td>
+<td><strong>$42.23 / $29.24 / $12.67</strong></td>
+<td>H (T-03)</td>
+</tr>
+<tr>
+<td><strong>LTV : CAC</strong></td>
+<td><strong>2.4 / 3.2 / 6.5</strong></td>
+<td>D</td>
+</tr>
+<tr>
+<td><strong>CAC payback</strong></td>
+<td><strong>5.2 / 3.9 / 1.9 months</strong></td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The number to put on the wall: break-even D35 conversion is ≈4.5%.</strong> That is roughly twice the North America category median and just above the top quartile. The plan does not have a comfortable base case; it has a thesis that job seekers convert at 2–3× category rates because they have a deadline and an income-linked payoff.</p>
+<p><strong>Why the wedge conversion is plausible but not assumed:</strong> at 6% D35, the implied paywall conversion is ~22%. That is high for cold traffic and normal for high-intent interview traffic — which is precisely the bet. T-01 (segment CPA) and T-05 (Career price at a fake door) test it for ~$3.5k before launch.</p>
+<p><strong>Sensitivity (one input at a time):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Change</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Churn 8% → 5%</td>
+<td>LTV $93 → $149; LTV:CAC 3.2 → 5.1</td>
+</tr>
+<tr>
+<td>Churn 8% → 12%</td>
+<td>LTV $93 → $62; LTV:CAC 3.2 → 2.1</td>
+</tr>
+<tr>
+<td>CAC $29 → $60</td>
+<td>LTV:CAC 3.2 → 1.6 — paid acquisition stops working</td>
+</tr>
+<tr>
+<td>D35 2.6% → 4.0%</td>
+<td>ARR M24 ≈ $3.6M; cash-out moves past M24</td>
+</tr>
+<tr>
+<td>Plus price $12.99 → $9.99</td>
+<td>Plus margin 31% → 10% at launch; the model inverts</td>
+</tr>
+</tbody>
+</table>
+<p>The asymmetry is the argument for parity pricing: at $9.99 the paid product is barely above water on median usage, and a single cost-optimization slip makes it negative.</p>
+<hr />
+<h2 id="6-regional-pricing">6. Regional pricing</h2>
+<p>Purchasing-power tiers, applied by <strong>billing country</strong>, not IP:</p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Example markets</th>
+<th>Plus</th>
+<th>Career</th>
+<th>Student annual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>US, UK, DE, AU, JP, KR</td>
+<td>$12.99 / $79.99</td>
+<td>$24.99 / $149.99</td>
+<td>$49.99</td>
+</tr>
+<tr>
+<td>B</td>
+<td>BR, MX, PL, TR, ZA, MY</td>
+<td>$8.99 / $54.99</td>
+<td>$17.99 / $99.99</td>
+<td>$34.99</td>
+</tr>
+<tr>
+<td>C</td>
+<td>VN, IN, ID, PH, NG, EG</td>
+<td>$5.99 / $39.99</td>
+<td>$11.99 / $69.99</td>
+<td>$24.99</td>
+</tr>
+</tbody>
+</table>
+<p>Rules: local currency display, local payment rails (Pix, UPI, MoMo, GCash, boleto, carrier billing), no geo-arbitrage enforcement beyond billing address, and identical features across tiers — price discrimination on ability to pay, never on learning quality.</p>
+<p>Note the COGS implication: a Tier-C Plus user at $5.99 gross (~$3.60 net after a 40% regional fee assumption, which varies) with 300 minutes costs $5.40 at launch. <strong>Tier C is underwater at launch unless usage is lower or cost optimization lands.</strong> Mitigation: Tier C fair-use ceiling at 15 min/day, and launch Tier C only after the cost gate passes. This is a hypothesis to test, not a solved problem.</p>
+<hr />
+<h2 id="7-discounts-and-guarantees">7. Discounts and guarantees</h2>
+<ul>
+<li><strong>Student verification:</strong> 40% off annual (SheerID or .edu + manual fallback). Verification must never block checkout — apply retroactively if needed.</li>
+<li><strong>Annual:</strong> ~49% off monthly, default-selected (Education category runs 59–66% annual share, S10).</li>
+<li><strong>Interview guarantee (Career):</strong> complete the 21-day plan (≥ 12 sessions) and if you do not feel more prepared, full refund within 30 days. Terms are explicit; abuse is bounded by completion requirements and reviewed manually. This converts the biggest objection ("what if it doesn't work?") into a reason to engage with the product.</li>
+<li><strong>Refunds:</strong> 14 days, no questions, self-serve.</li>
+<li><strong>Pause:</strong> 1–3 months, keeps progress and streak frozen. Pausing beats cancelling for seasonal learners (Maya after exams).</li>
+</ul>
+<hr />
+<h2 id="8-packaging-experiments-first-6-months-post-launch">8. Packaging experiments (first 6 months post-launch)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Hypothesis</th>
+<th>Test</th>
+<th>Primary metric</th>
+<th>Guardrail</th>
+<th>Backlog ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>$12.99 ≥ $9.99 on revenue per visitor</td>
+<td>50/50 price test, geo-matched</td>
+<td>Revenue per visitor</td>
+<td>Refund rate</td>
+<td>T-13</td>
+</tr>
+<tr>
+<td>2</td>
+<td>14-day reverse trial beats metered free</td>
+<td>Two-arm in-app test</td>
+<td>D35 install→paid</td>
+<td>D30 retention of non-converters</td>
+<td>T-04</td>
+</tr>
+<tr>
+<td>3</td>
+<td>$24.99 Career clears 8% at a fake door</td>
+<td>Fake-door with qualification</td>
+<td>CTA rate</td>
+<td>$19.99 arm</td>
+<td>T-05</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Annual default lifts LTV</td>
+<td>Pre-selected annual vs monthly</td>
+<td>90-day LTV</td>
+<td>Churn at month 13</td>
+<td>—</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Pack bundle (Interview + Business) at $59</td>
+<td>Bundle vs separate</td>
+<td>Attach rate</td>
+<td>Cannibalization of Plus</td>
+<td>—</td>
+</tr>
+<tr>
+<td>6</td>
+<td>"Finish this session free" paywall beats hard cap</td>
+<td>Cap-experience test</td>
+<td>Conversion + D7</td>
+<td>Session abandonment</td>
+<td>—</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Student annual at $24.99 in Tier C</td>
+<td>Price test</td>
+<td>Conversion</td>
+<td>Margin per user</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rule:</strong> never test price and paywall placement at the same time, and never run a price test on users acquired through a guarantee. One variable, one primary metric, pre-registered.</p>
+<hr />
+<h2 id="9-b2b-economics-phase-3">9. B2B economics (Phase 3)</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ACV per career center (200 seats × $7/mo)</td>
+<td>$16.8k</td>
+<td>H</td>
+</tr>
+<tr>
+<td>Sales cycle</td>
+<td>3–5 months</td>
+<td>H</td>
+</tr>
+<tr>
+<td>Gross margin</td>
+<td>70–80% (usage is lower than consumer)</td>
+<td>H</td>
+</tr>
+<tr>
+<td>Payback</td>
+<td>9–12 months</td>
+<td>H</td>
+</tr>
+<tr>
+<td>Strategic value</td>
+<td>Distribution into the student segment, outcome data at cohort scale, credibility for consumer marketing</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>B2B is deliberately slow-rolled: it requires SSO, FERPA/GDPR review, and a sales motion the team does not have in year 1. It becomes a priority only after consumer retention is proven.</p>
+<p><strong>What the model actually assumes — and why not to trust it.</strong> <code>10</code> carries 200 seats from M16 growing 55%/month to ~6,660 seats by M24: $46.6k/month, $0.56M ARR, at $7/seat, <strong>with no sales cost</strong>. That is the single most optimistic line in the model. It is 21% of M24 net revenue at 100% gross margin, and removing it drops base-case M24 gross margin from 56.8% to <strong>45.2%</strong>. The three pilots behind the ACV are hypotheses, not contracts. Treat the B2B line as upside in every external conversation; the consumer thesis has to stand without it. Full disclosure at <code>10</code> §8.1.</p>
+<hr />
+<h2 id="10-what-we-will-not-do">10. What we will not do</h2>
+<ul>
+<li>Charge for corrections, feedback, or the ability to delete your data.</li>
+<li>Use fake scarcity, countdown timers, or "someone is viewing this."</li>
+<li>Auto-renew without a pre-charge reminder email.</li>
+<li>Hide the annual price behind a monthly toggle.</li>
+<li>Sell or share voice data with advertisers — stated plainly on the pricing page.</li>
+<li>Price by IP address.</li>
+<li>Advertise "unlimited" voice without publishing the fair-use ceiling that makes it true.</li>
+<li>Quote a price in a comparison table without a dated source for the competitor's price.</li>
+</ul>
+<footer>Eloq v2.0 · every figure is verified, derived, or tagged (H) with a test.
+Internal references (<code>09</code>, <code>§8.1</code>) point to other pages in this set.</footer>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eloq — AI English Fluency Coach — Eloq</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Eloq — AI English fluency coach. Pre-build plan, v2.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Eloq</div>
+  <div class="ver">Pre-build plan · v2.0<br>2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="EXEC-SUMMARY.html">Executive summary</a>
+  <a href="README.html" class="on">Overview / index</a>
+  <a href="01-product-spec.html">01 · Product spec</a>
+  <a href="02-roadmap-prioritization.html">02 · Roadmap</a>
+  <a href="03-competitive-positioning.html">03 · Competitive positioning</a>
+  <a href="04-personas-journeys.html">04 · Personas & journeys</a>
+  <a href="05-pricing.html">05 · Pricing</a>
+  <a href="06-metrics.html">06 · Metrics</a>
+  <a href="07-technical.html">07 · Technical</a>
+  <a href="08-risks-open-questions.html">08 · Risks & open questions</a>
+  <a href="09-evidence-log.html">09 · Evidence log</a>
+  <a href="10-financial-model.html">10 · Financial model</a>
+  <a href="11-experiment-backlog.html">11 · Experiment backlog</a>
+  <a href="12-launch-checklist.html">12 · Launch checklist</a>
+  <a href="13-decision-stress-tests.html">13 · Decision stress tests</a>
+  <a href="14-pronunciation-validation.html">14 · Pronunciation validation</a>
+  <a href="NEXT-14-DAYS.html">Next 14 days</a>
+  <hr>
+  <a href="https://github.com" hidden></a>
+</nav>
+<main>
+<p><strong>Version:</strong> 2.0 · 2026-11-16</p>
+<p><strong>Status:</strong> publish-ready plan, pre-build. Every number is either verified, derived, or tagged as a hypothesis with a test.
+<strong>Scope:</strong> English learners 16+, students and job seekers. English only; L1 support for Mandarin, Spanish, Portuguese, Hindi, Vietnamese, Arabic.</p>
+<hr />
+<h2 id="the-pitch">The pitch</h2>
+<p>HelloTalk sold the dream of "talk to real people and learn a language." What it actually delivers is a scheduling lottery: you wait for a partner, hope they are patient, hope they show up, and hope their corrections are useful. Fluency is a skill, and skills need reps, feedback, and progression — not luck.</p>
+<p>Eloq is the reliable version of that dream. An AI tutor that is always available, never ghosts, and — critically — <strong>measures you</strong>. Every session produces phoneme-level pronunciation scores, grammar diagnostics, and a review queue built from your actual mistakes. Add CEFR-aligned paths and a job-interview simulator, and you get the one thing HelloTalk cannot promise: <em>evidence that you are getting better.</em></p>
+<p><strong>Thesis</strong></p>
+<ol>
+<li><strong>Reliability beats randomness.</strong> 24/7 availability with consistent pedagogy removes the #1 reason language-exchange users churn: waiting.</li>
+<li><strong>Structure beats conversation.</strong> Free chat is pleasant and pedagogically weak. Guided scenarios plus progression produce measurable gains.</li>
+<li><strong>Proof beats promises.</strong> A score you can trend, a report card you can share, and a published validation study are the trust assets in a category built on vibes.</li>
+</ol>
+<p><strong>The wedge:</strong> job seekers preparing for English-language interviews. Highest willingness to pay, clearest ROI, shortest path to a measurable outcome ("I got the offer"). This is a hypothesis with a $2.5k test (T-01), not a fact — and the whole financial model depends on it.</p>
+<p><strong>Beachhead → expansion:</strong> interview prep (M0–12) → university students and career centers (12–24) → professionals and B2B L&amp;D (24+).</p>
+<hr />
+<h2 id="what-changed-in-v2-the-three-material-changes">What changed in v2 — the three material changes</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>v1</th>
+<th>v2</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Plus $9.99 / $69.99 · Career $19.99 / $149</td>
+<td><strong>Plus $12.99 / $79.99 · Career $24.99 / $149.99</strong></td>
+<td>HelloTalk VIP is verified at $12.99/$79.99. Parity turns the comparison into "same price, and it answers."</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Conversion 5–8% of MAU · churn 5.5%</td>
+<td><strong>D35 install→paid 1.8% / 2.6% / 6.0% · churn 8%</strong></td>
+<td>RevenueCat 2026 benchmarks: NA median 2.6%, top quartile 5.6%; AI apps churn ~30% faster. Break-even is ≈4.5%.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>In-house GOP pronunciation scoring is the moat</td>
+<td><strong>Phoneme scoring is commodity; license it. Moat = closed loop + outcome data + interview depth</strong></td>
+<td>Speechace sells phoneme scoring as an API; Azure ships prosody as an add-on. A moat anyone can rent is not a moat.</td>
+</tr>
+</tbody>
+</table>
+<p>Plus a correction the model forced: <strong>voice COGS $0.051 → $0.018 per session minute</strong>. v1 charged 100% ASR duty and 100% TTS duty on the same minute, overstating cost ~2.2×.</p>
+<hr />
+<h2 id="evidence-state">Evidence state</h2>
+<p>The canonical register is <a href="09-evidence-log.html"><code>09-evidence-log.md</code></a>. It holds <strong>46 claim IDs</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Count</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>V</strong> verified</td>
+<td>21</td>
+<td>Dated public source, accessed 2026-11-15 (includes 9 RevenueCat benchmarks and 6 competitor facts)</td>
+</tr>
+<tr>
+<td><strong>D</strong> derived</td>
+<td>2</td>
+<td>Arithmetic over verified inputs, recomputable (plus 2 dual-tagged rows)</td>
+</tr>
+<tr>
+<td><strong>H</strong> hypothesis</td>
+<td>15</td>
+<td>No public evidence; each has a test ID (T-xx) in <a href="11-experiment-backlog.html"><code>11</code></a></td>
+</tr>
+<tr>
+<td><strong>A</strong> abandoned</td>
+<td>3</td>
+<td>Withdrawn; must not appear publicly</td>
+</tr>
+<tr>
+<td><strong>X</strong> decision/commitment</td>
+<td>5</td>
+<td>Product choice or release gate, not a factual claim</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What is verified:</strong> HelloTalk and ELSA pricing, features, ratings, age rating, and data collection; Duolingo pricing; Deepgram/ElevenLabs rates; RevenueCat category benchmarks; Apple's 15% commission.</p>
+<p><strong>What is not:</strong> our conversion, churn, CAC, retention, voice cost under our own load, market size, and the validity of our score. Those are (H), and the tests that settle them are dated and costed. No doc in this set quotes an (H) number as if it were a fact.</p>
+<hr />
+<h2 id="business-model">Business model</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Price (US)</th>
+<th>Core promise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free</td>
+<td>$0</td>
+<td>3 voice sessions/week (5 min), unlimited text chat, all drills, corrections never metered</td>
+</tr>
+<tr>
+<td>Plus</td>
+<td><strong>$12.99/mo · $79.99/yr</strong></td>
+<td>Unlimited practice (fair use 20 min/day), full analytics, study plan, base packs</td>
+</tr>
+<tr>
+<td>Career</td>
+<td><strong>$24.99/mo · $149.99/yr</strong></td>
+<td>Interview simulator, JD tailoring, pressure mode, readiness index; human mock at $49</td>
+</tr>
+<tr>
+<td>Packs</td>
+<td>$19–$49 one-time</td>
+<td>Interview Sprint, Business, Tech, Healthcare, Campus</td>
+</tr>
+<tr>
+<td>Campus / B2B</td>
+<td>$7–9/seat/mo (min 150)</td>
+<td>Career-center dashboards, cohort reporting, SSO</td>
+</tr>
+</tbody>
+</table>
+<p>Free tier limits the <strong>expensive</strong> resource (voice minutes), never the <strong>learning</strong> (corrections, review queue, progress). Paywalling feedback would destroy trust in the first session.</p>
+<p>The free-tier cap is load-bearing: at 20 min/MAU the free user costs ~$0.26/month against ~$0.81 revenue per free MAU; at 60 min it costs ~$0.78 and goes underwater below ~4% conversion. Tested in T-15.</p>
+<hr />
+<h2 id="headline-numbers-base-case-with-wedge-as-upside">Headline numbers (base case, with wedge as upside)</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Downside</th>
+<th>Base</th>
+<th>Wedge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>D35 install → paid</td>
+<td>1.8%</td>
+<td>2.6%</td>
+<td>6.0%</td>
+</tr>
+<tr>
+<td>ARR at M24</td>
+<td>$2.00M</td>
+<td>$2.64M</td>
+<td>$5.36M</td>
+</tr>
+<tr>
+<td>Gross margin M24</td>
+<td>52.6%</td>
+<td>56.8%</td>
+<td>63.5%</td>
+</tr>
+<tr>
+<td>Cash at M24</td>
+<td>−$1.57M</td>
+<td>−$1.21M</td>
+<td>+$0.31M</td>
+</tr>
+<tr>
+<td>LTV : CAC</td>
+<td>2.4</td>
+<td>3.2</td>
+<td>6.5</td>
+</tr>
+<tr>
+<td>Cash-out</td>
+<td>M17</td>
+<td>M18</td>
+<td>never</td>
+</tr>
+</tbody>
+</table>
+<p>Break-even D35 conversion: <strong>≈4.5%</strong>. The base case is not a comfortable plan; it is a thesis under test.</p>
+<p>Full model, inputs, and sensitivities: <a href="10-financial-model.html"><code>10-financial-model.md</code></a> and the CSVs. If prose and model disagree, the model wins.</p>
+<hr />
+<h2 id="document-index">Document index</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Contents</th>
+<th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="EXEC-SUMMARY.html"><code>EXEC-SUMMARY.md</code></a></td>
+<td>One page for an investor or hiring manager: thesis, wedge, moat, economics, milestones, risks, ask</td>
+<td>New</td>
+</tr>
+<tr>
+<td><a href="01-product-spec.html"><code>01-product-spec.md</code></a></td>
+<td>Vision, problem, principles, feature specs, acceptance criteria, community layer, non-goals</td>
+<td>Updated</td>
+</tr>
+<tr>
+<td><a href="02-roadmap-prioritization.html"><code>02-roadmap-prioritization.md</code></a></td>
+<td>RICE scoring, MVP vs later phases, cut list, dependencies, timeline, team</td>
+<td>Updated</td>
+</tr>
+<tr>
+<td><a href="03-competitive-positioning.html"><code>03-competitive-positioning.md</code></a></td>
+<td>HelloTalk and ELSA teardowns, comparison table, GTM, <strong>moat rewrite with a durability verdict</strong></td>
+<td>Rewritten</td>
+</tr>
+<tr>
+<td><a href="04-personas-journeys.html"><code>04-personas-journeys.md</code></a></td>
+<td>Student and job-seeker personas, JTBD, journeys, paywall and churn moments</td>
+<td>Updated</td>
+</tr>
+<tr>
+<td><a href="05-pricing.html"><code>05-pricing.md</code></a></td>
+<td>Tiers, limits, corrected COGS, benchmarked conversion, LTV/CAC, experiments</td>
+<td>Rewritten</td>
+</tr>
+<tr>
+<td><a href="06-metrics.html"><code>06-metrics.md</code></a></td>
+<td>North star, <strong>10 counter-metrics</strong>, definitions, CI targets, outcome study design</td>
+<td>Rewritten</td>
+</tr>
+<tr>
+<td><a href="07-technical.html"><code>07-technical.md</code></a></td>
+<td>Architecture, licensed scoring + in-house loop, LLM orchestration, moderation, offline, cost</td>
+<td>Updated</td>
+</tr>
+<tr>
+<td><a href="08-risks-open-questions.html"><code>08-risks-open-questions.md</code></a></td>
+<td>Risk register, kill criteria, open questions, <strong>assumption resolution map</strong></td>
+<td>Rewritten</td>
+</tr>
+<tr>
+<td><a href="09-evidence-log.html"><code>09-evidence-log.md</code></a></td>
+<td><strong>Canonical claim register</strong>, sources, test IDs, never-publish list</td>
+<td>New</td>
+</tr>
+<tr>
+<td><a href="10-financial-model.html"><code>10-financial-model.md</code></a></td>
+<td>Scenarios, cost gate, LTV/CAC, runway, exclusions; reproducible via <code>build_model.py</code></td>
+<td>New</td>
+</tr>
+<tr>
+<td><a href="11-experiment-backlog.html"><code>11-experiment-backlog.md</code></a></td>
+<td>T-01–T-16 with MDE, sample size, cost, owner, kill/scale; ranked by IV/$</td>
+<td>New</td>
+</tr>
+<tr>
+<td><a href="12-launch-checklist.html"><code>12-launch-checklist.md</code></a></td>
+<td>Dated legal, money, product, content, quality, analytics, safety, ASO, launch runbook</td>
+<td>New</td>
+</tr>
+<tr>
+<td><a href="13-decision-stress-tests.html"><code>13-decision-stress-tests.md</code></a></td>
+<td>Three load-bearing decisions: steelman, rebuttal, flip condition, cost of wrong</td>
+<td>New</td>
+</tr>
+<tr>
+<td><a href="14-pronunciation-validation.html"><code>14-pronunciation-validation.md</code></a></td>
+<td>Rater pool, rubric, ICC, n=600, r ≥ 0.85 gate, L1 subgroups, accent-erasure criteria</td>
+<td>New</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Supporting:</strong> <a href="NEXT-14-DAYS.html"><code>NEXT-14-DAYS.md</code></a> (action list) · <code>10-financial-model.csv</code> (monthly P&amp;L, 4 runs) · <code>10-financial-model-inputs.csv</code> (every input + status) · <code>build_model.py</code> (generator).</p>
+<hr />
+<h2 id="how-to-read-the-numbers">How to read the numbers</h2>
+<table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Meaning</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>V</strong></td>
+<td>Verified against a dated public source</td>
+<td><code>09</code> §1–2</td>
+</tr>
+<tr>
+<td><strong>D</strong></td>
+<td>Derived arithmetic over V inputs</td>
+<td><code>09</code> §2–3, <code>10</code></td>
+</tr>
+<tr>
+<td><strong>H</strong></td>
+<td>Hypothesis — no public evidence; has a test</td>
+<td><code>09</code> §2, test ID in <code>11</code></td>
+</tr>
+<tr>
+<td><strong>A</strong></td>
+<td>Abandoned — do not publish</td>
+<td><code>09</code> §5</td>
+</tr>
+<tr>
+<td><strong>X</strong></td>
+<td>Decision or commitment, not a fact</td>
+<td><code>09</code> §2.5</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Rule:</strong> nothing tagged H goes into an investor deck, a public comparison page, or an ad without converting to V. The never-publish list is at <code>09</code> §5, and it includes "we retain better than HelloTalk," any HelloTalk retention number, and any market-size figure before T-14.</p>
+<hr />
+<h2 id="what-is-still-hypothesis-the-honest-list">What is still hypothesis (the honest list)</h2>
+<ol>
+<li><strong>Job seekers convert at 2–3× category rates.</strong> T-01, $2.5k, 2 weeks.</li>
+<li><strong>D35 lands in the base band or above.</strong> T-16, 12 weeks, needs live traffic.</li>
+<li><strong>Churn is 8%/month, not 12%.</strong> T-06, 12 weeks.</li>
+<li><strong>Voice cost is $0.018 now and $0.010 by M13.</strong> T-11, 3 weeks.</li>
+<li><strong>Our score correlates r ≥ 0.85 with human raters, per L1.</strong> <code>14</code>, 8 weeks, ~$8.1k.</li>
+<li><strong>Practice changes interview outcomes.</strong> T-07, 16 weeks, $6k.</li>
+<li><strong>The free-tier cap is not the growth constraint.</strong> T-15, 8 weeks.</li>
+</ol>
+<p>If items 1–4 fail, the plan changes shape. If 5–6 fail, the moat claim is withdrawn and the fallback is in <code>03</code> §9.8. Both outcomes are written down in advance, which is the point.</p>
+<footer>Eloq v2.0 · every figure is verified, derived, or tagged (H) with a test.
+Internal references (<code>09</code>, <code>§8.1</code>) point to other pages in this set.</footer>
+</main>
+</div>
+</body>
+</html>

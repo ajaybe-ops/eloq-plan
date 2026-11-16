@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>01 — Product Specification — Eloq</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="Eloq — AI English fluency coach. Pre-build plan, v2.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Eloq</div>
+  <div class="ver">Pre-build plan · v2.0<br>2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="EXEC-SUMMARY.html">Executive summary</a>
+  <a href="README.html">Overview / index</a>
+  <a href="01-product-spec.html" class="on">01 · Product spec</a>
+  <a href="02-roadmap-prioritization.html">02 · Roadmap</a>
+  <a href="03-competitive-positioning.html">03 · Competitive positioning</a>
+  <a href="04-personas-journeys.html">04 · Personas & journeys</a>
+  <a href="05-pricing.html">05 · Pricing</a>
+  <a href="06-metrics.html">06 · Metrics</a>
+  <a href="07-technical.html">07 · Technical</a>
+  <a href="08-risks-open-questions.html">08 · Risks & open questions</a>
+  <a href="09-evidence-log.html">09 · Evidence log</a>
+  <a href="10-financial-model.html">10 · Financial model</a>
+  <a href="11-experiment-backlog.html">11 · Experiment backlog</a>
+  <a href="12-launch-checklist.html">12 · Launch checklist</a>
+  <a href="13-decision-stress-tests.html">13 · Decision stress tests</a>
+  <a href="14-pronunciation-validation.html">14 · Pronunciation validation</a>
+  <a href="NEXT-14-DAYS.html">Next 14 days</a>
+  <hr>
+  <a href="https://github.com" hidden></a>
+</nav>
+<main>
+<p><strong>Version:</strong> 2.0 · 2026-11-15</p>
+<p><strong>What changed in this revision:</strong> pricing references updated to $12.99 Plus / $24.99 Career; market sizing downgraded to explicit hypotheses with a test (T-14) instead of a unverified marker; pronunciation described as licensed acoustic scoring plus in-house calibration rather than "core IP"; CEFR and accent-erasure commitments cross-referenced to <code>14</code>. No feature scope changed.</p>
+<h2 id="1-vision">1. Vision</h2>
+<p>Anyone preparing for an English-speaking life event — an interview, a first job, a semester abroad — should be able to rehearse it out loud, tonight, alone, without embarrassment, and get feedback precise enough to change what they do tomorrow.</p>
+<h2 id="2-problem-statement">2. Problem statement</h2>
+<p><strong>Who:</strong> 16–30 year-old English learners (~B1–C1) in emerging and non-anglophone markets, split into two high-intent groups: students and job seekers.</p>
+<p><strong>What they do today:</strong> HelloTalk, Tandem, Cambly, italki, YouTube, ChatGPT, and free "speaking clubs." Each fails in a specific way:</p>
+<table>
+<thead>
+<tr>
+<th>Substitute</th>
+<th>Failure mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language-exchange apps (HelloTalk, Tandem)</td>
+<td>Partner availability, ghosting, unqualified corrections, safety concerns, zero structure</td>
+</tr>
+<tr>
+<td>Human tutoring (Cambly, italki)</td>
+<td>$10–$30/hr, scheduling friction, no between-session accountability</td>
+</tr>
+<tr>
+<td>General LLMs (ChatGPT voice)</td>
+<td>No curriculum, no scoring, no memory of your errors, no drills, no progression</td>
+</tr>
+<tr>
+<td>Content apps (Duolingo, BBC Learning)</td>
+<td>Input-heavy, almost no scored speaking output</td>
+</tr>
+<tr>
+<td>Self-study (YouTube, shadowing)</td>
+<td>No feedback loop; learners cannot hear their own errors</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Core job to be done:</strong></p>
+<blockquote>
+<p>"When I have to speak English in a situation that matters, help me practice it realistically, tell me exactly what is wrong, and prove to me that I am improving — without depending on another person's schedule or goodwill."</p>
+</blockquote>
+<p><strong>The gap in one line:</strong> the market has <em>conversation</em> (HelloTalk) and <em>curriculum</em> (Duolingo) but not <em>measured conversation</em>.</p>
+<h2 id="3-product-principles">3. Product principles</h2>
+<ol>
+<li><strong>Speaking first.</strong> Any feature that does not increase spoken output or improve the quality of the next utterance is secondary.</li>
+<li><strong>Never fake precision.</strong> If the score is uncertain, say so ("estimated"). Trust is the whole product.</li>
+<li><strong>Correct the error, not the accent.</strong> We score intelligibility and prosody, not proximity to a US accent. Accent erasure is not a goal and will not be marketed.</li>
+<li><strong>The learner owns their data.</strong> Voice recordings are sensitive. Default retention 30 days, exportable, deletable in one tap, never used for ad targeting.</li>
+<li><strong>One clear next action.</strong> At every point the app answers "what should I do right now?" — never a content library dump.</li>
+<li><strong>No social pressure at launch.</strong> No leaderboards against strangers, no public profiles, no DMs. Motivation comes from personal progress, not comparison.</li>
+<li><strong>Degrade gracefully.</strong> Bad wifi, noisy room, shared device, old phone — the session must still be useful.</li>
+</ol>
+<h2 id="4-market-and-segment-strategy">4. Market and segment strategy</h2>
+<p><strong>All figures in this table are hypotheses (H) except where noted.</strong> They are used for internal planning only and must not appear in an investor deck or a public page until T-14 rebuilds them bottom-up. See <code>09</code> M1–M2.</p>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Estimate</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Global English learners</td>
+<td>~1.5B</td>
+<td>H — widely cited, no single defensible source</td>
+</tr>
+<tr>
+<td>Digital English-learning spend</td>
+<td>~$10–15B/yr</td>
+<td>H — analyst-range estimate, uncited</td>
+</tr>
+<tr>
+<td>Serviceable segment</td>
+<td>~80M</td>
+<td>H — top-down guess; T-14 rebuilds by country</td>
+</tr>
+<tr>
+<td>Beachhead (interview prep)</td>
+<td>~6M</td>
+<td>H — derived from the above, not independently measured</td>
+</tr>
+<tr>
+<td>Model output at M24</td>
+<td>179k MAU · 11.6k–38.8k paid · $2.0–5.4M ARR</td>
+<td>D — <code>10-financial-model.csv</code>, base and wedge scenarios</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sequencing rationale:</strong> the wedge assumes job seekers convert <strong>2–3×</strong> better than casual learners because the purchase is tied to income and a dated event. That is the plan's central hypothesis (M3), tested by T-01 for $2.5k before launch. Students are cheaper to acquire but monetize later — they are the top of the funnel, not the launch market.</p>
+<p>A three-year projection beyond M24 is deliberately <strong>not</strong> given: extrapolating a consumer subscription past the model horizon produces a number nobody can defend, which is how the v1 "$8–20M ARR" line appeared. If the wedge works, the M24 run-rate is the input to a new model, not a slide.</p>
+<h2 id="5-personas-summary-full-journeys-in-04-personas-journeysmd">5. Personas (summary — full journeys in <code>04-personas-journeys.md</code>)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Maya, 19 — Student</strong></th>
+<th><strong>Daniel, 26 — Job seeker</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Context</td>
+<td>Sophomore, Hanoi; engineering major</td>
+<td>Backend dev, São Paulo; applying to remote US roles</td>
+</tr>
+<tr>
+<td>Level</td>
+<td>B1 (IELTS 5.5 target 6.5)</td>
+<td>B2 (strong reading, weak speaking)</td>
+</tr>
+<tr>
+<td>Trigger</td>
+<td>Study-abroad application, seminar presentations</td>
+<td>Interview scheduled in 3 weeks</td>
+</tr>
+<tr>
+<td>Pain</td>
+<td>Freezes when speaking; no one to practice with; HelloTalk partners disappear</td>
+<td>Sounds less competent than he is; loses offers after "tell me about yourself"</td>
+</tr>
+<tr>
+<td>Budget</td>
+<td>$0–5/mo, parent-funded</td>
+<td>$20–40 one-time or $15/mo</td>
+</tr>
+<tr>
+<td>Success</td>
+<td>Speaks 3 min without freezing; IELTS speaking 6.5</td>
+<td>Gets through a 45-min interview; receives an offer</td>
+</tr>
+<tr>
+<td>Primary surface</td>
+<td>Phone, 10-min bursts, evenings</td>
+<td>Laptop + phone, 30–45 min blocks</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-experience-architecture">6. Experience architecture</h2>
+<pre><code>Onboarding (4 min) → Placement (3 min speaking) → Goal selection
+        │
+        ▼
+   ┌─────────────── Daily Home ───────────────┐
+   │  Today's Plan · Streak · Next best action│
+   └───────┬──────────────┬──────────────┬─────┘
+           ▼              ▼              ▼
+     Conversation      Drills         Review Queue
+     (scenario/free)  (pronun/vocab)  (SRS + error bank)
+           │              │              │
+           └──────────► Session Report ◄─┘
+                          │
+              Corrections · Scores · New words
+                          │
+                    Progress (CEFR, skills, trends)
+</code></pre>
+<h2 id="7-feature-specifications">7. Feature specifications</h2>
+<p>Each spec lists the user-visible behavior, the underlying mechanism, and acceptance criteria (AC). ACs are written to be testable — they are the seed of the QA plan.</p>
+<hr />
+<h3 id="71-conversational-ai-tutor">7.1 Conversational AI tutor</h3>
+<p><strong>What it is:</strong> a voice-first (with text fallback) tutor that runs scenario-based dialogues and free conversation, adapts difficulty, and returns structured feedback.</p>
+<p><strong>Session types</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Length</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scenario roleplay</td>
+<td>5–8 min</td>
+<td>Tutor plays a role (recruiter, colleague, barista, professor); learner pursues a goal; success criteria at the end</td>
+</tr>
+<tr>
+<td>Free talk</td>
+<td>5–15 min</td>
+<td>Tutor follows learner interests, still tracks errors and vocabulary</td>
+</tr>
+<tr>
+<td>Drill</td>
+<td>2–4 min</td>
+<td>Tight loop on one target: minimal pairs, tense choice, STAR answers</td>
+</tr>
+<tr>
+<td>Interview sim</td>
+<td>15–30 min</td>
+<td>See 7.6</td>
+</tr>
+<tr>
+<td>Review conversation</td>
+<td>5 min</td>
+<td>Recycles due vocabulary and past errors in natural dialogue</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dialogue mechanics</strong></p>
+<ul>
+<li><strong>Turn-taking:</strong> push-to-talk default; hands-free mode with VAD-based endpointing (700 ms silence) for Plus. Barge-in supported (learner can interrupt the tutor mid-sentence; tutor stops within 300 ms).</li>
+<li><strong>Latency budget:</strong> speech-end → first tutor audio ≤ 1.2 s p50, ≤ 2.0 s p95 (see <code>07-technical.md</code>).</li>
+<li><strong>Correction modes:</strong></li>
+<li><em>Flow</em> (default for fluency work): no interruptions; corrections collected for the session report.</li>
+<li><em>Coach</em> (default for interview prep): one micro-correction per turn, max 2 per minute, phrased as a recast ("Nice — you'd usually say <em>I've been working here since 2021</em>").</li>
+<li><em>Strict</em> (exam prep): explicit rule explanation on every error; used sparingly.</li>
+<li><strong>Adaptive difficulty:</strong> tutor targets a CEFR band (learner's level +0.5). Controls: vocabulary ceiling, sentence length, speech rate (A2: 120 wpm; C1: 165 wpm), idiom density, and scaffolding (does it offer a hint, or wait?). Difficulty adjusts every 3 turns based on learner repair rate and comprehension signals ("sorry?", long pauses, off-topic replies).</li>
+<li><strong>Scaffolding ladder:</strong> wait → hint in L1 → provide phrase → model the answer → move on. Never leave the learner stuck for more than 12 seconds.</li>
+<li><strong>Persona consistency:</strong> each scenario has a fixed persona card (role, register, patience, accent). The tutor must not break character to become a cheerleader mid-scenario; praise is delivered at the report stage. This is a deliberate anti-sycophancy choice — constant "Great job!" destroys signal.</li>
+<li><strong>Goal completion:</strong> every scenario has 2–4 success conditions (e.g., "state your salary expectation," "ask a clarifying question," "close the meeting with next steps"). These are scored, not just tracked.</li>
+</ul>
+<p><strong>Under the hood:</strong> a dialogue policy layer (state machine for scenario beats) wrapped around an LLM. The state machine prevents the classic failure where the model forgets the scenario or skips to the end.</p>
+<p><strong>Acceptance criteria</strong>
+- AC1: A learner can complete a full 5-min scenario with no text input and no more than 2 conversational dead-ends.
+- AC2: Tutor never claims a grammatically wrong sentence is correct (validated against a 500-item golden set; ≥ 98% pass).
+- AC3: Difficulty band is respected: &lt; 5% of tutor turns contain vocabulary above the target band, excluding proper nouns.
+- AC4: Session report is available ≤ 5 s after session end, containing ≥ 1 correction, ≥ 1 vocabulary item, and a score.</p>
+<hr />
+<h3 id="72-pronunciation-feedback">7.2 Pronunciation feedback</h3>
+<p><strong>The promise:</strong> "Here is the exact sound that is costing you intelligibility, here is what it should sound like, and here is a 90-second drill."</p>
+<p><strong>Scores (0–100 each, plus composite)</strong></p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Definition</th>
+<th>Signal source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Accuracy</td>
+<td>Share of phonemes produced acceptably</td>
+<td>GOP (goodness of pronunciation) from phoneme posteriors + forced alignment</td>
+</tr>
+<tr>
+<td>Fluency</td>
+<td>Pace, pause ratio, filled pauses, self-repairs</td>
+<td>Timing from aligned transcript</td>
+</tr>
+<tr>
+<td>Completeness</td>
+<td>Words produced vs. words in target</td>
+<td>Alignment coverage</td>
+</tr>
+<tr>
+<td>Prosody</td>
+<td>Stress placement, pitch range, rhythm</td>
+<td>F0 contour comparison vs. reference</td>
+</tr>
+<tr>
+<td><strong>Speak Score</strong></td>
+<td>Weighted composite, mapped to CEFR-ish band</td>
+<td>Calibrated regression</td>
+</tr>
+</tbody>
+</table>
+<p>Weights are level-dependent: at A2, accuracy and completeness dominate; at C1, prosody and fluency dominate. Publishing one fixed weighting would mislead advanced learners.</p>
+<p><strong>Feedback surfaces</strong></p>
+<ol>
+<li><strong>Word heatmap</strong> — transcript colored by score; tap a word to hear the learner's audio vs. a reference model, slowed to 70%.</li>
+<li><strong>Phoneme detail</strong> — IPA string with per-phoneme score; for errors, a 3-second mouth-position animation and a minimal-pair contrast ("ship /ʃɪp/ vs. sheep /ʃiːp/").</li>
+<li><strong>Pitch contour overlay</strong> — learner's F0 curve against the reference, with stress markers. This is the feature that makes "you sound flat/robotic" actionable.</li>
+<li><strong>Targeted drill</strong> — auto-generated 8–12 item drill on the weakest 1–2 phonemes, mixing isolation → word → phrase → sentence.</li>
+<li><strong>Progress trend</strong> — per-phoneme improvement over 30/90 days.</li>
+</ol>
+<p><strong>Key design decisions</strong></p>
+<ul>
+<li><strong>Intelligibility, not accent.</strong> Scoring targets <em>canonical</em> phoneme realization, not a specific native accent. We explicitly allow /æ/–/ɑ/ mergers, rhotic variation, and vowel-space differences that do not impede comprehension.</li>
+<li><strong>L1-aware calibration.</strong> Error profiles differ systematically (e.g., Mandarin L1: final consonant deletion, /l/–/n/; Spanish L1: /ɪ/–/iː/, initial /s/-clusters; Vietnamese L1: final consonants, consonant clusters). The scorer uses an L1-conditioned threshold so a learner is not penalized for a <em>shared, comprehensible</em> variant.</li>
+<li><strong>Honest uncertainty.</strong> If SNR &lt; 15 dB or the utterance is &lt; 1.5 s, we suppress the score and ask for a re-record. A noisy score is worse than no score.</li>
+<li><strong>Reference audio is licensed or synthesized.</strong> Never scrape native-speaker audio.</li>
+</ul>
+<p><strong>Acceptance criteria</strong>
+- AC1: Correlation with trained human raters ≥ 0.85 (Pearson) on a 600-utterance multilingual test set, cluster-bootstrapped; ≥ 0.75 per L1 subgroup with a best–worst gap ≤ 0.10 (<code>14</code>).
+- AC2: Test–retest reliability ≥ 0.90 for the same recording scored twice.
+- AC3: Score is stable across device microphones (≤ 4 points mean shift between reference headset and a mid-range Android phone).
+- AC4: A learner can go from score → drill → re-record in ≤ 3 taps.
+- AC5: No score is shown when audio quality is insufficient; the reason is stated plainly.</p>
+<hr />
+<h3 id="73-vocabulary-system">7.3 Vocabulary system</h3>
+<p><strong>Capture:</strong> long-press any word in a transcript, or say "save that word." Card is created with: the word, the sentence it appeared in, <strong>the learner's own audio of that sentence</strong>, a plain-English definition, an L1 gloss (optional), collocations, and a CEFR/frequency tag.</p>
+<p>The learner's own audio is the differentiator: it makes the card <em>theirs</em> and doubles as a pronunciation artifact.</p>
+<p><strong>Review engine:</strong> FSRS (Free Spaced Repetition Scheduler) rather than SM-2 — better retention per review at the same workload. Target retention 0.90; 4-grade recall; daily cap 20 (free) / 60 (Plus); interleaved by default, with "cram" mode before an interview.</p>
+<p><strong>Card types:</strong> recognition (see → meaning), production (meaning → say it out loud, scored), cloze in context, and collocation gap-fill. Production cards are the ones that transfer to speech, so ≥ 40% of reviews must be production.</p>
+<p><strong>Packs</strong></p>
+<table>
+<thead>
+<tr>
+<th>Pack</th>
+<th>Contents</th>
+<th>Audience</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core 2k</td>
+<td>NGSL-based high-frequency base</td>
+<td>Everyone (free)</td>
+</tr>
+<tr>
+<td>Interview</td>
+<td>400 items: achievements, ownership, ambiguity, failure, salary, small talk</td>
+<td>Job seekers</td>
+</tr>
+<tr>
+<td>Business</td>
+<td>Meetings, negotiation, email, presentations, disagreement</td>
+<td>Professionals</td>
+</tr>
+<tr>
+<td>Tech</td>
+<td>Standups, code review, incident response, system design</td>
+<td>Engineers</td>
+</tr>
+<tr>
+<td>Healthcare</td>
+<td>Patient intake, handoff, empathy phrases, plain-language explanation</td>
+<td>Nurses, med students</td>
+</tr>
+<tr>
+<td>Campus</td>
+<td>Seminars, group projects, office hours, dorm life</td>
+<td>Students</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Coverage model:</strong> the app shows "you recognize 84% of the words in this article/interview description." This makes vocabulary progress tangible and drives pack purchases.</p>
+<p><strong>Acceptance criteria</strong>
+- AC1: Capture-to-card ≤ 2 s, works offline, syncs later without duplicates.
+- AC2: 30-day retention of captured words ≥ 85% at target workload (measured in-product).
+- AC3: Every pack item has audio, an example in a realistic sentence, and an L1 gloss for all 6 supported L1s.
+- AC4: A learner can complete a 10-card review in ≤ 3 minutes.</p>
+<hr />
+<h3 id="74-daily-exercises-and-accountability">7.4 Daily exercises and accountability</h3>
+<p><strong>Today's Plan</strong> is a single card stack, 8–12 minutes total:</p>
+<ol>
+<li>60-second warm-up (shadowing or minimal pair)</li>
+<li>Vocabulary review (due cards, capped)</li>
+<li>One micro-scenario (2–4 min, voice)</li>
+<li>One listening or comprehension item (60–90 s)</li>
+<li>Optional: "fix yesterday's top error" (30 s)</li>
+</ol>
+<p><strong>Streaks — designed not to punish.</strong> Daily streak plus a weekly goal (e.g., 4 sessions/week). Two <em>streak freezes</em> per month, auto-applied, plus a "repair" option for 24 hours after a break. Rationale: Duolingo-style hard streaks maximize daily opens but cause total abandonment after the first miss; for a paid product, week-4 retention matters more than day-2 vanity.</p>
+<p><strong>Review queue priority order:</strong> (1) overdue SRS cards, (2) errors seen ≥ 2 times in the last 14 days, (3) weakest phoneme drill, (4) new material.</p>
+<p><strong>Notifications:</strong> max 1/day, time-zone aware, content-bearing ("Your /θ/ score dropped 12 points — 90-second drill?"). Never guilt-based.</p>
+<p><strong>Acceptance criteria</strong>
+- AC1: Plan is generated in &lt; 500 ms and is different each day but stable if reopened.
+- AC2: A learner who misses 3 days sees a re-entry flow (not a broken streak wall) and can restart in one tap.
+- AC3: Notification opt-out rate &lt; 15% in the first 30 days.</p>
+<hr />
+<h3 id="75-progress-analytics">7.5 Progress analytics</h3>
+<p><strong>CEFR estimate</strong> from four signals: lexical/syntactic complexity of produced speech, task success on level-appropriate scenarios, pronunciation composite, and comprehension accuracy. Displayed with a confidence band ("B1+ · likely B1–B2") and a disclaimer that it is an estimate, not a certification.</p>
+<p><strong>Skill breakdown:</strong> Speaking, Listening, Reading (from chat/text and exercise items), Writing (chat), plus two job-relevant indices:
+- <strong>Interview Readiness Index (0–100):</strong> structure, relevance, fluency, pronunciation, register.
+- <strong>Workplace Communication Index:</strong> clarity, politeness/register, turn-taking, comprehension under speed.</p>
+<p><strong>Weekly Report Card:</strong> a shareable card with 3 numbers (speaking minutes, score delta, words mastered), one "win," one "focus," and next week's plan. This is the retention and acquisition artifact — shareable cards are the cheapest organic channel we have.</p>
+<p><strong>Milestones:</strong> CEFR can-do statements, not arbitrary badges ("I can describe my work experience in 2 minutes without notes"). Badges exist but are tied to real behaviors.</p>
+<p><strong>Acceptance criteria</strong>
+- AC1: CEFR estimate agrees with certified examiner ratings at quadratic weighted κ ≥ 0.70.
+- AC2: Every score on screen is traceable to evidence (tap → the utterance that produced it).
+- AC3: Report card renders in &lt; 1 s and is shareable as an image without exposing audio or personal data.</p>
+<hr />
+<h3 id="76-interview-simulator-differentiator">7.6 Interview simulator (differentiator)</h3>
+<p><strong>Flow:</strong> paste job description (or pick a role template) → choose interview type (behavioral, technical, case, HR screen) → 20–30 min simulated interview with 6–10 questions, follow-ups, and interruptions → rubric-scored report → targeted 7-day prep plan.</p>
+<p><strong>What makes it credible</strong></p>
+<ul>
+<li><strong>Follow-up probing.</strong> Real interviewers dig. The simulator must ask "What was <em>your</em> specific contribution?" and "What would you do differently?" — this is where LLM interview tools usually collapse into a list of pre-written questions.</li>
+<li><strong>STAR structure coaching.</strong> Detects missing Situation/Task/Action/Result and asks for the missing element in real time.</li>
+<li><strong>Pressure mode.</strong> Interruptions, skeptical tone, time pressure, one deliberately hostile question ("Why should we hire you over someone with more experience?"). Explicitly opt-in.</li>
+<li><strong>Delivery analysis.</strong> Filler-word rate, pace, pause distribution, hedging language ("I think maybe sort of"), uptalk, and — on desktop only, with consent — eye contact and posture from the webcam. <strong>All video processing on-device; no frames uploaded.</strong></li>
+<li><strong>Rubric scoring</strong> with evidence quotes, not vibes: each score links to the exact utterance.</li>
+<li><strong>Company/role packs</strong> for common hiring loops (Big Tech behavioral, consulting case, healthcare residency, customer support).</li>
+</ul>
+<p><strong>Acceptance criteria</strong>
+- AC1: 80% of users report the questions were "similar to or harder than" their real interview (post-session survey).
+- AC2: Report identifies ≥ 1 structural weakness and ≥ 1 language weakness with quoted evidence in 100% of sessions.
+- AC3: A 30-min session costs ≤ $0.35 in inference (see cost model).
+- AC4: Video never leaves the device; verifiable in the privacy center.</p>
+<hr />
+<h3 id="77-community-layer-phase-3-deliberately-gated">7.7 Community layer (Phase 3 — deliberately gated)</h3>
+<p>HelloTalk's social pull is real: learners want belonging and real humans. We capture that without importing the failure modes.</p>
+<p><strong>Design</strong></p>
+<ul>
+<li><strong>Practice Pods:</strong> scheduled 25-min group sessions, 4–6 learners at similar CEFR, one AI facilitator. The AI runs the agenda, pairs learners, and produces a shared correction summary afterward. Because the AI carries the pedagogy, a weak human partner no longer ruins the session.</li>
+<li><strong>No 1:1 stranger DMs at launch.</strong> Pods only. This removes the entire harassment/grooming surface that plagues exchange apps.</li>
+<li><strong>Moderated voice rooms</strong> with automated + human moderation, recording consent, and a one-tap report that attaches the audio buffer.</li>
+<li><strong>Minors (16–17):</strong> pods only, age-banded, no profile discovery, guardian consent, no direct contact of any kind. This is non-negotiable and will cost us growth — that is the point.</li>
+<li><strong>Reputation:</strong> contribution-based ("gave 12 useful corrections"), not follower counts.</li>
+</ul>
+<p><strong>Why it is Phase 3 and not Phase 1:</strong> community requires trust &amp; safety staffing, moderation infrastructure, and a critical mass of same-level users. Launching it early would recreate HelloTalk's core weakness while adding legal risk.</p>
+<hr />
+<h3 id="78-non-goals-v1">7.8 Non-goals (v1)</h3>
+<table>
+<thead>
+<tr>
+<th>Non-goal</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100+ languages</td>
+<td>English-only focus is the entire quality advantage</td>
+</tr>
+<tr>
+<td>Social feed / Moments</td>
+<td>High moderation cost, low learning value</td>
+</tr>
+<tr>
+<td>AI "companion" persona / emotional dependency design</td>
+<td>Ethically fraught; attracts the wrong retention and press</td>
+</tr>
+<tr>
+<td>Certification (replacing IELTS/TOEFL)</td>
+<td>We estimate and prepare; we do not certify. Partner instead</td>
+</tr>
+<tr>
+<td>Human tutor marketplace at launch</td>
+<td>Operational complexity; AI-first, human later for high-value review</td>
+</tr>
+<tr>
+<td>Desktop-first product</td>
+<td>Learners practice on phones; desktop exists for interviews only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-content-strategy">8. Content strategy</h2>
+<ul>
+<li><strong>Scenario library:</strong> 12 at MVP, 24 at public launch (M6), 60 by M12, 150 by M18. Each scenario = persona card, 2–4 success conditions, target vocabulary, 3 difficulty variants, and a rubric.</li>
+<li><strong>Authoring pipeline:</strong> in-house pedagogy lead writes specs → LLM drafts variants → human review → automated eval (level appropriateness, safety, factual accuracy) → playtest with 5 learners.</li>
+<li><strong>L1 support:</strong> UI + hints + glosses in 6 languages at launch; voice tutor is English-only (deliberate — the tutor should not switch to L1 except for a single-word hint).</li>
+<li><strong>Accent coverage in TTS:</strong> at least 5 tutor voices (US, UK, Indian, Australian, neutral) so learners are not trained on one accent. Interview sim defaults to the target company's region.</li>
+</ul>
+<h2 id="9-accessibility-and-inclusion">9. Accessibility and inclusion</h2>
+<ul>
+<li>Full captions on all tutor audio; adjustable playback speed 0.7–1.2×.</li>
+<li>Dyslexia-friendly font option; high-contrast mode.</li>
+<li>Works one-handed, on 4-year-old Android devices, at 3G speeds.</li>
+<li>Low-data mode: audio-only, 16 kHz capture, no video.</li>
+<li>No score shaming: never compare a learner to other learners; only to their past self.</li>
+</ul>
+<h2 id="10-definition-of-done-for-the-product">10. Definition of done for the product</h2>
+<p>A feature ships when: acceptance criteria pass, it is instrumented, it has a documented failure mode, it works on the bottom-quartile device, and a first-time user can discover it without a tooltip tour.</p>
+<footer>Eloq v2.0 · every figure is verified, derived, or tagged (H) with a test.
+Internal references (<code>09</code>, <code>§8.1</code>) point to other pages in this set.</footer>
+</main>
+</div>
+</body>
+</html>
