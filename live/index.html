@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>Live — a voice room network for language exchange — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p><strong>Version 1.0 · 2026-11-16</strong>
+<strong>One line:</strong> tap once, get matched with a real person who is learning your language, talk for ten minutes, leave with three corrections and a reason to come back.</p>
+<p><strong>What this is:</strong> the design and build plan for a live-audio language-exchange app — HelloTalk's premise (real people, native speakers) rebuilt with Clubhouse's spontaneity and neither product's failure modes.</p>
+<p><strong>What this is not:</strong> the AI-tutor plan in <code>../eloq/</code>. That set optimises for phoneme scoring and interview content sold as a subscription to one learner. This is a two-sided live network where the product is the <em>match</em>, not the model. See §0 for what carries over.</p>
+<hr />
+<h2 id="the-whole-product-in-six-sentences">The whole product in six sentences</h2>
+<ol>
+<li>You open the app and press <strong>Talk</strong>.</li>
+<li>It finds a person who wants to practise your language and whose language you want to practise.</li>
+<li>You get a room, a topic if you want one, and a timer.</li>
+<li>A quiet bar shows whether you are both getting speaking time.</li>
+<li>You can flag a phrase for a gentle correction without turning the call into a lesson.</li>
+<li>When you leave, you get a 30-second recap: what you reached for, two fixes, one thing to try next.</li>
+</ol>
+<p>No profiles to browse. No follower counts. No stage. No scheduling. No ghosting — if no human is free in twelve seconds, an AI partner holds the room and hands it over the moment a human arrives.</p>
+<hr />
+<h2 id="documents">Documents</h2>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>What it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="01-concept.html"><code>01-concept.md</code></a></td>
+<td>The concept, the thesis, and why this beats HelloTalk and Clubhouse — including where it might not</td>
+</tr>
+<tr>
+<td><a href="02-flows.html"><code>02-flows.md</code></a></td>
+<td>Onboarding, matching, 1:1 rooms, group tables, recap; the 12-screen inventory and word-wireframes</td>
+</tr>
+<tr>
+<td><a href="03-design-system.html"><code>03-design-system.md</code></a></td>
+<td>Principles, type, colour, spacing, motion, components, accessibility; room screen and onboarding as the north star</td>
+</tr>
+<tr>
+<td><a href="04-safety.html"><code>04-safety.md</code></a></td>
+<td>Threat model, verification, age gate, in-call reporting, evidence policy, enforcement ladder, launch gates</td>
+</tr>
+<tr>
+<td><a href="05-monetization.html"><code>05-monetization.md</code></a></td>
+<td>Free/Plus/Career tiers, caps, rationale, unit economics, the experiments that decide them</td>
+</tr>
+<tr>
+<td><a href="06-mvp.html"><code>06-mvp.md</code></a></td>
+<td>10-week MVP, the cut list, the team, and what ships later or never</td>
+</tr>
+<tr>
+<td><a href="07-risks.html"><code>07-risks.md</code></a></td>
+<td>Safety, cold-start liquidity, audio quality, retention, business — with kill signals</td>
+</tr>
+<tr>
+<td><a href="prototype.html"><code>prototype.html</code></a></td>
+<td>Clickable wireframe: onboarding → home → matching → room → recap</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="0-what-carries-over-from-the-ai-tutor-plan-and-what-dies">0. What carries over from the AI-tutor plan, and what dies</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Safety-first architecture (age gate, no location, no identifiers)</td>
+<td><strong>Carries over, and becomes the core differentiator</strong></td>
+</tr>
+<tr>
+<td>Pricing anchors: HelloTalk VIP verified at $12.99/mo · $79.99/yr (2026-11-15)</td>
+<td><strong>Carries over</strong> — parity is the argument</td>
+</tr>
+<tr>
+<td>Evidence discipline: every number tagged (V)/(D)/(H) with a test</td>
+<td><strong>Carries over</strong></td>
+</tr>
+<tr>
+<td>Interview-prep wedge, career rooms</td>
+<td><strong>Carries over as a paid tier</strong>, not the whole product</td>
+</tr>
+<tr>
+<td>Pronunciation engine, phoneme scoring, speech model licensing</td>
+<td><strong>Dies.</strong> Not the product. Corrections here are social, not acoustic.</td>
+</tr>
+<tr>
+<td>The 4-persona doc set, the 25-invariant financial model, the pronunciation validation protocol</td>
+<td><strong>Dies as core.</strong> The model can be rebuilt from the live-audio cost base in <code>05</code>.</td>
+</tr>
+<tr>
+<td>"No stranger chat, ever"</td>
+<td><strong>Dies.</strong> This product <em>is</em> stranger voice. The entire safety design exists because of that.</td>
+</tr>
+</tbody>
+</table>
+<p>If both sets are ever shown to the same person, this one is the product and the other is a feature (<code>Career</code> rooms with feedback).</p>
+<hr />
+<h2 id="the-three-decisions-this-design-locks">The three decisions this design locks</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Decision</th>
+<th>Why it is locked</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>18+ at launch</strong>, 16–17 only after a specific safety review</td>
+<td>Stranger voice chat with minors is the single fastest way to end the company. HelloTalk's 13+ rating is their weakness; it is not a benchmark to copy.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Reciprocal matching only</strong> for 1:1 (you help them, they help you)</td>
+<td>One-way "talk to a native" is a charity queue that empties. Reciprocity is what keeps supply alive at 3 a.m.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>One primary action per screen</strong></td>
+<td>This is the anti-Clubhouse rule. Any screen that needs a second decision goes back to design.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="what-would-make-me-kill-this">What would make me kill this</h2>
+<p>Written before the build, so it cannot be rationalised later:</p>
+<ul>
+<li>Median time-to-human-match stays above <strong>45 seconds</strong> after 8 weeks of seed liquidity → the "instant" promise is false; narrow to one language pair or move to scheduled tables.</li>
+<li>Report rate above <strong>3 per 1,000 room-minutes</strong> with no downward trend → the safety model is not working; freeze growth.</li>
+<li>D7 below <strong>20%</strong> at week 6 of beta → live audio is novelty, not a habit; re-scope to goal-based practice rooms with the same safety layer.</li>
+<li>Any confirmed CSAM or sexual-conduct incident involving a minor → stop matching entirely, external audit, no exceptions.</li>
+</ul>
+<p>Each of these is expanded in <code>07-risks.md</code> with the metric, the threshold, and the action.</p>
+<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>

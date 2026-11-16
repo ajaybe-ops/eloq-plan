@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>06 — MVP scope and build plan — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html" class="on">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p><strong>Goal of the MVP:</strong> prove that a stranger, matched in under 15 seconds, produces a ten-minute conversation good enough that 45% of users come back within a week. Nothing else matters yet.</p>
+<p><strong>Non-goal:</strong> proving the business. Conversion is measured, not optimised, in the first release.</p>
+<hr />
+<h2 id="1-scope-what-ships-in-v1">1. Scope: what ships in v1</h2>
+<table>
+<thead>
+<tr>
+<th>Area</th>
+<th>In v1</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Onboarding</td>
+<td>✅</td>
+<td>6 screens, 75 seconds (<code>02</code> §1.1)</td>
+</tr>
+<tr>
+<td>Age gate</td>
+<td>✅</td>
+<td>18+ hard block</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>✅</td>
+<td>Phone + liveness, required before room 2</td>
+</tr>
+<tr>
+<td>Matching</td>
+<td>✅</td>
+<td>1:1 only, two language pairs, 12s fallback</td>
+</tr>
+<tr>
+<td>Rooms</td>
+<td>✅</td>
+<td>1:1 audio, mute, leave, connection state</td>
+</tr>
+<tr>
+<td>Prompts</td>
+<td>✅</td>
+<td>3 prompts per topic, 4 topics</td>
+</tr>
+<tr>
+<td>Speaking balance</td>
+<td>✅</td>
+<td>Meter only, no enforcement</td>
+</tr>
+<tr>
+<td>Correction cue</td>
+<td>✅</td>
+<td>Long-press → phrase → chip</td>
+</tr>
+<tr>
+<td>Recap</td>
+<td>✅</td>
+<td>Time, 1 fix (free) / 2 fixes + next step (paid)</td>
+</tr>
+<tr>
+<td>Report / block</td>
+<td>✅</td>
+<td>One tap, evidence buffer, 6 reasons</td>
+</tr>
+<tr>
+<td>Paywall</td>
+<td>✅</td>
+<td>20 min/day cap, Plus and Career</td>
+</tr>
+<tr>
+<td>Themes</td>
+<td>✅</td>
+<td>Dark + light, system default</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>✅</td>
+<td>AA, dynamic type to 200%, screen reader labels</td>
+</tr>
+<tr>
+<td>Group tables</td>
+<td>❌</td>
+<td>v1.1 (W14)</td>
+</tr>
+<tr>
+<td>Live translation</td>
+<td>❌</td>
+<td>v1.2; v1 ships tap-a-word gloss only</td>
+</tr>
+<tr>
+<td>AI partner</td>
+<td>⚠️ <strong>Limited</strong></td>
+<td>5 min/day, English-only, text-to-speech + ASR loop, no full duplex polish</td>
+</tr>
+<tr>
+<td>Interview rooms</td>
+<td>⚠️ <strong>Content only</strong></td>
+<td>6 scripted interview scenarios, no rubric scoring</td>
+</tr>
+<tr>
+<td>Streaks / nudge</td>
+<td>✅</td>
+<td>Weekly goal, one notification, off by default</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Launch languages pairs (deliberate, not aspirational):</strong> English ↔ Spanish and English ↔ Portuguese. Two pairs, three time-zone clusters (Americas, Europe, Brazil). Adding a pair multiplies liquidity requirements; adding four pairs at launch guarantees four empty queues.</p>
+<hr />
+<h2 id="2-the-cut-list-and-why-each-cut-is-safe">2. The cut list (and why each cut is safe)</h2>
+<table>
+<thead>
+<tr>
+<th>Cut</th>
+<th>Why it is safe to cut</th>
+<th>When it comes back</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Group tables</td>
+<td>1:1 is the product thesis; tables are a liquidity tool, and liquidity is the thing we do not have yet</td>
+<td>v1.1, after matching P90 &lt; 20s</td>
+</tr>
+<tr>
+<td>Full-duplex AI partner</td>
+<td>Expensive, and a half-good AI partner teaches users the product is fake</td>
+<td>v1.2, only if AI fallback rate &gt; 25%</td>
+</tr>
+<tr>
+<td>Live translation</td>
+<td>Kills the learning (people read instead of speak); gloss covers the failure case</td>
+<td>v1.2</td>
+</tr>
+<tr>
+<td>Video</td>
+<td>Bandwidth, moderation, and it changes the product into a call with a stranger</td>
+<td>Not planned</td>
+</tr>
+<tr>
+<td>Profiles, followers, feeds</td>
+<td>Explicitly against the thesis</td>
+<td>Never</td>
+</tr>
+<tr>
+<td>Android tablets / iPad layouts</td>
+<td>&lt; 4% of expected usage; phone-first</td>
+<td>v1.3</td>
+</tr>
+<tr>
+<td>8 languages</td>
+<td>Liquidity, not engineering</td>
+<td>One pair per quarter, gated on P90 match time</td>
+</tr>
+<tr>
+<td>Human-reviewed mocks</td>
+<td>Not this product; it is the other plan's feature</td>
+<td>Never</td>
+</tr>
+<tr>
+<td>Recording / replay</td>
+<td>Consent complexity before trust exists</td>
+<td>Never by default</td>
+</tr>
+<tr>
+<td>B2B / campus dashboards</td>
+<td>Sales motion before retention</td>
+<td>M18+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The rule behind the cut list:</strong> anything that adds a second user type, a second content type, or a second queue is cut. The MVP has exactly one of each.</p>
+<hr />
+<h2 id="3-build-sequence-10-weeks-4-engineers-1-designer">3. Build sequence (10 weeks, 4 engineers + 1 designer)</h2>
+<table>
+<thead>
+<tr>
+<th>Week</th>
+<th>Engineering</th>
+<th>Design</th>
+<th>Exit criterion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Repo, auth, design tokens, CI, analytics skeleton</td>
+<td>Design system in code; room + onboarding hi-fi</td>
+<td>Components render on both platforms</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Onboarding 6 screens, age gate, localisation scaffold</td>
+<td>Mic check, level estimator UX</td>
+<td>A user can reach Home in &lt; 90s</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Verification integration, profile (name only), device ID</td>
+<td>Report sheet, safety copy</td>
+<td>Verified user can enter a queue</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Match service v0: pair graph, Redis queue, level band</td>
+<td>Matching states, truth-telling copy</td>
+<td>Two test devices match each other</td>
+</tr>
+<tr>
+<td>5</td>
+<td>LiveKit rooms, mute/leave, reconnect, connection quality</td>
+<td>Room screen final, balance meter</td>
+<td>10-minute call with &lt; 1% drop</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Presence, speaking detection, prompts, timer</td>
+<td>Prompt card, correction flow</td>
+<td>Balance meter is accurate ±5%</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Correction cue end-to-end, gloss, caption strip (optional)</td>
+<td>Recap layout, word bank</td>
+<td>A correction arrives as a chip in &lt; 2s</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Recap, weekly streak, notifications, paywall</td>
+<td>Paywall, settings, word bank</td>
+<td>Free cap enforced without interrupting a call</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Report pipeline, evidence buffer, moderation console v0</td>
+<td>Admin console (functional, not pretty)</td>
+<td>A report reaches a human in &lt; 5 min</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Closed beta hardening, crash fixes, store builds</td>
+<td>App Store screenshots, safety copy review</td>
+<td>200 users, 2 pairs, 18+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Dependencies that can slip and what they block:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Dependency</th>
+<th>Blocks</th>
+<th>Fallback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LiveKit (or Daily/Agora) contract</td>
+<td>Everything in week 5+</td>
+<td>Ship 1:1 on a second vendor behind a flag; abstract the SFU interface in week 1</td>
+</tr>
+<tr>
+<td>Verification vendor approval</td>
+<td>Room 2 for every user</td>
+<td>Manual review queue for beta users only</td>
+</tr>
+<tr>
+<td>Liveness check accuracy</td>
+<td>Minor-safety guarantee</td>
+<td>Manual spot-check of 10% of verifications</td>
+</tr>
+<tr>
+<td>Deepgram captions</td>
+<td>Caption strip, correction cue transcription</td>
+<td>Correction cue degrades to manual text entry</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-release-gates">4. Release gates</h2>
+<p>The build is not "done" when it compiles. It ships when all of these are true:</p>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Threshold</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Crash-free sessions</td>
+<td>≥ 99.5% over 14 days</td>
+<td>Eng</td>
+</tr>
+<tr>
+<td>P50 time-to-match</td>
+<td>≤ 15s (2 pairs, peak hours)</td>
+<td>Eng + Growth</td>
+</tr>
+<tr>
+<td>P90 time-to-match</td>
+<td>≤ 45s</td>
+<td>Eng</td>
+</tr>
+<tr>
+<td>Call setup success</td>
+<td>≥ 97%</td>
+<td>Eng</td>
+</tr>
+<tr>
+<td>Audio MOS (self-reported "could you hear clearly?")</td>
+<td>≥ 4.2 / 5</td>
+<td>Eng</td>
+</tr>
+<tr>
+<td>Verification pass rate</td>
+<td>≥ 85% first attempt</td>
+<td>Trust &amp; Safety</td>
+</tr>
+<tr>
+<td>Report → human review</td>
+<td>P95 ≤ 24h, minor-safety ≤ 4h</td>
+<td>Trust &amp; Safety</td>
+</tr>
+<tr>
+<td>Accessibility</td>
+<td>AA on room + onboarding, VoiceOver/TalkBack pass</td>
+<td>Design</td>
+</tr>
+<tr>
+<td>Safety copy</td>
+<td>Legal review of the three claims in <code>04</code> §9</td>
+<td>Legal</td>
+</tr>
+<tr>
+<td>App store</td>
+<td>18+ rating, no location permission, mic string reviewed</td>
+<td>PM</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-team">5. Team</h2>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Count</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Full-stack / mobile</td>
+<td>2</td>
+<td>React Native + matching service</td>
+</tr>
+<tr>
+<td>Real-time / audio</td>
+<td>1</td>
+<td>SFU, presence, quality, reconnection</td>
+</tr>
+<tr>
+<td>Trust &amp; Safety engineer</td>
+<td>1</td>
+<td>Report pipeline, evidence, console, enforcement</td>
+</tr>
+<tr>
+<td>Product designer</td>
+<td>1</td>
+<td>The two north-star screens, then the rest</td>
+</tr>
+<tr>
+<td>PM / founder</td>
+<td>1</td>
+<td>Cuts, gates, pricing, store</td>
+</tr>
+<tr>
+<td>Trust &amp; Safety reviewer</td>
+<td>2 (part-time at beta)</td>
+<td>24/5 coverage from launch</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>6 full-time + 2 part-time</strong></td>
+<td>Deliberately small; every extra person adds a surface</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What we do not hire yet:</strong> growth, content marketing, community management. Liquidity is a matching problem before it is a marketing problem.</p>
+<hr />
+<h2 id="6-cost-to-first-room">6. Cost to first room</h2>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Estimate</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Team, 10 weeks</td>
+<td>$180–220k</td>
+<td>6 FTE blended (<strong>H</strong>)</td>
+</tr>
+<tr>
+<td>Verification vendor</td>
+<td>$1.5k</td>
+<td>1,500 beta checks at ~$1</td>
+</tr>
+<tr>
+<td>SFU + infra</td>
+<td>$1–2k</td>
+<td>Beta volume</td>
+</tr>
+<tr>
+<td>Design + brand</td>
+<td>$0</td>
+<td>In-house</td>
+</tr>
+<tr>
+<td>Legal (privacy policy, ToS, safety review)</td>
+<td>$8–15k</td>
+<td>Non-negotiable</td>
+</tr>
+<tr>
+<td>App store fees, devices, misc</td>
+<td>$3k</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>~$195–245k</strong></td>
+<td>To 200 beta users and a public launch candidate</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-v11-and-beyond-only-if-v1-works">7. v1.1 and beyond (only if v1 works)</h2>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Trigger to build</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>v1.1</td>
+<td>P90 match &lt; 20s for 4 weeks</td>
+<td>Group tables, 3rd language pair</td>
+</tr>
+<tr>
+<td>v1.2</td>
+<td>D30 retention &gt; 12%</td>
+<td>AI partner full duplex, gloss improvements</td>
+</tr>
+<tr>
+<td>v1.3</td>
+<td>Paid conversion &gt; 3%</td>
+<td>Career interview rooms with rubric, 4 more pairs</td>
+</tr>
+<tr>
+<td>v2.0</td>
+<td>100k MAU</td>
+<td>16–17 supervised tier (only with external child-safety audit), campus partnerships</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What never ships regardless of metrics:</strong> follower graphs, public profiles, video, recording by default, ads, and any feature that makes a room feel like a stage.</p>
+<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>

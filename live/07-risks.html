@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>07 — Key risks and mitigations — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html" class="on">07 · Risks</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p>Five risks can kill this. They are ordered by how quickly they do it, not by how likely they are.</p>
+<hr />
+<h2 id="1-safety-incident-existential">1. Safety incident (existential)</h2>
+<p><strong>What it looks like:</strong> a minor in an adult room, a sexual-harassment recording that circulates, or a credible threat made live. One screenshot is enough to end the company — the product's own premise (stranger voice) is the evidence.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Likelihood</strong></td>
+<td>Medium over 24 months at scale, low in a 200-person beta</td>
+</tr>
+<tr>
+<td><strong>Impact</strong></td>
+<td>Existential — brand, app-store removal, legal exposure, personal harm</td>
+</tr>
+<tr>
+<td><strong>Leading indicator</strong></td>
+<td>Report rate per 1,000 room-minutes; share of reports mentioning a minor; retention of women in cohorts</td>
+</tr>
+<tr>
+<td><strong>Mitigation</strong></td>
+<td>18+ hard gate; phone + liveness verification before room 2; no identifiers or location; one-tap report that ends the call; 60s device-local evidence buffer; 24/5 human review; 2 FTE at launch; permanent, device-level bans</td>
+</tr>
+<tr>
+<td><strong>Residual risk</strong></td>
+<td>We cannot detect intent. Verification proves accountability, not character.</td>
+</tr>
+<tr>
+<td><strong>Kill / freeze signal</strong></td>
+<td>Any confirmed minor in an adult room, or any CSAM: <strong>stop matching immediately</strong>, external audit, no growth until the audit closes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The honest position:</strong> this risk is reduced, not eliminated. Any live voice product with strangers carries it. The design choice is to make the company <em>accountable</em> for it — named reviewers, published enforcement times, and a public safety report every quarter — rather than pretending moderation solved it.</p>
+<hr />
+<h2 id="2-cold-start-liquidity-the-most-likely-killer">2. Cold-start liquidity (the most likely killer)</h2>
+<p><strong>What it looks like:</strong> you open the app, wait 40 seconds, get "no one online", and never come back. Every language pair needs simultaneous supply on both sides, in the same timezone, at the same level band. That is a hard constraint that marketing cannot fix.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Likelihood</strong></td>
+<td><strong>High</strong> — this is the default outcome for two-sided voice products</td>
+</tr>
+<tr>
+<td><strong>Impact</strong></td>
+<td>Fatal if unresolved; the product simply does not function</td>
+</tr>
+<tr>
+<td><strong>Leading indicator</strong></td>
+<td>P50/P90 time-to-match; "% of taps that end in a completed room"; AI-fallback rate</td>
+</tr>
+<tr>
+<td><strong>Mitigation</strong></td>
+<td>Launch <strong>two pairs only</strong>, in three timezone clusters; paid <strong>seed hosts</strong> (native speakers paid $8–12/hour to be available at peak, disclosed as "Community host"); AI fallback so the queue is never empty; reciprocity credits for "giver" sessions; soft peak-hour promotion on Home (not a schedule requirement); 6-person tables as a liquidity sink when 1:1 cannot fill</td>
+</tr>
+<tr>
+<td><strong>Cost of mitigation</strong></td>
+<td>Seed hosts ~$6–10k/month at launch; this is the single largest growth expense and it is worth it</td>
+</tr>
+<tr>
+<td><strong>Kill signal</strong></td>
+<td>P90 time-to-match &gt; 45s after 8 weeks of seeding → the "instant" promise is false. <strong>Action:</strong> narrow to one pair, or convert to scheduled practice tables (honest pivot, not a redesign)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why AI fallback is not the answer to liquidity:</strong> it protects the <em>individual</em> experience but destroys the <em>network</em> value. If 40% of rooms are AI, users learn the product is a chatbot with extra steps. Target: AI fallback &lt; 15% of rooms; if it exceeds 25% for two weeks, liquidity is failing and seeding must increase or the pair must be cut.</p>
+<hr />
+<h2 id="3-audio-quality-the-silent-churn">3. Audio quality (the silent churn)</h2>
+<p><strong>What it looks like:</strong> one side hears "you're breaking up", the call ends politely, and neither user reports it. Churn looks like disinterest; it is actually jitter.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Likelihood</strong></td>
+<td>High on mobile networks, especially in Brazil, India, and Southeast Asia</td>
+</tr>
+<tr>
+<td><strong>Impact</strong></td>
+<td>High — a language product that cannot be heard has no product</td>
+</tr>
+<tr>
+<td><strong>Leading indicator</strong></td>
+<td>Call setup success; reconnect rate; self-reported clarity; % of calls &lt; 3 minutes</td>
+</tr>
+<tr>
+<td><strong>Mitigation</strong></td>
+<td>SFU with regional edges (LiveKit/Daily/Agora), Opus 24–32 kbps, jitter buffer tuning, pre-join network probe with a warning, 1:1 P2P fallback when SFU latency spikes, automatic downgrade to lower bitrate before dropping, "audio is bad" one-tap diagnostic that routes to a support queue</td>
+</tr>
+<tr>
+<td><strong>Target</strong></td>
+<td>≥ 97% call setup; MOS ≥ 4.2; &lt; 2% of calls end due to audio</td>
+</tr>
+<tr>
+<td><strong>Kill signal</strong></td>
+<td>&lt; 90% call setup after two optimisation cycles → the target markets are not ready; restrict launch geographies</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-retention-live-audio-is-a-novelty-the-clubhouse-lesson">4. Retention: live audio is a novelty (the Clubhouse lesson)</h2>
+<p><strong>What it looks like:</strong> week-one usage is strong, week-two collapses. Clubhouse had tens of millions of users and no durable habit; live audio alone is not a reason to return.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Likelihood</strong></td>
+<td>Medium-high — this is the category's documented failure mode</td>
+</tr>
+<tr>
+<td><strong>Impact</strong></td>
+<td>High — no retention, no business, regardless of unit economics</td>
+</tr>
+<tr>
+<td><strong>Leading indicator</strong></td>
+<td>Second room within 7 days; D7/D30; sessions per active week; recap open rate</td>
+</tr>
+<tr>
+<td><strong>Mitigation</strong></td>
+<td>The learning loop is the retention product: recap with a concrete next step, word bank, weekly goal (not daily streak), goal-based rooms (interview in 3 weeks), and "your partner said hello" re-match prompts — <strong>not</strong> push-notification spam</td>
+</tr>
+<tr>
+<td><strong>Why this might work where Clubhouse failed</strong></td>
+<td>Clubhouse sold presence; this sells progress against a dated goal. The recap is the artefact that says "you did something", which a stage never produced</td>
+</tr>
+<tr>
+<td><strong>Kill signal</strong></td>
+<td>D7 &lt; 20% at week 6 of beta, or second-room-within-7-days &lt; 30% → live audio is not the habit. <strong>Action:</strong> re-scope to scheduled practice tables or goal-based cohorts; do not add features to a product nobody returns to</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-business-moderation-and-verification-costs-scale-faster-than-revenue">5. Business: moderation and verification costs scale faster than revenue</h2>
+<p><strong>What it looks like:</strong> every new user costs ~$0.90 to verify and a share of a reviewer's time, while only 3–5% ever pay. Growth increases the loss.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Likelihood</strong></td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Impact</strong></td>
+<td>Medium — survivable, but it caps growth and forces a raise</td>
+</tr>
+<tr>
+<td><strong>Leading indicator</strong></td>
+<td>Cost per verified user; cost per room-minute; reports per 1,000 room-minutes; gross margin per paid user</td>
+</tr>
+<tr>
+<td><strong>Mitigation</strong></td>
+<td>Verification only before room 2 (not at install); re-verification only on suspicion; reviewer tooling that triages by pattern rather than reading every report; tighter free cap if COGS drifts; annual plans to fund verification upfront</td>
+</tr>
+<tr>
+<td><strong>Target</strong></td>
+<td>Blended cost per free MAU &lt; $0.50/month; paid gross margin &gt; 90%</td>
+</tr>
+<tr>
+<td><strong>Kill signal</strong></td>
+<td>Blended gross margin &lt; 70% at 50k MAU → the model does not work at this price; reprice or restrict free tier to 10 min/day</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="risk-summary">Risk summary</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Risk</th>
+<th>Likelihood</th>
+<th>Impact</th>
+<th>Earliest signal</th>
+<th>Hard action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Safety incident</td>
+<td>Medium</td>
+<td>Existential</td>
+<td>Minor-related reports</td>
+<td>Freeze matching, external audit</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Liquidity</td>
+<td><strong>High</strong></td>
+<td>Fatal</td>
+<td>P90 match time</td>
+<td>Narrow pairs or pivot to tables</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Audio quality</td>
+<td>High</td>
+<td>High</td>
+<td>Call setup %, &lt; 3 min calls</td>
+<td>Restrict geographies, change SFU</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Retention</td>
+<td>Medium-high</td>
+<td>High</td>
+<td>D7, second room in 7 days</td>
+<td>Re-scope to goal-based cohorts</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Cost structure</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>Cost per room-minute</td>
+<td>Reprice or cut free cap</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The pattern:</strong> risks 2–4 all present as "people don't come back." The only way to tell them apart is instrumentation — time-to-match, call setup, and second-room-within-7-days must be measured from day one, separately, or every diagnosis will be wrong.</p>
+<p><strong>What we do not do:</strong> add features to fix a retention problem. Features are what Clubhouse added on the way down.</p>
+<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>

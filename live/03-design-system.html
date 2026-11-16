@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>03 — Minimalist design system — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html" class="on">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p><strong>North star:</strong> two screens decide whether this product is any good — <strong>Onboarding</strong> (do I trust this?) and <strong>Room</strong> (do I stay?). Everything else is scaffolding. Design those two until they are boringly obvious, then make the rest match.</p>
+<hr />
+<h2 id="1-eight-principles">1. Eight principles</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Principle</th>
+<th>In practice</th>
+<th>What it forbids</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>One decision per screen</strong></td>
+<td>Home has one primary button; room has one centre control</td>
+<td>Split CTAs, carousels, "while you're here"</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Calm is a feature</strong></td>
+<td>Neutral surfaces, one accent used for state only</td>
+<td>Gradients, glassmorphism, confetti, glow</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Show presence, not status</strong></td>
+<td>Speaking circles, connection dot, balance bar</td>
+<td>Followers, badges, levels-as-trophies, "top speaker"</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>The interface disappears during speech</strong></td>
+<td>Controls fade to 30% opacity after 8s of no touch; a tap restores</td>
+<td>Persistent chrome over a conversation</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Motion explains, never decorates</strong></td>
+<td>140ms ease-out on state change; sheets 220ms</td>
+<td>Bounces, parallax, auto-playing loops</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>Accessible by default</strong></td>
+<td>AA contrast, 48px targets, screen-reader live regions, no colour-only meaning</td>
+<td>Icon-only unlabelled controls, colour as the only signal</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Never punish leaving</strong></td>
+<td>No confirmation, no penalty, no guilt copy</td>
+<td>Streak-loss warnings, "wait, don't go"</td>
+</tr>
+<tr>
+<td>8</td>
+<td><strong>Text is UI</strong></td>
+<td>Sentences instead of labels where a sentence is clearer</td>
+<td>Jargon: "room", "stage", "club", "host" in the interface</td>
+</tr>
+</tbody>
+</table>
+<p>Note principle 8: internally we say <em>room</em> and <em>table</em>. In the interface we say <strong>"Talk"</strong>, <strong>"Practise with someone"</strong>, <strong>"Join a table"</strong> — words a learner would use.</p>
+<hr />
+<h2 id="2-foundations">2. Foundations</h2>
+<h3 id="21-typography">2.1 Typography</h3>
+<p>One family. Two weights. No display face.</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Size / line</th>
+<th>Weight</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>display</code></td>
+<td>32 / 38</td>
+<td>600</td>
+<td>Welcome headline, recap total</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>22 / 28</td>
+<td>600</td>
+<td>Screen titles</td>
+</tr>
+<tr>
+<td><code>body</code></td>
+<td>17 / 26</td>
+<td>400</td>
+<td>Everything readable</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>15 / 20</td>
+<td>500</td>
+<td>Buttons, chips</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td>13 / 18</td>
+<td>400</td>
+<td>Timers, pair labels, captions</td>
+</tr>
+<tr>
+<td><code>micro</code></td>
+<td>12 / 16</td>
+<td>500</td>
+<td>Tabular only: seconds, counts</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Family: <strong>system stack</strong> (<code>-apple-system, Segoe UI, Inter</code>) — no font download, no layout shift, native feel, and it is the calmest possible choice.</li>
+<li>Numerals in timers and the balance meter are <strong>tabular</strong> so digits do not jitter.</li>
+<li>Body never below 17px in the room; 15px is the floor anywhere.</li>
+<li>Max line length 38 characters on mobile. If a sentence needs more, it is two sentences.</li>
+</ul>
+<h3 id="22-colour">2.2 Colour</h3>
+<p>One accent. Semantic colour only for state. Dark is the default; light is a first-class theme, not a filter.</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Dark</th>
+<th>Light</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bg</code></td>
+<td><code>#0B0C0E</code></td>
+<td><code>#FBFBF9</code></td>
+<td>Canvas</td>
+</tr>
+<tr>
+<td><code>surface</code></td>
+<td><code>#141619</code></td>
+<td><code>#FFFFFF</code></td>
+<td>Cards, sheets</td>
+</tr>
+<tr>
+<td><code>line</code></td>
+<td><code>#24272C</code></td>
+<td><code>#E5E4DF</code></td>
+<td>Dividers, borders</td>
+</tr>
+<tr>
+<td><code>ink</code></td>
+<td><code>#F2F1EC</code></td>
+<td><code>#141518</code></td>
+<td>Primary text</td>
+</tr>
+<tr>
+<td><code>muted</code></td>
+<td><code>#9AA0A6</code></td>
+<td><code>#6B7076</code></td>
+<td>Secondary text</td>
+</tr>
+<tr>
+<td><code>signal</code></td>
+<td><code>#3DDC97</code></td>
+<td><code>#0F7A5A</code></td>
+<td>Live, connected, speaking</td>
+</tr>
+<tr>
+<td><code>warm</code></td>
+<td><code>#F2B705</code></td>
+<td><code>#A97400</code></td>
+<td>Correction cue, gentle warning</td>
+</tr>
+<tr>
+<td><code>alert</code></td>
+<td><code>#FF6B5A</code></td>
+<td><code>#B4402E</code></td>
+<td>Destructive, report, error</td>
+</tr>
+</tbody>
+</table>
+<p>Rules:
+- <strong>Never</strong> use <code>signal</code> for decoration. If it is green, something is live or connected.
+- <code>warm</code> appears at most once per screen — it is the "this is a learning moment" colour.
+- No colour carries meaning alone: mute always pairs colour with an icon and a label change.
+- Contrast: body text ≥ 7:1, meta ≥ 4.5:1, large text ≥ 3:1.</p>
+<h3 id="23-spacing-and-shape">2.3 Spacing and shape</h3>
+<ul>
+<li>Base unit <strong>4px</strong>. Scale: <code>4 · 8 · 12 · 16 · 24 · 32 · 48 · 64</code>.</li>
+<li>Screen gutter <strong>20px</strong>; card padding <strong>16px</strong>; vertical rhythm between blocks <strong>24px</strong>.</li>
+<li>Radius: cards <strong>16</strong>, sheets <strong>24</strong> (top corners), pills <strong>999</strong>, circles <strong>50%</strong>.</li>
+<li>Elevation: <strong>one</strong> shadow token, used only for sheets. No stacked shadows, no borders <em>and</em> shadows on the same element.</li>
+</ul>
+<h3 id="24-motion">2.4 Motion</h3>
+<table>
+<thead>
+<tr>
+<th>Interaction</th>
+<th>Duration</th>
+<th>Curve</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Press feedback</td>
+<td>90ms</td>
+<td>ease-out</td>
+</tr>
+<tr>
+<td>State change (mute, connect)</td>
+<td>140ms</td>
+<td><code>cubic-bezier(.2,.8,.2,1)</code></td>
+</tr>
+<tr>
+<td>Sheet present/dismiss</td>
+<td>220ms</td>
+<td>same</td>
+</tr>
+<tr>
+<td>Presence pulse while speaking</td>
+<td>1.6s loop, 4% scale</td>
+<td>ease-in-out</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>prefers-reduced-motion</code> → every animation becomes a 120ms cross-fade; the presence pulse becomes a static ring.</li>
+<li>Nothing animates for longer than 1.6s except the speaking pulse, and that pulse must be interruptible by touch.</li>
+</ul>
+<hr />
+<h2 id="3-components-the-whole-set">3. Components (the whole set)</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Spec</th>
+<th>Used on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Primary button</strong></td>
+<td>56px tall, full-width minus gutter, radius 16, <code>signal</code> on dark bg / white on <code>signal</code> in light</td>
+<td>Every screen — exactly one</td>
+</tr>
+<tr>
+<td><strong>Ghost button</strong></td>
+<td>44px, text only</td>
+<td>Secondary actions</td>
+</tr>
+<tr>
+<td><strong>Chip</strong></td>
+<td>36px tall, pill, selected = <code>signal</code> 12% fill + 1px border</td>
+<td>Language, level, intent, report reasons</td>
+</tr>
+<tr>
+<td><strong>Circle control</strong></td>
+<td>56px (utility) / 72px (mute), centred icon 24px</td>
+<td>Room</td>
+</tr>
+<tr>
+<td><strong>Presence circle</strong></td>
+<td>88px 1:1, 64px in table; ring = speaking</td>
+<td>Room, table</td>
+</tr>
+<tr>
+<td><strong>Balance bar</strong></td>
+<td>6px tall, 2 segments, 120ms transitions</td>
+<td>Room, table</td>
+</tr>
+<tr>
+<td><strong>Prompt card</strong></td>
+<td>Collapsible, 2 lines collapsed, 3 prompts expanded</td>
+<td>Room, table</td>
+</tr>
+<tr>
+<td><strong>Chip toast</strong></td>
+<td>Incoming correction, 1 line, 6s auto-dismiss</td>
+<td>Room</td>
+</tr>
+<tr>
+<td><strong>Sheet</strong></td>
+<td>Bottom, drag-to-dismiss, 24px top radius, max 70% height</td>
+<td>Report, more, recap detail</td>
+</tr>
+<tr>
+<td><strong>Live caption strip</strong></td>
+<td>One line, 13px, tap word → gloss</td>
+<td>Room</td>
+</tr>
+</tbody>
+</table>
+<p>That is the entire vocabulary. If a new screen needs a new component, the design is probably wrong.</p>
+<hr />
+<h2 id="4-the-room-screen-wireframed-in-words">4. The room screen, wireframed in words</h2>
+<blockquote>
+<p><strong>This is the screen the company is judged on.</strong></p>
+</blockquote>
+<p><strong>Top (safe area + 16px):</strong>
+<code>English ↔ Spanish</code> on the left in <code>meta</code>/<code>muted</code>; <code>04:12</code> on the right in <code>micro</code>/tabular. Below them, a 6px dot + the word <code>Connected</code> — green when healthy, amber for "unstable", red for "reconnecting". Tapping the dot opens a one-line diagnosis sheet: <em>"Your connection is weak. Move somewhere quieter or switch to audio-only."</em></p>
+<p><strong>Middle (vertically centred, 40% of height):</strong>
+Two presence circles, 88px, 40px apart. <strong>You</strong> on the left, partner on the right. The circle of whoever is speaking expands to 104px over 1.6s and its ring fills. Under each: a 13px name, muted. No photos.</p>
+<p>Directly beneath: the <strong>balance bar</strong>, 240px wide, two segments — yours in <code>signal</code>, theirs in <code>muted</code>. It is the only element that can turn <code>warm</code>, and only after 90 seconds of one-sided speech.</p>
+<p><strong>Lower third:</strong>
+A <strong>prompt card</strong>, collapsed to a single line: <em>"Ask about a job they want."</em> A small chevron expands it to three prompts. It auto-collapses 60 seconds into the call and never returns unless tapped.</p>
+<p><strong>Bottom (thumb zone, 20px gutter, 24px above safe area):</strong>
+Three circles on one row, evenly spaced:
+<code>Leave</code> (56, ghost, left) · <strong><code>Mute</code></strong> (72, filled, centre) · <code>More</code> (56, ghost, right).</p>
+<p>Mute is the only filled control in the room. When muted, it fills <code>alert</code>-tinted neutral, the icon becomes a struck mic, and a 13px label under it reads <code>Muted</code> — three signals, none of them colour alone.</p>
+<p><strong>More sheet:</strong> <code>Correct something</code> · <code>Translate a word</code> · <code>Change topic</code> · <code>Report</code> · <code>Block</code>.
+<code>Report</code> and <code>Block</code> are separated by 16px and sit at the bottom, in <code>alert</code>, never adjacent to a positive action.</p>
+<p><strong>What is deliberately absent:</strong> no participant list, no room title bar with a count, no "share", no emoji bar, no reaction animations, no waveform visualiser. A waveform is the fastest way to make a calm screen noisy.</p>
+<hr />
+<h2 id="5-onboarding-wireframed-in-words">5. Onboarding, wireframed in words</h2>
+<blockquote>
+<p><strong>Second north-star screen.</strong> 75 seconds, six taps, one sentence per screen.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Screen</th>
+<th>Layout</th>
+<th>Copy (exact)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Centred, one line of type at 32/38, one illustration (two circles, one speaking), one primary button</td>
+<td><strong>"Speak a language with a real person. Right now."</strong> · sub: "No profiles. No scheduling. Ten minutes is enough." · button: <strong>Get started</strong></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Title + two stacked buttons + 13px footnote</td>
+<td><strong>"How old are you?"</strong> · <strong>I'm 18 or older</strong> · <strong>I'm under 18</strong> (disabled with reason) · footnote: "We only match adults. Under-18 access is coming with a different safety model."</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Two chip rows, max 6 visible, "more" expands</td>
+<td><strong>"What do you speak?"</strong> then <strong>"What do you want to practise?"</strong> · Only pairs with live supply are selectable; the rest show <em>"no one online right now"</em></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Big record button, live level ring, one sentence to read</td>
+<td><strong>"Say this: 'I'm preparing for a job interview next month.'"</strong> · after 20s: <strong>"Sounds like B1. Change?"</strong> with a ± stepper and a <strong>Looks right</strong> button</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Four chips, 2×2</td>
+<td><strong>"What are you practising for?"</strong> · Job interview · Everyday conversation · Exam · Just talking</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Mic level meter, playback, one primary</td>
+<td><strong>"Let's check your mic."</strong> · <strong>Sounds good</strong> · ghost: <strong>Fix audio</strong></td>
+</tr>
+<tr>
+<td>→</td>
+<td>Straight to Home, no tour, no permissions carousel</td>
+<td>Home shows one card: <strong>"14 people online for English ↔ Spanish"</strong> and one button: <strong>Talk</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Onboarding rules:</strong>
+- No account creation before the first room. The sign-in prompt appears after the recap, titled "Save your progress".
+- No notification permission request during onboarding. It is asked after the second completed room, with a reason.
+- Every screen is skippable except the age gate.
+- The estimated level is always editable and never shown as a judgment ("Sounds like B1" not "You are B1").</p>
+<hr />
+<h2 id="6-accessibility-concretely">6. Accessibility, concretely</h2>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Screen reader</td>
+<td>Presence circles expose <code>aria-live="polite"</code>: "Mateo is speaking", "You are speaking", "Muted"</td>
+</tr>
+<tr>
+<td>Mute state</td>
+<td>Icon + label + colour + haptic on toggle</td>
+</tr>
+<tr>
+<td>Touch targets</td>
+<td>48px minimum everywhere; 56/72 in-call</td>
+</tr>
+<tr>
+<td>Contrast</td>
+<td>Body 7:1; all interactive text 4.5:1</td>
+</tr>
+<tr>
+<td>Dynamic type</td>
+<td>Layout tested to 200%; room controls reflow to two rows rather than overlap</td>
+</tr>
+<tr>
+<td>Captions</td>
+<td>Optional live caption strip, off by default, on-device; toggled in the More sheet</td>
+</tr>
+<tr>
+<td>Reduced motion</td>
+<td>Cross-fades only; speaking state conveyed by ring stroke, not scale</td>
+</tr>
+<tr>
+<td>Motor</td>
+<td>No drag-only actions; every gesture has a button equivalent</td>
+</tr>
+<tr>
+<td>Cognitive</td>
+<td>One primary action; plain-language copy; no timers that punish</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-anti-patterns-do-not-ship-these">7. Anti-patterns (do not ship these)</h2>
+<ol>
+<li>A follower count, even in settings.</li>
+<li>A profile photo required to be matched.</li>
+<li>A "room full" state — cap at six and show a table instead.</li>
+<li>Emoji reactions floating over the conversation.</li>
+<li>A waveform visualiser during the call.</li>
+<li>Confetti on a streak.</li>
+<li>"Rate this conversation" with five stars.</li>
+<li>A countdown on the free-tier cap during a call. Show remaining time on Home only; never interrupt a conversation.</li>
+<li>A red badge on the app icon.</li>
+<li>A "share your recap" prompt. Recaps are private until the user chooses otherwise.</li>
+</ol>
+<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>01 — Concept and thesis — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html" class="on">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<h2 id="1-the-problem-stated-without-marketing">1. The problem, stated without marketing</h2>
+<p>Language exchange already works. People meet, talk, and improve. The failures are not pedagogical — they are operational and social:</p>
+<table>
+<thead>
+<tr>
+<th>Failure</th>
+<th>What it looks like</th>
+<th>Whose fault</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ghosting</strong></td>
+<td>You message twenty people; four reply; one shows up; they leave after three minutes.</td>
+<td>HelloTalk's asynchronous, profile-based model</td>
+</tr>
+<tr>
+<td><strong>Scheduling lottery</strong></td>
+<td>The native speaker you need is asleep, or busy, or bored.</td>
+<td>Time zones + volunteer supply</td>
+</tr>
+<tr>
+<td><strong>Creepiness</strong></td>
+<td>Strangers use language exchange as a dating funnel. Women leave; the network degrades.</td>
+<td>No identity, no moderation, no consequences</td>
+</tr>
+<tr>
+<td><strong>No structure</strong></td>
+<td>"Hi, how are you, where are you from" forever. Nothing gets better.</td>
+<td>Free chat with no scaffolding</td>
+</tr>
+<tr>
+<td><strong>Performance anxiety</strong></td>
+<td>Clubs and rooms become stages; the loudest person wins.</td>
+<td>Clubhouse's audience/hierarchy model</td>
+</tr>
+<tr>
+<td><strong>Bloat</strong></td>
+<td>Followers, bios, badges, feeds — the product becomes a social network with a language hobby.</td>
+<td>Growth-driven feature creep</td>
+</tr>
+</tbody>
+</table>
+<p>Two products solved half of this each. Nobody solved both halves.</p>
+<h2 id="2-the-synthesis">2. The synthesis</h2>
+<blockquote>
+<p><strong>Conversation as a utility, not a social network.</strong></p>
+</blockquote>
+<p>HelloTalk is a <em>network</em>: profiles, feeds, moments, followers. Clubhouse was a <em>stage</em>: hosts, audiences, applause. Both made talking to a stranger feel like an event you had to prepare for.</p>
+<p>This product treats a conversation the way a utility treats a call: you press a button, it connects, it works, you hang up, it costs almost nothing, and it never asks you to build a personal brand first.</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>HelloTalk</th>
+<th>Clubhouse</th>
+<th><strong>This product</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time to first conversation</td>
+<td>Minutes to days (async)</td>
+<td>Minutes (find a room)</td>
+<td><strong>Seconds (matched)</strong></td>
+</tr>
+<tr>
+<td>Supply model</td>
+<td>Volunteers' free time</td>
+<td>Hosts seeking status</td>
+<td><strong>Reciprocity + paid seed hosts</strong></td>
+</tr>
+<tr>
+<td>Unit of interaction</td>
+<td>1:1 chat / moments</td>
+<td>1:many stage</td>
+<td><strong>1:1 exchange, 3–6 table</strong></td>
+</tr>
+<tr>
+<td>Social graph</td>
+<td>Followers, likes</td>
+<td>Followers, clubs</td>
+<td><strong>None. You cannot follow anyone.</strong></td>
+</tr>
+<tr>
+<td>Identity</td>
+<td>Pseudonymous, unverified</td>
+<td>Real names, status</td>
+<td><strong>Verified, minimal, no location</strong></td>
+</tr>
+<tr>
+<td>Learning scaffold</td>
+<td>Translation, corrections in chat</td>
+<td>None</td>
+<td><strong>Topic prompts, correction cues, recap</strong></td>
+</tr>
+<tr>
+<td>Failure mode</td>
+<td>Ghosting, harassment</td>
+<td>Emptiness, hierarchy</td>
+<td><strong>Machine-matched, moderated, bounded</strong></td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-why-this-beats-hellotalk">3. Why this beats HelloTalk</h2>
+<p><strong>It removes the two things that make HelloTalk exhausting: waiting and risk.</strong></p>
+<ol>
+<li><strong>Waiting.</strong> HelloTalk's core loop is asynchronous. You post, you wait, you hope. Instant match removes the wait, and — critically — the <em>reciprocity rule</em> removes the asymmetry: you are matched with someone who needs what you have. Nobody is doing you a favour.</li>
+<li><strong>Risk.</strong> HelloTalk's 13+ rating, open DMs, location collection, and profile browsing are a harassment surface. This product has no location, no photos, no links, no follow graph, no DMs outside a room, verification before you can be matched, and a report button that ends the call in one tap.</li>
+</ol>
+<p><strong>Honest counter:</strong> HelloTalk has 70M+ registered learners (verified 2026-11-15) and a decade of content, community, and SEO. A new app has none of that. We do not beat them on breadth or brand. We beat them on the first ten minutes — and only if liquidity works. That is the whole bet.</p>
+<h2 id="4-why-this-beats-clubhouse">4. Why this beats Clubhouse</h2>
+<p><strong>Clubhouse was a stage. This is a table.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Clubhouse failure</th>
+<th>Design response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rooms were performances: host speaks, audience listens</td>
+<td>No audience. Every participant is a speaker; 6 people max</td>
+</tr>
+<tr>
+<td>Followers and "who's in the room" became a status game</td>
+<td>No follow graph, no visible follower counts, no badges in rooms</td>
+</tr>
+<tr>
+<td>Discovery was a wall of room titles with 40 people inside</td>
+<td>One card, one pair, one topic, one button</td>
+</tr>
+<tr>
+<td>Silence and dead air killed rooms</td>
+<td>Topic prompts, round timer, speaking-balance meter</td>
+</tr>
+<tr>
+<td>It was a place to be seen, not a place to do something</td>
+<td>It is a place to practise; the recap is the proof you did</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Honest counter:</strong> Clubhouse's decline suggests live audio alone is not a retention engine. The learning loop — recap, correction cues, progress — is what makes this a habit rather than a novelty. If that loop does not work, this is Clubhouse with a language label.</p>
+<h2 id="5-who-it-is-for">5. Who it is for</h2>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Why they come</th>
+<th>Why they stay</th>
+<th>Willingness to pay</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Job seekers</strong> (primary)</td>
+<td>Interview in weeks; need real spoken reps against a stranger's ear</td>
+<td>Deadline urgency, career rooms, recap they can act on</td>
+<td>High — one offer is worth 100× the price</td>
+</tr>
+<tr>
+<td><strong>University students</strong> (primary)</td>
+<td>Semester abroad, exams, social confidence</td>
+<td>Weekly streak, friends-of-friends tables, low price</td>
+<td>Medium — student annual</td>
+</tr>
+<tr>
+<td>General learners (secondary)</td>
+<td>Curiosity, travel, family</td>
+<td>Habit, topics, community</td>
+<td>Low — free tier</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why job seekers first:</strong> they have a deadline, a budget, and a measurable outcome. They also tolerate a rough MVP if it helps them get the job. Students are the volume; job seekers are the revenue.</p>
+<h2 id="6-the-product-thesis-in-four-claims">6. The product thesis in four claims</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Claim</th>
+<th>If it is false</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Enough people are online at any moment to match a given language pair in &lt; 15s</td>
+<td>Nothing works; narrow to 1 pair or schedule tables</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Reciprocity keeps supply alive without paying for it</td>
+<td>Subsidise "giver" sessions with credits; costs rise, margins fall</td>
+</tr>
+<tr>
+<td>3</td>
+<td>A 10-minute live call produces more speaking confidence than 30 minutes of async chat</td>
+<td>The learning loop is decorative; product becomes a voice chat app</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Verification + no-identity design reduces harassment enough that women stay</td>
+<td>Retention collapses to the male-only tail HelloTalk struggles with</td>
+</tr>
+</tbody>
+</table>
+<p>Each has a test in <code>05</code> and <code>07</code>. None is proven. The design is built so that claim 1 failing is survivable (AI fallback, narrowing) and claim 4 failing is not (freeze growth).</p>
+<h2 id="7-what-we-deliberately-do-not-build">7. What we deliberately do not build</h2>
+<table>
+<thead>
+<tr>
+<th>Not building</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Profiles with photos, bios, follower counts</td>
+<td>Status surface, harassment vector, and it makes people perform instead of practise</td>
+</tr>
+<tr>
+<td>Text chat outside a room</td>
+<td>Becomes a dating inbox; the room is the product</td>
+</tr>
+<tr>
+<td>Video</td>
+<td>Bandwidth, moderation cost, and it turns practice into a call with a stranger's face</td>
+</tr>
+<tr>
+<td>Hosts and audiences</td>
+<td>Recreates Clubhouse's hierarchy</td>
+</tr>
+<tr>
+<td>Public room listings with 40 people</td>
+<td>Noise; matching beats browsing</td>
+</tr>
+<tr>
+<td>Gamified XP, badges, leaderboards</td>
+<td>Optimises for the metric, not the speaking</td>
+</tr>
+<tr>
+<td>Recording on by default</td>
+<td>Trust; see <code>04</code> §5</td>
+</tr>
+<tr>
+<td>Minors at launch</td>
+<td>See <code>README</code> decision 1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="8-the-one-sentence-positioning">8. The one-sentence positioning</h2>
+<blockquote>
+<p><strong>For people who need to speak a language out loud, with a real person, today — not after twenty messages and not in front of an audience.</strong></p>
+</blockquote>
+<p>If a feature does not make that sentence more true, it does not ship.</p>
+<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>

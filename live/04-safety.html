@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>04 — Safety and moderation model — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html" class="on">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p><strong>The uncomfortable premise:</strong> this product asks strangers to speak to each other with their voices. Voice is intimate, hard to moderate, and impossible to un-hear. HelloTalk's biggest weakness is exactly here — 13+ age rating, open messaging, location collection, and profiles that invite the wrong attention. Copying their posture would import their problem.</p>
+<p>Safety is therefore <strong>a product feature with its own budget, headcount, and launch gates</strong> — not a policy page.</p>
+<hr />
+<h2 id="1-threat-model">1. Threat model</h2>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Who</th>
+<th>Severity</th>
+<th>Why it matters here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sexual harassment / exposure</td>
+<td>Predatory adults</td>
+<td><strong>Existential</strong></td>
+<td>Live voice, no text trail, victim leaves and never returns</td>
+</tr>
+<tr>
+<td>Minors in adult rooms</td>
+<td>13–17</td>
+<td><strong>Existential</strong></td>
+<td>One incident ends the company and possibly someone's safety</td>
+</tr>
+<tr>
+<td>Doxxing / off-platform contact</td>
+<td>Anyone</td>
+<td>High</td>
+<td>Voice reveals accent, name, sometimes workplace</td>
+</tr>
+<tr>
+<td>Scams / romance fraud</td>
+<td>Organised</td>
+<td>High</td>
+<td>"Practise English" is a plausible opening</td>
+</tr>
+<tr>
+<td>Hate speech, slurs</td>
+<td>Anyone</td>
+<td>High</td>
+<td>Audio has no filter, no undo</td>
+</tr>
+<tr>
+<td>Recording and redistribution</td>
+<td>Anyone</td>
+<td>High</td>
+<td>A recorded voice clip is a permanent artefact</td>
+</tr>
+<tr>
+<td>Spam / commercial solicitation</td>
+<td>Tutors, agencies</td>
+<td>Medium</td>
+<td>Degrades the room and the brand</td>
+</tr>
+<tr>
+<td>Ban evasion</td>
+<td>Repeat offenders</td>
+<td>Medium</td>
+<td>Device-level enforcement required</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Design position:</strong> we cannot detect most of this in real time. We can make it <em>rare</em> (verification, age gate, no identifiers), make it <em>reported in one tap</em>, make the <em>consequence fast and permanent</em>, and make <em>evidence</em> available without recording everyone by default.</p>
+<hr />
+<h2 id="2-age-gate-18-at-launch">2. Age gate: 18+ at launch</h2>
+<ul>
+<li><strong>Hard block</strong> for under-18 on the age screen — not a soft "are you sure".</li>
+<li>Store birth year only, not full date of birth. Re-verify on any hint of a minor (voice, self-description, report).</li>
+<li><strong>16–17 is a separate product</strong> (school-verified cohorts, guardian consent, same-age matching only, no 1:1 with adults) and ships only after an external child-safety review. It is not a toggle.</li>
+<li>Any user who reports being a minor is immediately removed from matching pending review, regardless of their stated age.</li>
+</ul>
+<p><strong>Why this is a differentiator, not a limitation:</strong> HelloTalk's 13+ rating is one of its most-cited problems in reviews and press. Launching adult-only is a credible, defensible trust claim — and it is the only version of this product that can pass an app-store review without a child-safety programme.</p>
+<hr />
+<h2 id="3-verification">3. Verification</h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>What it takes</th>
+<th>What it unlocks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unverified</strong></td>
+<td>Email or Apple/Google sign-in</td>
+<td>Nothing — cannot enter a live room</td>
+</tr>
+<tr>
+<td><strong>Verified</strong></td>
+<td>Phone number + selfie liveness check (vendor: Persona/Onfido, ~$0.60–1.20 per check, <strong>H</strong>)</td>
+<td>1:1 and table matching</td>
+</tr>
+<tr>
+<td><strong>Trusted</strong></td>
+<td>10 completed rooms, 0 upheld reports, 30 days</td>
+<td>May open a table; lighter re-verification</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Verification happens <strong>after the first room, before the second</strong>. The first room is with a verified user only, and the new user is flagged as new to their partner ("New here — be kind").</li>
+<li>Display name is chosen by the user; <strong>real names, photos, locations, and links are not collected at all.</strong> No field exists to put them in. This is stronger than a filter.</li>
+<li>One verified identity per device family. Device fingerprint + phone hash for ban enforcement; both stored hashed, deleted after 12 months of inactivity.</li>
+<li>Verification is not a badge to show off — there is no visible "verified" trophy in the room. It is a gate, not a status.</li>
+</ul>
+<p><strong>Cost note:</strong> verification is the largest per-user fixed cost (~$0.90, H). At 100k verified users that is ~$90k. It is the price of the product existing, and it belongs in the unit economics (<code>05</code> §5), not in a hidden growth budget.</p>
+<hr />
+<h2 id="4-pre-call-and-in-call-controls">4. Pre-call and in-call controls</h2>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No identifiers</strong></td>
+<td>No surname, no photo, no city, no employer, no social handle. Accent is unavoidable; biography is not.</td>
+</tr>
+<tr>
+<td><strong>Topic-bound rooms</strong></td>
+<td>Rooms open with a topic prompt; off-topic escalation is a reportable signal, not a script to police</td>
+</tr>
+<tr>
+<td><strong>One-tap report</strong></td>
+<td>Ends the call instantly for the reporter, opens 6 reason chips, optionally records a 20-second voice note</td>
+</tr>
+<tr>
+<td><strong>Block</strong></td>
+<td>Permanent, device-level, both directions, no notification to the blocked party</td>
+</tr>
+<tr>
+<td><strong>Mute</strong></td>
+<td>Local mute is instant; the other side sees "muted", not the reason</td>
+</tr>
+<tr>
+<td><strong>Recording indicator</strong></td>
+<td>If either side records (see §5), both see a persistent amber bar and the room cannot start without acknowledgement</td>
+</tr>
+<tr>
+<td><strong>Leave</strong></td>
+<td>Always available, never confirmed, ends the session for both with a neutral "Call ended"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Report copy — exact:</strong></p>
+<blockquote>
+<p><strong>What happened?</strong>
+Sexual or inappropriate · Harassment or threats · Hate speech · They seem under 18 · Scam or spam · Something else</p>
+<p><em>Optional: hold to record 20 seconds.</em></p>
+<p><strong>Submit</strong> · <em>Cancel</em></p>
+</blockquote>
+<p>One screen. No "are you sure", no "this will notify the other person".</p>
+<hr />
+<h2 id="5-recording-and-evidence-the-hard-trade-off">5. Recording and evidence: the hard trade-off</h2>
+<p><strong>Default: no recording, no server-side audio retention.</strong> Audio is relayed, not stored. This is a real promise and it is in the privacy policy in one sentence.</p>
+<p><strong>But a report with no evidence is a he-said-she-said queue</strong>, and that is how harassment goes unpunished. The resolution:</p>
+<blockquote>
+<p><strong>Rolling 60-second encrypted buffer, device-local, never uploaded unless a report is filed within five minutes.</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Spec</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Where</td>
+<td>On-device only (iOS/Android encrypted file, app-private)</td>
+</tr>
+<tr>
+<td>Length</td>
+<td>60 seconds, overwritten continuously</td>
+</tr>
+<tr>
+<td>Upload</td>
+<td>Only on report, only the 60s preceding the tap</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>30 days if a report is filed; otherwise overwritten within 60s</td>
+</tr>
+<tr>
+<td>Disclosure</td>
+<td>A one-line notice at room start: "For safety, the last minute is kept on your device and only shared if either of you reports." + a "How this works" link</td>
+</tr>
+<tr>
+<td>Who can access</td>
+<td>Trust &amp; Safety reviewers, logged, two-person approval for playback</td>
+</tr>
+<tr>
+<td>User access</td>
+<td>Either party can request their own clip under GDPR/CCPA</td>
+</tr>
+</tbody>
+</table>
+<p>This is disclosed, symmetric, and limited. It does not make the product "recorded"; it makes reports adjudicable. Users who decline the buffer can still use the app, but their reports are "no evidence" and enforcement is limited to pattern-of-behaviour analysis (which is weaker — and the UI says so).</p>
+<hr />
+<h2 id="6-enforcement-ladder">6. Enforcement ladder</h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Trigger</th>
+<th>Action</th>
+<th>Appeal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>First upheld minor report</td>
+<td>24h suspension + mandatory policy read</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sexual harassment, threats, hate speech</td>
+<td>7-day suspension, removed from matching</td>
+<td>Yes, human review</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Second offence, or any physical threat</td>
+<td>Permanent ban, device-level</td>
+<td>Yes, one review</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Scam/romance fraud pattern</td>
+<td>Permanent ban, payment processor notified</td>
+<td>No</td>
+</tr>
+<tr>
+<td>5</td>
+<td>CSAM, credible threat to life</td>
+<td><strong>Permanent ban, preservation of evidence, report to NCMEC / law enforcement</strong></td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Target time-to-action:</strong> 24 hours for sexual/harassment reports, 4 hours for minor-safety, immediate automated mute on report submission. These are commitments, not aspirations; they appear in the launch checklist (<code>06</code> §4).</li>
+<li><strong>Moderation staffing:</strong> 2 FTE Trust &amp; Safety at launch, 24/5 coverage, on-call escalation for minor-safety. Ratio target: 1 reviewer per 25k monthly active users (<strong>H</strong>; measure queue depth, not ratio).</li>
+<li><strong>Reviewer wellbeing:</strong> rotating exposure limits, counselling budget, no reviewer sees the same case twice.</li>
+</ul>
+<hr />
+<h2 id="7-moderation-stack-by-layer">7. Moderation stack, by layer</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Mechanism</th>
+<th>Reality check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Signup</td>
+<td>Phone + liveness, device fingerprint, deny-list</td>
+<td>Catches ban evasion, not intent</td>
+</tr>
+<tr>
+<td>Pre-room</td>
+<td>Topic prompts, age gate, no identifiers</td>
+<td>Reduces surface area</td>
+</tr>
+<tr>
+<td>In-room</td>
+<td>On-device keyword spotting → local warning ("that word isn't okay here")</td>
+<td>Never uploads audio; high false-negative rate; do not over-claim</td>
+</tr>
+<tr>
+<td>In-room</td>
+<td>One-tap report, instant end, evidence buffer</td>
+<td>The only mechanism that reliably works</td>
+</tr>
+<tr>
+<td>Post-room</td>
+<td>Human review queue sorted by severity, repeat-offender graph</td>
+<td>Expensive; the bottleneck</td>
+</tr>
+<tr>
+<td>Structural</td>
+<td>No DMs, no follow, no profile browsing, 6-person cap</td>
+<td>The most effective control in the whole system</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What we will not claim:</strong> that we detect abuse in real time, that AI moderation makes rooms safe, or that verification proves someone is safe. Verification proves <em>accountability</em>, not <em>character</em>.</p>
+<hr />
+<h2 id="8-metrics-and-launch-gates">8. Metrics and launch gates</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Definition</th>
+<th>Launch gate (H)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Report rate</td>
+<td>Reports per 1,000 room-minutes</td>
+<td>≤ 3.0 and falling</td>
+</tr>
+<tr>
+<td>Upheld rate</td>
+<td>Upheld / reviewed</td>
+<td>Track only; &gt; 60% means over-reporting, &lt; 25% means under-action</td>
+</tr>
+<tr>
+<td>Repeat offenders</td>
+<td>Users with ≥ 2 upheld reports</td>
+<td>&lt; 5% of reported users</td>
+</tr>
+<tr>
+<td>Time to action</td>
+<td>Report → enforcement</td>
+<td>P50 ≤ 12h, P95 ≤ 24h</td>
+</tr>
+<tr>
+<td>Minor exposure</td>
+<td>Rooms with a suspected minor</td>
+<td><strong>Zero tolerance; any confirmed case freezes matching</strong></td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>Room-minutes by a verified participant</td>
+<td>≥ 99%</td>
+</tr>
+<tr>
+<td>Appeals overturned</td>
+<td>Appeals upheld / appeals</td>
+<td>&lt; 15%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Kill signal:</strong> if report rate does not decline over two consecutive months <em>while</em> verification and moderation are fully staffed, the matching model is the problem, not the moderation. Stop growth and redesign matching (e.g., reputation-gated pairing).</p>
+<hr />
+<h2 id="9-what-we-tell-users-exactly">9. What we tell users, exactly</h2>
+<p>Three sentences, on the safety screen and the App Store description:</p>
+<blockquote>
+<p><strong>Everyone you meet is verified as an adult.</strong>
+<strong>We never share your location, your full name, or your contacts.</strong>
+<strong>One tap ends any call and sends it to a human reviewer.</strong></p>
+</blockquote>
+<p>If any of those becomes untrue, the copy changes before the feature ships — not after.</p>
+<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>

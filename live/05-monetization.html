@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>05 — Monetization — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html" class="on">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p><strong>Principle:</strong> the free tier must be genuinely useful and the paid tier must sell <strong>time, priority, and proof</strong> — never safety, never the learning loop, never the ability to leave a bad room.</p>
+<p>Metering safety is not a business model; it is a scandal.</p>
+<hr />
+<h2 id="1-tiers">1. Tiers</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Free</strong></th>
+<th><strong>Plus</strong></th>
+<th><strong>Career</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Price (US)</td>
+<td>$0</td>
+<td><strong>$12.99/mo · $79.99/yr</strong></td>
+<td><strong>$24.99/mo · $149.99/yr</strong></td>
+</tr>
+<tr>
+<td>Live 1:1 + tables</td>
+<td><strong>20 min/day</strong></td>
+<td>Unlimited, fair use 120 min/day</td>
+<td>Unlimited + priority</td>
+</tr>
+<tr>
+<td>Priority matching</td>
+<td>—</td>
+<td>Yes (queue priority, not human priority)</td>
+<td>Highest</td>
+</tr>
+<tr>
+<td>AI practice partner</td>
+<td>5 min/day</td>
+<td>Unlimited</td>
+<td>Unlimited + interview mode</td>
+</tr>
+<tr>
+<td>Interview rooms</td>
+<td>Join only if a host is live</td>
+<td>Join</td>
+<td><strong>Unlimited, JD-tailored prompts</strong></td>
+</tr>
+<tr>
+<td>Recap</td>
+<td>Basic (time, 1 fix)</td>
+<td>Full (words, 2 fixes, next step)</td>
+<td>Full + readiness score + rubric</td>
+</tr>
+<tr>
+<td>Word bank / review</td>
+<td>20 words</td>
+<td>Unlimited</td>
+<td>Unlimited + role vocabulary</td>
+</tr>
+<tr>
+<td>Ads</td>
+<td><strong>None, ever</strong></td>
+<td>None</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Safety features</td>
+<td><strong>All included</strong></td>
+<td>All</td>
+<td>All</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why $12.99 / $79.99:</strong> it is exact parity with HelloTalk VIP, verified from their store listing on 2026-11-15. Parity turns the comparison into one sentence — <em>"same price, and it actually connects you."</em> Undercutting at $9.99 signals a weaker product and leaves money on the table from the segment with the highest willingness to pay.</p>
+<p><strong>Why a $24.99 Career tier:</strong> job seekers are buying an outcome with an income attached. Anchoring against a human interview coach ($100–300/session) rather than against a language app is honest and leaves the premium tier structurally open. It is the only tier where the content (role/JD-specific rooms, rubric feedback) justifies a different price.</p>
+<p><strong>Annual pricing:</strong> $79.99 (49% off monthly equivalent) and $149.99 (50% off). Annual is the retention product; it should be the default toggle, with monthly one tap away — not hidden.</p>
+<hr />
+<h2 id="2-what-is-metered-and-why-that-exact-thing">2. What is metered, and why that exact thing</h2>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Metered?</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Live minutes</td>
+<td><strong>Yes</strong> — the only metered thing</td>
+<td>It is the scarce, costly resource (human supply + relay)</td>
+</tr>
+<tr>
+<td>Corrections</td>
+<td>No</td>
+<td>Metering feedback converts the free tier into a demo</td>
+</tr>
+<tr>
+<td>Recap</td>
+<td>Basic free, full paid</td>
+<td>The recap is the habit; the <em>depth</em> is the product</td>
+</tr>
+<tr>
+<td>AI partner</td>
+<td>5 min/day free</td>
+<td>Enough to prove it works, not enough to replace the human product</td>
+</tr>
+<tr>
+<td>Safety tools</td>
+<td><strong>Never</strong></td>
+<td>Charging for reporting would be indefensible</td>
+</tr>
+<tr>
+<td>Leaving a room</td>
+<td><strong>Never</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The cap is 20 minutes/day, not 20 per month.</strong> A daily cap lets a free user build a habit (three sessions a week at ten minutes) without ever feeling rationed across a month. It also bounds free cost predictably.</p>
+<p><strong>Cap UX:</strong> remaining time is shown on Home only, as a quiet line — "14 min left today". The cap is <strong>never</strong> enforced mid-conversation. If a call reaches the limit, the current room finishes and the next join is blocked, with the paywall offered <em>after</em> the recap, when the value is freshest.</p>
+<hr />
+<h2 id="3-unit-economics">3. Unit economics</h2>
+<p>Live audio is dramatically cheaper to run than an AI tutor. That is the structural advantage of this product and the reason the free tier can exist at all.</p>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Estimate</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio relay (SFU)</td>
+<td><strong>$0.004–0.010 / participant-hour</strong></td>
+<td>LiveKit/Daily/Agora list pricing, volume-dependent (<strong>H</strong>)</td>
+</tr>
+<tr>
+<td>Transcription (live captions, optional)</td>
+<td>$0.0048/min, only when captions are on</td>
+<td>Deepgram Nova-3 rate, verified 2026-11-15</td>
+</tr>
+<tr>
+<td>AI fallback partner</td>
+<td>~$0.03–0.06 / minute</td>
+<td>Realtime speech-to-speech pricing (<strong>H</strong>)</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>~$0.90 one-time per user</td>
+<td>Vendor range (<strong>H</strong>)</td>
+</tr>
+<tr>
+<td>Moderation</td>
+<td>~$0.15–0.30 / active user / month</td>
+<td>Reviewer cost ÷ caseload (<strong>H</strong>)</td>
+</tr>
+<tr>
+<td>Infra, storage, push</td>
+<td>~$0.05 / MAU / month</td>
+<td>(<strong>H</strong>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Illustrative gross margin at 10 minutes/day, 20 days/month (200 min):</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Free user</th>
+<th>Plus user</th>
+<th>Career user</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Relay</td>
+<td>$0.03</td>
+<td>$0.03</td>
+<td>$0.03</td>
+</tr>
+<tr>
+<td>AI fallback (share of minutes)</td>
+<td>$0.10</td>
+<td>$0.30</td>
+<td>$0.30</td>
+</tr>
+<tr>
+<td>Moderation + infra</td>
+<td>$0.25</td>
+<td>$0.25</td>
+<td>$0.30</td>
+</tr>
+<tr>
+<td><strong>Monthly cost</strong></td>
+<td><strong>~$0.38</strong></td>
+<td><strong>~$0.58</strong></td>
+<td><strong>~$0.63</strong></td>
+</tr>
+<tr>
+<td>Net revenue (after 15% store fee)</td>
+<td>$0</td>
+<td>$11.04</td>
+<td>$21.24</td>
+</tr>
+<tr>
+<td><strong>Gross margin</strong></td>
+<td>subsidised</td>
+<td><strong>~95%</strong></td>
+<td><strong>~97%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>These are hypotheses until measured (<strong>H</strong>), but the shape is the point: <strong>the marginal cost of a paid live user is under a dollar a month.</strong> An AI tutor with 300 minutes of speech costs $3–5. That gap is why this business can afford a generous free tier and why the tutor plan could not.</p>
+<p><strong>Break-even:</strong> with ~$0.40/month cost per free user and ~$11 net per Plus subscriber, break-even conversion is <strong>≈3.6%</strong> of monthly actives — roughly in line with the category median, not double it. That is a materially easier business than the AI-tutor model, and it is the strongest argument for building this instead.</p>
+<hr />
+<h2 id="4-conversion-hypothesis">4. Conversion hypothesis</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Hypothesis (H)</th>
+<th>Benchmark basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Install → verified</td>
+<td>55%</td>
+<td>Verification friction is real; measure drop-off per step</td>
+</tr>
+<tr>
+<td>Verified → first room completed</td>
+<td>70%</td>
+<td>Mic check + matching quality decide this</td>
+</tr>
+<tr>
+<td>First room → second room within 7 days</td>
+<td>45%</td>
+<td>The real retention gate</td>
+</tr>
+<tr>
+<td>Free → paid by day 30</td>
+<td><strong>3–5%</strong></td>
+<td>Category freemium is 2.1% D35 median; live value may lift it</td>
+</tr>
+<tr>
+<td>Plus → Career upsell</td>
+<td>8–12% of Plus</td>
+<td>Job-seeker subset with a dated interview</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What we deliberately do not do:</strong> trial-bait (a 3-day trial with a card is the highest-converting and highest-churn pattern), fake scarcity ("only 3 spots"), or paywalling the second session. The second session is where the habit forms; it must be free.</p>
+<hr />
+<h2 id="5-pricing-experiments-each-with-a-kill-condition">5. Pricing experiments (each with a kill condition)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Test</th>
+<th>Design</th>
+<th>Decision it unblocks</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P-1</td>
+<td>Cap: 20 vs 40 min/day</td>
+<td>Two-arm, 6 weeks, measure D30 conversion and free COGS</td>
+<td>Whether the cap is a growth constraint or cost control</td>
+<td>$0</td>
+</tr>
+<tr>
+<td>P-2</td>
+<td>$12.99 vs $9.99</td>
+<td>Fake-door on the paywall, 4 weeks</td>
+<td>Plus price</td>
+<td>$0</td>
+</tr>
+<tr>
+<td>P-3</td>
+<td>Annual-first vs monthly-first</td>
+<td>Paywall default toggle, 4 weeks</td>
+<td>Whether annual share clears 50%</td>
+<td>$0</td>
+</tr>
+<tr>
+<td>P-4</td>
+<td>Career at $24.99 vs $19.99</td>
+<td>Fake-door with qualification ("interview in 60 days?")</td>
+<td>Career price</td>
+<td>$0</td>
+</tr>
+<tr>
+<td>P-5</td>
+<td>AI partner as paid-only vs 5 free min/day</td>
+<td>Cohort test, 8 weeks</td>
+<td>Whether AI is a hook or a crutch</td>
+<td>$0</td>
+</tr>
+</tbody>
+</table>
+<p>All five are product-side tests; total cash cost is zero. They run after launch (M7+), not before, because they need live cohorts.</p>
+<hr />
+<h2 id="6-what-we-will-not-charge-for">6. What we will not charge for</h2>
+<ul>
+<li>Reporting, blocking, or leaving a call.</li>
+<li>Corrections or the recap's basic version.</li>
+<li>Access to a human when the AI fails.</li>
+<li>Removing ads (there are none).</li>
+<li>"Verification badge" as a cosmetic upgrade — verification is a gate, not a purchase.</li>
+<li>Priority in the <em>human</em> queue sold as skipping safety checks. Priority matching reorders people who have all passed the same gate; it never bypasses one.</li>
+</ul>
+<hr />
+<h2 id="7-revenue-shape-over-24-months-hypothesis-not-a-model">7. Revenue shape over 24 months (hypothesis, not a model)</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>M6</th>
+<th>M12</th>
+<th>M24</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Verified users</td>
+<td>25k</td>
+<td>120k</td>
+<td>500k</td>
+</tr>
+<tr>
+<td>MAU</td>
+<td>12k</td>
+<td>60k</td>
+<td>260k</td>
+</tr>
+<tr>
+<td>Paid (3.5% of MAU)</td>
+<td>420</td>
+<td>2,100</td>
+<td>9,100</td>
+</tr>
+<tr>
+<td>Blended ARPU (net/mo)</td>
+<td>$12.50</td>
+<td>$13.20</td>
+<td>$13.80</td>
+</tr>
+<tr>
+<td>ARR run-rate</td>
+<td>$63k</td>
+<td>$333k</td>
+<td><strong>$1.51M</strong></td>
+</tr>
+</tbody>
+</table>
+<p>These numbers are <strong>placeholders</strong>, not a forecast: they exist to show the shape (sub-linear cost, high gross margin, conversion-bound) and to be replaced by real cohort data at M9. A full model belongs in a spreadsheet with inputs, not in a design document — the previous plan's mistake was treating model output as strategy.</p>
+<p><strong>The one number that matters:</strong> paid conversion. Everything else is a multiplier on it.</p>
+<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>02 — Flows, screens, and wireframes — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html" class="on">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p><strong>Rule for this document:</strong> if a screen has two primary actions, it is wrong. Every screen below has exactly one thing to press.</p>
+<hr />
+<h2 id="1-the-four-flows">1. The four flows</h2>
+<h3 id="11-first-run-target-75-seconds-to-first-room">1.1 First run (target: 75 seconds to first room)</h3>
+<pre><code>Welcome ──► Age gate ──► Your language ──► Practise language ──► Level ──► Intent ──► Mic check ──► Home ──► Matching
+  10s          5s            10s                10s              20s         10s         10s          —        —
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What the user does</th>
+<th>What the app does</th>
+<th>Why it exists</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Welcome</td>
+<td>Nothing — one button: <strong>Get started</strong></td>
+<td>Explains the promise in one sentence</td>
+<td>No carousel, no login wall</td>
+</tr>
+<tr>
+<td>Age gate</td>
+<td>Taps "I'm 18 or older"</td>
+<td>Blocks under-18s with a clear reason</td>
+<td>Legal + safety; no dark pattern</td>
+</tr>
+<tr>
+<td>Your language</td>
+<td>Taps one chip</td>
+<td>Sets <code>L1</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Practise language</td>
+<td>Taps one chip</td>
+<td>Sets <code>L2</code> and pair</td>
+<td>Only pairs with live supply are shown</td>
+</tr>
+<tr>
+<td>Level</td>
+<td>Speaks for 20 seconds</td>
+<td>Estimates A1–C1, shows the estimate and lets them adjust one notch</td>
+<td>Self-report alone is noisy; audio alone is scary</td>
+</tr>
+<tr>
+<td>Intent</td>
+<td>Taps one chip (Interview / Everyday / Exam / Just talking)</td>
+<td>Sets topic defaults</td>
+<td>Drives room content</td>
+</tr>
+<tr>
+<td>Mic check</td>
+<td>Says one sentence</td>
+<td>Plays it back, checks level and echo</td>
+<td>40% of first-call failures are audio setup</td>
+</tr>
+<tr>
+<td>Home</td>
+<td>Taps <strong>Talk</strong></td>
+<td>Enters queue</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>No account creation before value.</strong> Sign-in (Apple/Google/email) happens <em>after</em> the first room, framed as "save your progress". Phone verification is required only before the second room — that is the point where a bad actor costs someone real time.</p>
+<h3 id="12-matching">1.2 Matching</h3>
+<pre><code>Tap Talk
+  └─► Finding (0–12s) ──────────────► Room
+        │
+        ├─ at 12s: &quot;No one free right now&quot;
+        │     ├─► Practise with AI while waiting ──► AI room; human handover when available
+        │     └─► Change topic / language ──► back to Finding
+        └─ at 45s: offer to join a table or leave the queue
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>UI</th>
+<th>Copy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Finding</strong></td>
+<td>One pulsing ring, pair chips, elapsed seconds <strong>not</strong> shown as a countdown</td>
+<td>"Finding someone who wants to practise English"</td>
+</tr>
+<tr>
+<td><strong>Match found</strong></td>
+<td>Ring snaps to solid, partner's display name + level + topic</td>
+<td>"Mateo · B1 · Interview practice" → auto-join after 2s</td>
+</tr>
+<tr>
+<td><strong>Fallback</strong></td>
+<td>Same layout, label changes</td>
+<td>"No one free — Ana can practise with you for now"</td>
+</tr>
+<tr>
+<td><strong>Handover</strong></td>
+<td>Partner card slides in mid-call</td>
+<td>"A person just arrived. Switch? 10s" — never forced</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why the 12-second rule:</strong> a queue that feels infinite reads as broken. Twelve seconds is long enough for a real match and short enough to believe. The AI fallback means the queue can never produce dead time — but the person must always be told which one they are talking to.</p>
+<p><strong>Matching inputs, in priority order:</strong> language pair → level band (±1) → intent/topic → recent partner history (never repeat the same person twice in 24h unless both opt in) → reciprocity balance.</p>
+<h3 id="13-the-11-room">1.3 The 1:1 room</h3>
+<pre><code>        ┌─────────────────────────────┐
+        │ English ↔ Spanish   04:12   │   ← pair, elapsed
+        │ ● Connected                 │
+        │                             │
+        │   ╭───────╮   ╭───────╮     │
+        │   │  You  │   │ Mateo │     │   ← presence, speaking state
+        │   ╰───────╯   ╰───────╯     │
+        │   ▓▓▓▓▓▓▓░░░░░  balance     │   ← speaking-time meter
+        │                             │
+        │  ┌───────────────────────┐  │
+        │  │ Prompt: Tell him about│  │   ← collapsible topic card
+        │  │ a job you want.       │  │
+        │  └───────────────────────┘  │
+        │                             │
+        │   ( leave )  (  mute  )  ( … ) │  ← 56 / 72 / 56 px
+        └─────────────────────────────┘
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Behaviour</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pair + timer</td>
+<td>Top-left, small, monospaced digits</td>
+<td>Orientation without a dashboard</td>
+</tr>
+<tr>
+<td>Connection dot</td>
+<td>Green / amber / red; tap for a one-line diagnosis</td>
+<td>Audio problems are the #1 silent churn cause</td>
+</tr>
+<tr>
+<td>Presence</td>
+<td>Two circles that gently expand while that person talks</td>
+<td>You can see who is speaking without a name-tag hierarchy</td>
+</tr>
+<tr>
+<td>Balance meter</td>
+<td>One bar, two segments; amber if one side exceeds 75% for 90 seconds</td>
+<td>The only nudge toward pedagogy that is not a lesson</td>
+</tr>
+<tr>
+<td>Prompt card</td>
+<td>Collapsed after 60s; pull up to change</td>
+<td>Structure for people who freeze; invisible for people who don't</td>
+</tr>
+<tr>
+<td>Leave</td>
+<td>Always visible, never confirmed with a guilt screen</td>
+<td>Trust</td>
+</tr>
+<tr>
+<td>Mute</td>
+<td>72px, centre, unmistakable state</td>
+<td>The one control that must never be missed</td>
+</tr>
+<tr>
+<td>More</td>
+<td>Correct cue, translate a word, report, block</td>
+<td>Destructive actions are one level deeper, never in the thumb's path</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Correction cue (the differentiator that must stay light):</strong>
+1. Long-press the "…" → <strong>Correct something</strong>.
+2. The last 10 seconds of transcript appear as tappable phrases.
+3. Tap the phrase, type or accept a suggested version.
+4. Partner sees a small chip: <em>"Try: 'I've been working there since 2020'"</em> — no interruption, no modal, dismissible.
+5. Chip is saved to their recap automatically.</p>
+<p><strong>Translation:</strong> tap a word in the live caption strip → one-word gloss, 2-second display, then gone. No full-sentence translation — that turns practice into reading.</p>
+<h3 id="14-group-table-36">1.4 Group table (3–6)</h3>
+<pre><code>Join table ──► 3-min round ──► rotate speaker ──► 3-min round ──► … ──► recap
+</code></pre>
+<ul>
+<li><strong>No host.</strong> A rotating "table lead" is chosen per round — the person who has spoken least.</li>
+<li><strong>Round timer</strong> is visible to everyone; at 0:00 the lead picks the next speaker or the app picks the person with the least time.</li>
+<li><strong>Raise-hand-free:</strong> you tap your own circle to indicate "I'd like the next turn"; no queue management UI.</li>
+<li><strong>Pass</strong> is one tap and carries no penalty.</li>
+<li><strong>Hard cap: 6.</strong> Above that, someone is always silent, and silence is what killed Clubhouse rooms.</li>
+</ul>
+<h3 id="15-recap-and-the-learning-loop">1.5 Recap and the learning loop</h3>
+<pre><code>Leave room ──► Recap (30s max) ──► Home ──► optional nudge next day
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Recap block</th>
+<th>Content</th>
+<th>Interaction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>You spoke</strong></td>
+<td>6:40 of 10:00 · 41 utterances</td>
+<td>None — just the number</td>
+</tr>
+<tr>
+<td><strong>Words you reached for</strong></td>
+<td>3 words you paused on or asked for</td>
+<td>Tap to save to word bank</td>
+</tr>
+<tr>
+<td><strong>Two fixes</strong></td>
+<td>The corrections you flagged, one line each</td>
+<td>Tap to hear the model version</td>
+</tr>
+<tr>
+<td><strong>One next step</strong></td>
+<td>"Next time: practise past tense in interview answers"</td>
+<td>Accept → becomes tomorrow's prompt</td>
+</tr>
+<tr>
+<td><strong>Save / Skip</strong></td>
+<td>Never auto-posted, never shared, no confetti</td>
+<td>Two buttons, equal weight</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Streak model:</strong> a <strong>weekly</strong> goal (3 sessions), not a daily streak. Missing a day does not reset anything. The nudge is at a user-chosen time, once, and it can be turned off in one tap.</p>
+<hr />
+<h2 id="2-the-12-screens-complete-list">2. The 12 screens (complete list)</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Screen</th>
+<th>Primary action</th>
+<th>Secondary</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Welcome</td>
+<td>Get started</td>
+<td>—</td>
+<td>One sentence, one illustration</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Age gate</td>
+<td>I'm 18+</td>
+<td>Why we ask</td>
+<td>Blocks under-18 with a real explanation</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Language pair</td>
+<td>Continue</td>
+<td>—</td>
+<td>Two chip rows; unavailable pairs greyed with reason</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Level check</td>
+<td>Record 20s</td>
+<td>Skip (defaults A2)</td>
+<td>Shows estimate, allows ±1 adjustment</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Intent</td>
+<td>Continue</td>
+<td>—</td>
+<td>4 chips</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Mic check</td>
+<td>Sounds good</td>
+<td>Fix audio</td>
+<td>Live level meter</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Home</td>
+<td><strong>Talk</strong></td>
+<td>Join a table</td>
+<td>One live card: "14 people online for English ↔ Spanish"</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Finding</td>
+<td>Cancel</td>
+<td>Practise with AI</td>
+<td>Pulsing ring, no spinner</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Room 1:1</td>
+<td>Mute</td>
+<td>Leave / More</td>
+<td>North-star screen</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Table</td>
+<td>Mute</td>
+<td>Leave / Next speaker</td>
+<td>3–6 tiles, round timer</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Report sheet</td>
+<td>Submit</td>
+<td>Cancel</td>
+<td>Reason chips + optional 20s note</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Recap</td>
+<td>Done</td>
+<td>Save words</td>
+<td>30s, scroll-free</td>
+</tr>
+</tbody>
+</table>
+<p>Settings, profile, word bank, and billing exist but are <strong>not part of the core flow</strong>; they are reached from a single gear on Home and never interrupt a session.</p>
+<hr />
+<h2 id="3-edge-cases-that-decide-whether-this-feels-trustworthy">3. Edge cases that decide whether this feels trustworthy</h2>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Partner leaves mid-sentence</td>
+<td>5-second "Mateo left" state → immediate requeue with the same topic, no penalty, no explanation required</td>
+</tr>
+<tr>
+<td>You lose connection</td>
+<td>Auto-reconnect for 30s; after that, a one-tap "rejoin or leave"</td>
+</tr>
+<tr>
+<td>Partner is silent for 60s</td>
+<td>Prompt appears for you only: "Ask them a question" — never a public callout</td>
+</tr>
+<tr>
+<td>Someone is inappropriate</td>
+<td>One tap on <strong>Report</strong> ends the call for both, mutes you instantly, opens the report sheet; the other side sees "Call ended", not "You were reported"</td>
+</tr>
+<tr>
+<td>You are reported</td>
+<td>You see "Call ended" and nothing else; enforcement is asynchronous and appealable (<code>04</code> §6)</td>
+</tr>
+<tr>
+<td>No one in your pair</td>
+<td>App tells you the truth ("only 3 people online for Japanese right now") and offers the nearest pair with supply</td>
+</tr>
+<tr>
+<td>Blocked user re-queues</td>
+<td>Matching excludes blocked pairs permanently, device-level</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Anti-dark-pattern rules:</strong> no "are you sure you want to leave?", no streak-loss warnings, no artificial scarcity, no "someone is waiting for you" notifications that are not true.</p>
+<hr />
+<h2 id="4-navigation-model">4. Navigation model</h2>
+<p>Three destinations, not five:</p>
+<pre><code>                 ┌──────────────┐
+                 │    Home      │  ← Talk, table, online count
+                 └──────┬───────┘
+        ┌───────────────┼───────────────┐
+     Recap           Room            Settings
+   (from a call)   (modal, full)    (gear, top-right)
+</code></pre>
+<p>No tab bar during a call. No persistent bottom nav. The back gesture always means "leave the room", and it always asks nothing.</p>
+<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>
