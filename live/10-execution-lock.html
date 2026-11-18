@@ -1,0 +1,1217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>10 — Execution lock: decisions, ASR architecture, liquidity, and the honest model — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for high-signal conversation<br>v5.0 · 2026-11-18</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="08-launch-plan.html">08 · Launch plan</a>
+  <a href="09-v5-master-plan.html">09 · v5 master plan</a>
+  <a href="10-execution-lock.html" class="on">10 · Execution lock</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p><strong>Version 5.1 · 2026-11-18 · Status: locked. Reversal requires a stated trigger, not a meeting.</strong></p>
+<p>This closes the five open questions in <code>09</code> §12, specifies the audio pipeline that makes the price work, and recalculates the financial model with that pipeline fixed. <strong>The recalculation changes one number materially and leaves three unchanged.</strong> §5 says exactly which, and why the 15% → 40% story is partly true and partly a category error.</p>
+<hr />
+<h2 id="0-what-locked-means">0. What "locked" means</h2>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Locked</strong></td>
+<td>Built this way. Changing it requires the reversal trigger in §1 to fire and a written note.</td>
+</tr>
+<tr>
+<td><strong>Trigger</strong></td>
+<td>A measurable condition, not a feeling. Reviewed monthly.</td>
+</tr>
+<tr>
+<td><strong>Gate</strong></td>
+<td>A launch condition. Not met, not shipped.</td>
+</tr>
+</tbody>
+</table>
+<p>Everything below is reversible. Nothing below is silently reversible.</p>
+<hr />
+<h2 id="1-the-decision-log">1. The decision log</h2>
+<h3 id="d1-free-cap-30-minday-and-90-minweek">D1 — Free cap: <strong>30 min/day and 90 min/week</strong></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Decision</strong></td>
+<td>Both limits, whichever binds first. Shown as a 4px hairline, not a counter.</td>
+</tr>
+<tr>
+<td><strong>Why</strong></td>
+<td>The average free MAU uses <strong>5.4 rooms/month (81 minutes)</strong>, so the daily cap binds for under 6% of users. The weekly cap is what contains the tail: a maxed free user costs <strong>$0.94/month</strong> at 90 min/week versus <strong>$2.60/month</strong> at 30 min/day uncapped.</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>Average free MAU <strong>$0.61/month</strong>; maxed free user <strong>$0.94</strong>; the tail is bounded, which is what makes the free tier forecastable.</td>
+</tr>
+<tr>
+<td><strong>Why not 20/day</strong></td>
+<td>It cuts average usage by ~4% (saves $0.02/MAU) and costs the headline. It is a worse trade: the cap that matters is weekly, and 20/day reads stingy in ASO copy.</td>
+</tr>
+<tr>
+<td><strong>Reversal trigger</strong></td>
+<td>Free-tier COGS &gt; $0.70/MAU/month for two consecutive months → drop to 20/day and 60/week.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="d2-pro-pricing-1999-at-launch-test-2499-at-month-6">D2 — Pro pricing: <strong>$19.99 at launch; test $24.99 at month 6</strong></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Decision</strong></td>
+<td>$19.99/mo · $199/yr at launch. A $24.99 test runs only after the practice record and voice feedback ship.</td>
+</tr>
+<tr>
+<td><strong>Why</strong></td>
+<td>$24.99 without an artifact is a price with no proof. At $19.99 and a 35% Pro mix, net ARPP is <strong>$9.52</strong> and break-even conversion is <strong>4.2%</strong> (§5). Moving to $24.99 before the record exists risks a 20–30% conversion drop to protect ~$0.60 of ARPP.</td>
+</tr>
+<tr>
+<td><strong>Why the mix matters more than the price</strong></td>
+<td>Plus alone breaks even at 6.7%; a 35% Pro mix at 4.2%. <strong>The Pro tier is the business</strong>, which is why the interview rooms, the record, and voice feedback sit there and not in Plus.</td>
+</tr>
+<tr>
+<td><strong>Reversal trigger</strong></td>
+<td>Pro share &lt; 25% of new subscriptions at month 6 → hold $19.99, add annual-only discount, and stop building Pro features until the mix moves.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="d3-vibe-check-drop-the-room-instantly-move-the-score-only-after-review">D3 — Vibe Check: <strong>drop the room instantly; move the score only after review</strong></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Decision</strong></td>
+<td>Two reports remove the reported user from <strong>that room</strong>, immediately, for everyone's safety. The account is untouched until a human reviews.</td>
+</tr>
+<tr>
+<td><strong>Why</strong></td>
+<td>Two people in a five-person room is <strong>40% of the room</strong> and can be coordinated. Letting two reports move a score is a brigading tool with a safety label. The room drop is reversible (they join another room in 30 seconds); a score collapse is not.</td>
+</tr>
+<tr>
+<td><strong>What the reporter sees</strong></td>
+<td>The person's circle goes quiet and greys out; the room continues. One line: <em>"They've left."</em> No accusation, no confirmation of who reported.</td>
+</tr>
+<tr>
+<td><strong>Appeal</strong></td>
+<td>Any access restriction beyond the room requires review. The restricted user gets one screen, one reason, one <strong>Appeal</strong> button, and a 72-hour human decision.</td>
+</tr>
+<tr>
+<td><strong>Reversal trigger</strong></td>
+<td>30-day repeat-offender rate &gt; 5% of reported users → add a <strong>24-hour protective exclusion</strong> before review (matching scope only, never the score, always appealable).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="d4-ai-co-host-paid-rooms-only-plus-a-capped-free-rescue">D4 — AI co-host: <strong>paid rooms only, plus a capped free rescue</strong></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Decision</strong></td>
+<td>AI participates in (a) paid Topic Boosts, (b) Pro Seed Rooms, (c) a free <strong>stall rescue</strong>: after 60 seconds with two people waiting, max <strong>3 minutes</strong>, max <strong>once per user per day</strong>.</td>
+</tr>
+<tr>
+<td><strong>Why</strong></td>
+<td>An AI participant costs <strong>$0.03–0.06/minute</strong> → <strong>$0.45–0.90 per 15-minute room</strong>, 7–13× an entire human room. A free co-host in 20% of rooms adds ~$0.25/MAU and cuts Y3 gross margin by ~6 points; break-even conversion rises 1.6 points.</td>
+</tr>
+<tr>
+<td><strong>Why the rescue exists</strong></td>
+<td>Without it, two people who almost matched leave. Three minutes of AI costs <strong>$0.09–0.18</strong> — the cheapest retention spend in the product.</td>
+</tr>
+<tr>
+<td><strong>Reversal trigger</strong></td>
+<td>P90 time-to-room &gt; 45s for four consecutive weeks → extend the free rescue to 5 minutes, but only in the <strong>two lowest-density topics</strong>, never globally.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="d5-room-length-15-minutes-for-topic-rooms-10-for-practice">D5 — Room length: <strong>15 minutes for topic rooms, 10 for Practice</strong></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Decision</strong></td>
+<td>AI / Science / Philosophy / Tech / Career = 15:00. Language and interview drills = 10:00.</td>
+</tr>
+<tr>
+<td><strong>Why</strong></td>
+<td>A topic needs 15 minutes to get past positions and into reasons. A drill does not: interview and language rooms have a fixed structure (question → answer → feedback) that degrades into filler after ten.</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td><strong>$0.068</strong> per 15-minute room versus <strong>$0.045</strong> per 10-minute room. Practice rooms are 34% cheaper per session and higher frequency — they subsidise the topic rooms' cost.</td>
+</tr>
+<tr>
+<td><strong>Reversal trigger</strong></td>
+<td>Topic-room completion &lt; 70% at day 60 → cut to 12 minutes. Completion &gt; 88% with strong recap engagement at day 90 → test 18.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-the-sampled-asr-architecture">2. The sampled ASR architecture</h2>
+<h3 id="21-why-the-pipeline-is-the-business">2.1 Why the pipeline is the business</h3>
+<p>A 15-minute room with four speakers is <strong>60 participant-minutes</strong> but only about <strong>18 speaker-minutes of actual speech</strong> — people listen most of the time. Transcribing the stream blindly costs 3.3× what the conversation contains. Transcribing the whole conversation costs 5.5× what the product needs.</p>
+<pre><code>                 CLIENT (no audio leaves by default)
+ ┌──────────────────────────────────────────────────────────┐
+ │  mic ──► 30ms frames ──► Silero VAD (on-device, ONNX)     │
+ │                            │                             │
+ │              ┌─────────────┼─────────────────┐           │
+ │              ▼             ▼                 ▼           │
+ │        speech mask    turn markers    60s encrypted ring  │
+ │        (timestamps)   (who, when)     buffer (memory)     │
+ └──────────────┬─────────────┬─────────────────┬───────────┘
+                │             │                 │
+                ▼             ▼                 ▼ (report only)
+        ┌──────────────┐ ┌───────────┐  ┌──────────────────┐
+        │ 6-min window │ │ 5% sample │  │ 30s clip, with   │
+        │  selector    │ │  router   │  │ explicit consent │
+        └──────┬───────┘ └─────┬─────┘  └────────┬─────────┘
+               ▼               ▼                 ▼
+           ASR (batch)     ASR (batch)      ASR + human
+               ▼               ▼                 ▼
+          summary LLM     calibration      T&amp;S case
+</code></pre>
+<h3 id="22-on-device-vad">2.2 On-device VAD</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>Silero VAD v5, ONNX, ~1.8 MB</td>
+<td>Runs in &lt;1% CPU on a 2020 phone; no vendor dependency</td>
+</tr>
+<tr>
+<td>Frame</td>
+<td>30 ms, 16 kHz mono</td>
+<td>Standard; matches Opus frame size</td>
+</tr>
+<tr>
+<td>Threshold</td>
+<td>0.5, hysteresis 0.35</td>
+<td>Prevents flicker at the edge of speech</td>
+</tr>
+<tr>
+<td>Min speech</td>
+<td>250 ms</td>
+<td>Rejects coughs and door slams</td>
+</tr>
+<tr>
+<td>Hangover</td>
+<td>300 ms</td>
+<td>Keeps the tail of a word; ASR accuracy drops sharply on clipped endings</td>
+</tr>
+<tr>
+<td>Output</td>
+<td><code>[{start_ms, end_ms, energy}]</code> per speaker</td>
+<td>~2 KB per room. This is the only thing uploaded by default</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What it saves:</strong> silence, listening, and background noise. In a healthy four-person room that is <strong>~70% of participant-minutes</strong>. It also produces the turn-taking data the balance meter and the score need — for free, before any server sees audio.</p>
+<p><strong>What it costs:</strong> aggressive VAD misses whispers and quiet speakers, which biases the transcript toward confident voices. Hangover plus a 0.35 floor recovers most of it. Any room where VAD speech share is &lt; 20% is flagged for a human listen — that pattern is either a broken mic or someone being talked over.</p>
+<h3 id="23-selecting-the-6-minute-recap-window">2.3 Selecting the 6-minute recap window</h3>
+<p><strong>Not the first six minutes, and not the loudest six.</strong> The first six are introductions; the loudest six are arguments without conclusions. The recap needs the arc: what was asked, where it turned, how it landed.</p>
+<p><strong>Algorithm — four 90-second blocks, dynamic programming over 30-second buckets:</strong></p>
+<ol>
+<li>Score each 30s bucket: <code>0.40 × speech_density + 0.25 × turn_count_normalised + 0.20 × recency + 0.15 × novelty(energy variance)</code>.</li>
+<li>Subtract <code>0.5 × overlap_ratio</code> for crosstalk — unintelligible audio is worse than quiet audio.</li>
+<li>Pick <strong>four 90s blocks</strong>, maximising total score, with constraints: at least one block from <strong>0:30–3:30</strong>, at least one from the <strong>final 3:00</strong>, at most two adjacent.</li>
+<li>Concatenate, transcribe, summarise with timestamps so the recap can cite "at 11:20, someone said…".</li>
+</ol>
+<p><strong>Why contiguous blocks:</strong> sentence-level stitching produces summaries that read like a random sample of quotes. Blocks preserve the argument. Four 90-second pieces are enough for three takeaways and one 30-second highlight.</p>
+<p><strong>Fallback:</strong> if the room is &lt; 6 minutes or has &lt; 4 minutes of speech, transcribe everything and label the recap "short session."</p>
+<h3 id="24-the-5-sample">2.4 The 5% sample</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rate</strong></td>
+<td>5% of rooms, whole-room (not 5% of each room) — you need context to judge a room</td>
+</tr>
+<tr>
+<td><strong>Selection</strong></td>
+<td><code>HMAC(server_secret, room_id + date)</code> → uniform, unpredictable to the client, reproducible in an audit</td>
+</tr>
+<tr>
+<td><strong>Stratification</strong></td>
+<td>Forced minimums: 2% of each topic, 100% of rooms with an upheld report in the last 90 days, 100% of rooms where a participant's score changed</td>
+</tr>
+<tr>
+<td><strong>Use</strong></td>
+<td>Calibration, P1 discovery, and score-model training. <strong>Never automatic enforcement</strong></td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>0.9 speaker-minutes per room at 5% of rooms → <strong>$0.005/room</strong></td>
+</tr>
+<tr>
+<td><strong>Retention</strong></td>
+<td>30 days, then deleted; transcripts kept, audio deleted at 7 days</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The honest limit:</strong> 5% sampling will miss most harassment. It is a backstop for pattern discovery, not a detector. The primary signal is the Vibe Check; the second is the report buffer. Any document that claims otherwise is selling.</p>
+<h3 id="25-the-60-second-moderation-buffer">2.5 The 60-second moderation buffer</h3>
+<p>The server is not recording, so the buffer lives on the <strong>reporter's device</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>During the room</td>
+<td>Encrypted roll of the last 60s in memory, keyed per session, never written to disk by default</td>
+</tr>
+<tr>
+<td>On Report</td>
+<td>The call drops first (§<code>09</code>). Then: <em>"Attach the last 30 seconds? It helps us review."</em> Default <strong>on</strong>, one tap to decline</td>
+</tr>
+<tr>
+<td>Upload</td>
+<td>The 30s clip is uploaded with the report, encrypted in transit, access-logged</td>
+</tr>
+<tr>
+<td>If declined / app killed</td>
+<td>No clip. The case proceeds on the sampled audio, the score history, and prior reports</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>Audio 30 days, then deleted; case metadata 24 months</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why the reporter's device, not the server:</strong> server-side continuous recording of every room is a privacy liability, a breach target, and the exact architecture that makes the ASR cost unaffordable. The buffer is a feature of the <em>report</em>, not of the product.</p>
+<p><strong>Disclosure, one line, at room start:</strong> <em>"If you report someone, the last 30 seconds can be attached. Nothing is recorded otherwise."</em> That sentence is the whole privacy policy for audio.</p>
+<h3 id="26-locked-cost-per-room">2.6 Locked cost, per room</h3>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Basis</th>
+<th>API ASR (Y1–Y2)</th>
+<th>Self-hosted (Y3)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SFU relay</td>
+<td>60 participant-min × $0.00012</td>
+<td>$0.007</td>
+<td>$0.007</td>
+</tr>
+<tr>
+<td>Recap window</td>
+<td>7.2 speaker-min</td>
+<td>$0.042</td>
+<td>$0.018</td>
+</tr>
+<tr>
+<td>5% sample</td>
+<td>0.9 speaker-min</td>
+<td>$0.005</td>
+<td>$0.002</td>
+</tr>
+<tr>
+<td>Scoring</td>
+<td>15 room-min × $0.0003</td>
+<td>$0.005</td>
+<td>$0.004</td>
+</tr>
+<tr>
+<td>Summary</td>
+<td>1 call</td>
+<td>$0.008</td>
+<td>$0.005</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>—</td>
+<td>$0.001</td>
+<td>$0.001</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>$0.068</strong></td>
+<td><strong>$0.037</strong></td>
+</tr>
+<tr>
+<td><strong>Per room-minute</strong></td>
+<td></td>
+<td><strong>$0.0045</strong></td>
+<td><strong>$0.0025</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The $0.0045/room-minute target is met</strong> — at API prices, not because of a trick, but because VAD removes 70% of the audio before it is ever billed.</p>
+<p><strong>Self-hosting is the only way to $0.0025.</strong> At 400k MAU the product generates ~15.5M speaker-minutes/month. Whisper-class inference on an A10G runs ~40× realtime, so ~9–18 GPUs cover it: <strong>$7–13k/month</strong> versus <strong>$90k</strong> at API rates. The build cost is ~$150k and 2 engineer-months. Break-even at ~2M speaker-minutes/month — roughly 60k MAU.</p>
+<hr />
+<h2 id="3-liquidity-the-only-number-that-decides-this-product">3. Liquidity: the only number that decides this product</h2>
+<h3 id="31-the-maths-stated-plainly">3.1 The maths, stated plainly</h3>
+<p>Filling a room needs <strong>three arrivals</strong> in a topic. With <strong>N</strong> people concurrently in that topic and 15-minute sessions, arrivals arrive at <code>λ = N/15</code> per minute.</p>
+<ul>
+<li>Mean wait for three: <code>W = 45/N</code> minutes.</li>
+<li>P90 is roughly <code>2.3 ×</code> the mean (Poisson arrivals).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Concurrent in the prime topic</th>
+<th>Mean fill</th>
+<th><strong>P90 fill</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>30</td>
+<td>1.5 min</td>
+<td>3.5 min</td>
+</tr>
+<tr>
+<td>60</td>
+<td>45 s</td>
+<td>1.7 min</td>
+</tr>
+<tr>
+<td>90</td>
+<td>30 s</td>
+<td>70 s</td>
+</tr>
+<tr>
+<td>150</td>
+<td>18 s</td>
+<td>42 s</td>
+</tr>
+<tr>
+<td><strong>210</strong></td>
+<td><strong>13 s</strong></td>
+<td><strong>30 s</strong></td>
+</tr>
+<tr>
+<td>300</td>
+<td>9 s</td>
+<td>21 s</td>
+</tr>
+</tbody>
+</table>
+<p><strong>To guarantee a room in 30 seconds at P90, you need ~210 concurrent users in that topic.</strong> At 12% peak concurrency, that is <strong>~1,750 DAU</strong> — call it <strong>2,000</strong> with topic skew.</p>
+<table>
+<thead>
+<tr>
+<th>DAU in one metro</th>
+<th>Peak concurrent (12%)</th>
+<th>P90 fill, one topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>800</td>
+<td>96</td>
+<td>65 s</td>
+</tr>
+<tr>
+<td>1,500</td>
+<td>180</td>
+<td>35 s</td>
+</tr>
+<tr>
+<td><strong>2,000</strong></td>
+<td><strong>240</strong></td>
+<td><strong>26 s</strong> ✅</td>
+</tr>
+<tr>
+<td>4,000</td>
+<td>480</td>
+<td>13 s (two topics simultaneously)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-the-unlock-schedule-the-topic-not-the-person">3.2 The unlock: schedule the topic, not the person</h3>
+<p>The brief asks for a 4-person room on "AI <strong>or</strong> Philosophy" within 30 seconds. Two topics at 30s P90 needs <strong>~4,000 DAU</strong>. One topic needs 2,000. So:</p>
+<p><strong>Launch with one prime topic per evening.</strong> Monday AI, Tuesday Philosophy, Wednesday Tech Careers, Thursday Science, Friday open. The Home screen shows one room; the topic chips reflect <em>tonight's</em> prime topic plus whatever else has density. This concentrates demand by ~5× and makes the specific-topic promise true at a fifth of the users.</p>
+<p>This is the single most important growth decision in the plan. It is also the least glamorous: a schedule is not a feature.</p>
+<h3 id="33-the-90-day-playbook-austin-first">3.3 The 90-day playbook — Austin first</h3>
+<p><strong>Why Austin:</strong> UT Austin + ACC + a dense early-career tech population, one time zone, English-first (no language-pair liquidity problem), and a startup community that will tolerate a rough beta.</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Days</th>
+<th>Supply</th>
+<th>Demand</th>
+<th>Ships</th>
+<th>Gate to next</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0 — Seed</strong></td>
+<td>−14 → 0</td>
+<td>120 founding speakers (3 nights/week), 3 campus clubs</td>
+<td>400 waitlist</td>
+<td>Prime-topic schedule, stall rescue, Vibe Check, report flow</td>
+<td>50 test rooms, 0 P1 defects</td>
+</tr>
+<tr>
+<td><strong>1 — Alpha</strong></td>
+<td>1–30</td>
+<td>120 → 250 speakers</td>
+<td>600 activated users</td>
+<td>AI + Philosophy nights, 2 ambassadors</td>
+<td><strong>D30: 300 activated, P90 ≤90s, D7 ≥25%</strong></td>
+</tr>
+<tr>
+<td><strong>2 — Density</strong></td>
+<td>31–60</td>
+<td>400 speakers</td>
+<td>1,200 DAU</td>
+<td>Daily prime topic, recap, Plus</td>
+<td><strong>D60: 700 DAU, P90 ≤45s, conversion ≥4%</strong></td>
+</tr>
+<tr>
+<td><strong>3 — Proof</strong></td>
+<td>61–90</td>
+<td>600 speakers</td>
+<td>2,000 DAU</td>
+<td>Pro, Career rooms, second campus (Rice/Houston)</td>
+<td><strong>D90: P90 ≤30s, D30 ≥15%, conversion ≥5.5%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The supply ratio:</strong> at 2,000 DAU you need <strong>600 rostered speakers</strong> (30%) because half show up on a given night and half of those are online at 8pm. That is the number that makes the queue feel alive; it is also the number that makes the unit economics look worse, because speakers are users, not inventory.</p>
+<p><strong>Three rules that keep the seed honest:</strong>
+1. No paid presence. Speakers get Pro free and a title, not money.
+2. No fake rooms. An AI co-host is labelled, and never the majority.
+3. Publish the real P90 fill time on Home during alpha ("usually under 2 minutes"). Trust is the launch asset.</p>
+<h3 id="34-the-ai-seed-fallback-and-its-kill-signal">3.4 The AI seed fallback, and its kill signal</h3>
+<p>The AI co-host is a <strong>third seat, not a host</strong>: it asks one question, yields, and leaves the moment a third human joins. Rules:</p>
+<ul>
+<li>Enters only after <strong>60s with two people</strong> in a room, or in a paid Boost.</li>
+<li>Maximum <strong>3 minutes</strong> free (D4), 15 in a Boost.</li>
+<li>Speaks ≤ 40% of the airtime in any 60-second window.</li>
+<li>Named "Ana · AI" on the circle; never claims otherwise.</li>
+<li>If a room has an AI for its entire duration, it is not counted as a "human room" in the North Star metric.</li>
+</ul>
+<p><strong>Kill signal for the fallback:</strong> if <strong>&gt; 30% of room-minutes</strong> involve an AI participant for two consecutive weeks, the fallback is no longer a fallback. Action: cut free rescue to boosts only, drop to two topics, and re-run the density plan. If it stays above 30% after that, the product is a chatbot and should be priced like one.</p>
+<hr />
+<h2 id="4-paywall-and-conversion">4. Paywall and conversion</h2>
+<h3 id="41-trial-7-days-annual-only">4.1 Trial: <strong>7 days, annual only</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Plan</th>
+<th>Trial</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Annual $79.99</td>
+<td><strong>7 days</strong></td>
+<td>The trial exists to prove the habit, not to discount a month</td>
+</tr>
+<tr>
+<td>Monthly $9.99</td>
+<td><strong>None</strong></td>
+<td>A 7-day trial on a monthly plan is a churn machine: 55% cancel on day 0 and the rest were never going to pay</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Trial rules:</strong> starts at purchase, not at install. Full access. Reminder at day 5 (one line), day 6 (one line), no countdown. Cancel is one tap in Settings, and the app says so on the sheet.</p>
+<h3 id="42-the-mid-room-limit">4.2 The mid-room limit</h3>
+<p>The user hits 30 minutes <strong>during</strong> a room. Nothing happens.</p>
+<table>
+<thead>
+<tr>
+<th>Moment</th>
+<th>UI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5 minutes past the limit</td>
+<td>Nothing. The hairline stays 1px. No toast, no colour</td>
+</tr>
+<tr>
+<td>Room ends at 15:00</td>
+<td>Normal ending, normal chime</td>
+</tr>
+<tr>
+<td>Recap</td>
+<td>One quiet line under the facts: <em>"That was your last room on Free today."</em></td>
+</tr>
+<tr>
+<td>Next "Join" tap</td>
+<td>The sheet (§5 of <code>09</code>)</td>
+</tr>
+<tr>
+<td>Next app open</td>
+<td>Home shows the limit line and one button: <strong>Plus</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why no interruption:</strong> a paywall mid-conversation is the single fastest way to make a user feel ambushed, and it teaches them to fear the timer. The limit is a fact about tomorrow, not a cliff in the middle of today.</p>
+<h3 id="43-the-day-0-problem-activation-before-the-ask">4.3 The day-0 problem: activation before the ask</h3>
+<p>55% of trial cancellations happen on day 0 because the user pays before they have had a good room. The fix is not a better paywall; it is <strong>an onboarding grant</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What happens</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Install → first room</td>
+<td><strong>No cap for the first 3 rooms or 48 hours</strong>, whichever comes first</td>
+<td>The free tier is 90 min/week; the grant guarantees three complete rooms before any limit is visible</td>
+</tr>
+<tr>
+<td>Room 1</td>
+<td>Matched into a <strong>prime-topic room at peak</strong>, never a niche one</td>
+<td>The first room must be full; density is a product feature</td>
+</tr>
+<tr>
+<td>Room 2</td>
+<td>Same night or next, one tap from the recap</td>
+<td>Habit forms on the second room, not the first</td>
+</tr>
+<tr>
+<td>Room 3</td>
+<td>Recap shows one quiet line: <em>"Plus keeps this going."</em> No sheet</td>
+<td>The ask appears only when a limit is hit</td>
+</tr>
+<tr>
+<td>Day 3+</td>
+<td>Normal 90 min/week applies</td>
+<td>By now the user has a reason, or they were never going to convert</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The trial offer appears in exactly one place:</strong> the paywall sheet, after a blocked action. Never on open, never on the recap, never as an interstitial. A user who never hits a limit may never see a price — that is correct.</p>
+<p><strong>The numbers this is designed to move:</strong> install → room 1 ≥ 70%; room 1 → room 2 ≥ 45% within 7 days; trial start ≥ 8% of users who see the sheet; day-0 trial cancel &lt; 35% (versus the 55% baseline).</p>
+<hr />
+<h2 id="5-the-recalculated-model">5. The recalculated model</h2>
+<h3 id="51-what-actually-changed">5.1 What actually changed</h3>
+<p>The v5 model already assumed sampled ASR. <strong>Locking the architecture therefore does not change Y1 or Y2 at all.</strong> The Y3 improvement comes from three separate things, and it is dishonest to attribute it to the sampling design:</p>
+<table>
+<thead>
+<tr>
+<th>Lever</th>
+<th>Effect on cost/MAU</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sampled ASR + VAD</td>
+<td>Already in v5 (−$0.28 vs naive)</td>
+<td>Y1</td>
+</tr>
+<tr>
+<td><strong>Self-hosted ASR</strong></td>
+<td><strong>−$0.13</strong></td>
+<td>Y3</td>
+</tr>
+<tr>
+<td>Summary model downgrade (small model)</td>
+<td>−$0.01</td>
+<td>Y2</td>
+</tr>
+<tr>
+<td>Moderation tooling (triage, not more reviewers)</td>
+<td>−$0.02</td>
+<td>Y3</td>
+</tr>
+<tr>
+<td>Infra efficiency</td>
+<td>−$0.02</td>
+<td>Y3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-cost-per-mau">5.2 Cost per MAU</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Y1 (API)</th>
+<th>Y2 (hybrid)</th>
+<th>Y3 (self-hosted)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rooms / MAU / month</td>
+<td>5.4</td>
+<td>5.4</td>
+<td>5.4</td>
+</tr>
+<tr>
+<td>Live + ASR + scoring</td>
+<td>$0.34</td>
+<td>$0.26</td>
+<td>$0.17</td>
+</tr>
+<tr>
+<td>Summaries</td>
+<td>$0.02</td>
+<td>$0.02</td>
+<td>$0.02</td>
+</tr>
+<tr>
+<td>Moderation</td>
+<td>$0.16</td>
+<td>$0.15</td>
+<td>$0.14</td>
+</tr>
+<tr>
+<td>Infra, support, verification</td>
+<td>$0.09</td>
+<td>$0.08</td>
+<td>$0.07</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>$0.61</strong></td>
+<td><strong>$0.51</strong></td>
+<td><strong>$0.40</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="53-the-model">5.3 The model</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Y1</strong></th>
+<th><strong>Y2</strong></th>
+<th><strong>Y3</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Average MAU</td>
+<td>15,000</td>
+<td>110,000</td>
+<td>400,000</td>
+</tr>
+<tr>
+<td>Paid conversion</td>
+<td>4.2%</td>
+<td>5.8%</td>
+<td>7.0%</td>
+</tr>
+<tr>
+<td>Average paying subs</td>
+<td>520</td>
+<td>5,600</td>
+<td>24,500</td>
+</tr>
+<tr>
+<td>Net ARPP / month</td>
+<td>$9.35</td>
+<td>$9.63</td>
+<td>$9.52</td>
+</tr>
+<tr>
+<td>Subscription revenue</td>
+<td>$58k</td>
+<td>$647k</td>
+<td>$2.80M</td>
+</tr>
+<tr>
+<td>Micro-transactions</td>
+<td>$6k</td>
+<td>$70k</td>
+<td>$360k</td>
+</tr>
+<tr>
+<td><strong>Total revenue</strong></td>
+<td><strong>$64k</strong></td>
+<td><strong>$717k</strong></td>
+<td><strong>$3.16M</strong></td>
+</tr>
+<tr>
+<td><strong>Cost per MAU</strong></td>
+<td><strong>$0.61</strong></td>
+<td><strong>$0.51</strong></td>
+<td><strong>$0.40</strong></td>
+</tr>
+<tr>
+<td>Variable COGS</td>
+<td>$110k</td>
+<td>$673k</td>
+<td>$1.92M</td>
+</tr>
+<tr>
+<td><strong>Gross profit</strong></td>
+<td><strong>−$46k</strong></td>
+<td><strong>+$44k</strong></td>
+<td><strong>+$1.24M</strong></td>
+</tr>
+<tr>
+<td><strong>Gross margin</strong></td>
+<td><strong>−72%</strong></td>
+<td><strong>+6%</strong></td>
+<td><strong>+39%</strong></td>
+</tr>
+<tr>
+<td>CAC spend</td>
+<td>$140k</td>
+<td>$630k</td>
+<td>$1.82M</td>
+</tr>
+<tr>
+<td>Fixed</td>
+<td>$1.05M</td>
+<td>$1.95M</td>
+<td>$3.40M</td>
+</tr>
+<tr>
+<td><strong>Net</strong></td>
+<td><strong>−$1.24M</strong></td>
+<td><strong>−$2.54M</strong></td>
+<td><strong>−$3.98M</strong></td>
+</tr>
+<tr>
+<td>Cumulative</td>
+<td>−$1.24M</td>
+<td>−$3.78M</td>
+<td><strong>−$7.76M</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Y3 net margin is −126%</strong> (−$3.98M on $3.16M of revenue). Gross margin is +39%; the company is still buying density and paying a fixed team. Those two numbers are both true and should never be quoted without the other.</p>
+<h3 id="54-the-direct-answer-on-40">5.4 The direct answer on 40%</h3>
+<p><strong>Y3 gross margin lands at 39%, not 15% — but the 15% was a v5 arithmetic choice, not a sampling failure.</strong></p>
+<p>Three things are true at once:</p>
+<ol>
+<li><strong>Sampled ASR is already inside the 15% number.</strong> Locking it in protects the model from a 5× cost error; it does not add margin.</li>
+<li><strong>The jump to 39% is bought with vertical integration</strong> — self-hosted ASR at 400k MAU. If the company stays on API ASR, Y3 gross margin is <strong>~20%</strong>, and the business never clears its fixed costs.</li>
+<li><strong>39% is not 60%.</strong> Voice AI with a free tier is an infrastructure business. The only routes to 55%+ are a higher Pro mix, usage-based pricing, or cutting the free tier — in that order.</li>
+</ol>
+<p><strong>Break-even conversion:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Y1</th>
+<th>Y2</th>
+<th>Y3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cost / MAU</td>
+<td>$0.61</td>
+<td>$0.51</td>
+<td>$0.40</td>
+</tr>
+<tr>
+<td>Net ARPP</td>
+<td>$9.35</td>
+<td>$9.63</td>
+<td>$9.52</td>
+</tr>
+<tr>
+<td><strong>Break-even conversion</strong></td>
+<td><strong>6.5%</strong></td>
+<td><strong>5.3%</strong></td>
+<td><strong>4.2%</strong></td>
+</tr>
+<tr>
+<td>Conversion at plan</td>
+<td>4.2%</td>
+<td>5.8%</td>
+<td>7.0%</td>
+</tr>
+<tr>
+<td><strong>Margin at plan</strong></td>
+<td><strong>negative</strong></td>
+<td><strong>+9%</strong></td>
+<td><strong>+39%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>The brief's 3–5% target:</strong> still below break-even in Y1 and Y2, viable only in Y3. At 3% in Y3 the product loses $0.11/MAU/month — <strong>$550k/year at 400k MAU</strong>. The plan does not survive a 3% conversion rate at any point.</p>
+<h3 id="55-the-cac-correction-the-v5-ratio-was-measured-on-the-wrong-denominator">5.5 The CAC correction: the v5 ratio was measured on the wrong denominator</h3>
+<p>The v5 model reported LTV/CAC of 3.1×. That was <strong>LTV per MAU ÷ CAC per MAU</strong>, which is not a business metric. Subscription economics need <strong>CAC per paying customer</strong>:</p>
+<p><code>CAC per payer = CAC per activated user ÷ conversion rate</code></p>
+<table>
+<thead>
+<tr>
+<th>Conversion</th>
+<th>CAC per activation</th>
+<th><strong>CAC per payer</strong></th>
+<th>LTV</th>
+<th><strong>LTV / CAC</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3%</td>
+<td>$3.50</td>
+<td>$117</td>
+<td>$93</td>
+<td><strong>0.8×</strong> ❌</td>
+</tr>
+<tr>
+<td>5%</td>
+<td>$3.50</td>
+<td>$70</td>
+<td>$93</td>
+<td><strong>1.3×</strong> ❌</td>
+</tr>
+<tr>
+<td>7%</td>
+<td>$3.50</td>
+<td>$50</td>
+<td>$93</td>
+<td><strong>1.9×</strong> ⚠️</td>
+</tr>
+<tr>
+<td>10%</td>
+<td>$3.50</td>
+<td>$35</td>
+<td>$93</td>
+<td><strong>2.7×</strong> ✅</td>
+</tr>
+<tr>
+<td>7%</td>
+<td>$12.00</td>
+<td>$171</td>
+<td>$93</td>
+<td><strong>0.5×</strong> ❌</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What this means, without softening it:</strong></p>
+<ol>
+<li><strong>Paid social at $12–16 per install is fatal.</strong> At a 7% conversion it implies a $171–229 CAC against a $93 LTV. Every dollar of it destroys value.</li>
+<li><strong>The only viable acquisition is campus- and community-led at ≤ $3.50 per activated user.</strong> That is what the ambassador model in <code>08</code> §6.3 was priced at, and it is now a hard constraint, not a preference.</li>
+<li><strong>The plan's 7% conversion is enough only because CAC is low.</strong> If CAC drifts to $6, LTV/CAC falls to 1.1× and the company cannot grow profitably at any scale.</li>
+<li><strong>The model in §5.3 uses $3.50 per activation</strong> for exactly this reason. The acquisition line is $140k / $630k / $1.82M, not a marketing budget that can be scaled at will.</li>
+</ol>
+<p><strong>The consequence for growth:</strong> this product cannot be bought. It has to be seeded campus by campus, which caps growth at roughly 1.5–2× per quarter and makes the 90-day density plan the growth plan. If the board wants 3× per year, the answer is a different conversion rate, not a bigger ad budget.</p>
+<h3 id="56-when-the-company-is-actually-profitable">5.6 When the company is actually profitable</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Y1</th>
+<th>Y2</th>
+<th>Y3</th>
+<th><strong>Y4 (illustrative)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Average MAU</td>
+<td>15k</td>
+<td>110k</td>
+<td>400k</td>
+<td><strong>1,400k</strong></td>
+</tr>
+<tr>
+<td>Revenue</td>
+<td>$64k</td>
+<td>$717k</td>
+<td>$3.16M</td>
+<td><strong>$12.6M</strong></td>
+</tr>
+<tr>
+<td>Gross margin</td>
+<td>−72%</td>
+<td>6%</td>
+<td>39%</td>
+<td><strong>47%</strong></td>
+</tr>
+<tr>
+<td>Fixed + CAC</td>
+<td>$1.19M</td>
+<td>$2.58M</td>
+<td>$5.22M</td>
+<td><strong>$5.70M</strong></td>
+</tr>
+<tr>
+<td><strong>Net</strong></td>
+<td>−$1.24M</td>
+<td>−$2.54M</td>
+<td>−$3.98M</td>
+<td><strong>+$0.21M</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Operating break-even arrives in year four at ~1.2–1.5M MAU</strong>, on ~$12M of revenue and a 47% gross margin. Total capital required: <strong>$7.5–8M</strong>, not $3M. Anyone pitching this as a two-year path to profitability is mispricing ASR and moderation.</p>
+<p><strong>If that capital is not available, the honest alternatives are:</strong> (a) cut the free tier to 15 min/week and target 8% conversion, (b) price Plus at $14.99 and accept a smaller funnel, or (c) drop topic rooms and return to 1:1 language practice, where cost per session is half. There is no fourth option that keeps the product and the price.</p>
+<hr />
+<h2 id="6-kill-signals">6. Kill signals</h2>
+<p>Reviewed at day 30, 60, and 90. Each has an owner and a pre-committed action. <strong>Pivot</strong> means change the format; <strong>stop</strong> means stop.</p>
+<h3 id="day-30-is-the-room-worth-15-minutes">Day 30 — "Is the room worth 15 minutes?"</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Threshold</th>
+<th>If missed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Activated users (≥1 completed room)</td>
+<td><strong>≥ 300</strong></td>
+<td>Extend alpha 30 days; do not add features</td>
+</tr>
+<tr>
+<td>P90 time-to-room</td>
+<td><strong>≤ 90s</strong></td>
+<td>Add a second prime topic night; recruit 100 more speakers</td>
+</tr>
+<tr>
+<td>Rooms per activated user</td>
+<td><strong>≥ 1.2</strong></td>
+<td>The first room is not good enough; rewrite prompts before anything else</td>
+</tr>
+<tr>
+<td>D7 retention</td>
+<td><strong>≥ 25%</strong></td>
+<td><strong>Pivot:</strong> move to scheduled tables at fixed times</td>
+</tr>
+<tr>
+<td>Report rate</td>
+<td><strong>≤ 3.0 / 1k room-min</strong></td>
+<td>Freeze growth; audit matching and score</td>
+</tr>
+<tr>
+<td>AI share of room-minutes</td>
+<td><strong>≤ 25%</strong></td>
+<td>The network is not forming; cut the free rescue</td>
+</tr>
+<tr>
+<td>Zero confirmed minor incidents</td>
+<td><strong>0</strong></td>
+<td><strong>STOP.</strong> Full stop, external audit</td>
+</tr>
+</tbody>
+</table>
+<h3 id="day-60-does-it-retain-without-a-schedule">Day 60 — "Does it retain without a schedule?"</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Threshold</th>
+<th>If missed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DAU</td>
+<td><strong>≥ 700</strong></td>
+<td>Density plan is failing; concentrate to one campus</td>
+</tr>
+<tr>
+<td>P90 time-to-room</td>
+<td><strong>≤ 45s</strong></td>
+<td>Drop to three topics</td>
+</tr>
+<tr>
+<td>D7 / D30</td>
+<td><strong>≥ 30% / ≥ 15%</strong></td>
+<td><strong>Pivot</strong> to cohort-based rooms (bootcamp, club)</td>
+</tr>
+<tr>
+<td>Conversion (any paid)</td>
+<td><strong>≥ 4%</strong></td>
+<td>Reprice Plus to $11.99 before touching the free tier</td>
+</tr>
+<tr>
+<td>Pro share of new subs</td>
+<td><strong>≥ 25%</strong></td>
+<td>Career rooms are not landing; stop building them</td>
+</tr>
+<tr>
+<td>Gross margin per cohort</td>
+<td><strong>&gt; −$0.10/MAU</strong></td>
+<td>The unit economics are not converging; cut free AI first</td>
+</tr>
+<tr>
+<td>CAC</td>
+<td><strong>≤ $35</strong></td>
+<td>Kill paid acquisition entirely</td>
+</tr>
+</tbody>
+</table>
+<h3 id="day-90-does-it-scale-or-does-it-only-work-in-austin">Day 90 — "Does it scale, or does it only work in Austin?"</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Threshold</th>
+<th>If missed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DAU</td>
+<td><strong>≥ 2,000</strong></td>
+<td>Second campus is not viable; stay single-metro and cut costs</td>
+</tr>
+<tr>
+<td>P90 time-to-room</td>
+<td><strong>≤ 30s</strong></td>
+<td><strong>Pivot:</strong> the "instant" promise is false; go scheduled</td>
+</tr>
+<tr>
+<td>D30 retention</td>
+<td><strong>≥ 18%</strong></td>
+<td><strong>Pivot</strong> to a cohort product with a fixed weekly time</td>
+</tr>
+<tr>
+<td>Conversion</td>
+<td><strong>≥ 5.5%</strong></td>
+<td><strong>STOP paid growth.</strong> The product is a utility, not a subscription. Cut free to 20 min/week and re-test at 8%</td>
+</tr>
+<tr>
+<td>Pro share</td>
+<td><strong>≥ 30%</strong></td>
+<td>Collapse Pro into Plus, sell the record as a one-off</td>
+</tr>
+<tr>
+<td>AI share</td>
+<td><strong>≤ 20%</strong></td>
+<td>Human network is not forming; stop scaling</td>
+</tr>
+<tr>
+<td>Gross margin (run-rate)</td>
+<td><strong>≥ 30%</strong></td>
+<td>Reprice or cut the free tier; do not raise again</td>
+</tr>
+<tr>
+<td>Confirmed P1 with no prior report</td>
+<td><strong>0</strong></td>
+<td>Raise sampling in the cohort, publish the change, freeze marketing for 30 days</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-two-hard-stops">The two hard stops</h3>
+<ol>
+<li><strong>Any confirmed minor in an 18+ room.</strong> Matching stops immediately. External audit. No relaunch without a new verification vendor and a public report.</li>
+<li><strong>Day 90 with DAU &lt; 800 and D7 &lt; 20%.</strong> The group format has not found a habit. Stop the consumer product, return remaining capital, or pivot to a cohort/B2B2C model where the buyer supplies the density (bootcamps, universities) rather than the consumer app.</li>
+</ol>
+<p><strong>What is not a kill signal:</strong> slow revenue in month one, a competitor launching, or a bad press cycle. Those are noise. The numbers above are structure.</p>
+<hr />
+<h2 id="7-what-remains-open-and-what-is-now-closed">7. What remains open, and what is now closed</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free cap, Pro price, Vibe Check, AI co-host, room length</td>
+<td><strong>Closed</strong> (D1–D5)</td>
+</tr>
+<tr>
+<td>ASR pipeline, window selection, sampling, buffer</td>
+<td><strong>Closed</strong> (§2)</td>
+</tr>
+<tr>
+<td>Launch city and density target</td>
+<td><strong>Closed</strong> — Austin, 2,000 DAU, one prime topic (§3)</td>
+</tr>
+<tr>
+<td>Self-hosted ASR build</td>
+<td><strong>Open</strong> — owner: Eng; decision at 60k MAU or $40k/month API spend, whichever first</td>
+</tr>
+<tr>
+<td>Pro feature bundle (record + voice feedback)</td>
+<td><strong>Open</strong> — must ship before the $24.99 test</td>
+</tr>
+<tr>
+<td>Second metro</td>
+<td><strong>Open</strong> — gated on D90 P90 ≤ 30s in Austin</td>
+</tr>
+<tr>
+<td>B2B2C cohort product</td>
+<td><strong>Open</strong> — the fallback if day 90 fails; do not build before then</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The one sentence to hold onto:</strong> the product is cheap to run only if the client does the hearing, the server does the thinking on a sample, and the free tier is bounded by the week rather than the day. Everything in this document follows from that.</p>
+<footer>Live v5.0 · product, monetization, and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>

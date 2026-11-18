@@ -23,6 +23,7 @@
   <a href="07-risks.html">07 · Risks</a>
   <a href="08-launch-plan.html">08 · Launch plan</a>
   <a href="09-v5-master-plan.html" class="on">09 · v5 master plan</a>
+  <a href="10-execution-lock.html">10 · Execution lock</a>
   <a href="prototype.html">▶ Prototype</a>
   <hr>
   <a href="../index.html">← Eloq plan (other set)</a>
@@ -825,6 +826,9 @@
 <p><strong>If AI participation exceeds 35% of room-minutes, the product is subsidising a chatbot.</strong> Gate in §9.</p>
 <hr />
 <h2 id="7-the-three-year-model">7. The three-year model</h2>
+<blockquote>
+<p><strong>Revised in <a href="10-execution-lock.html"><code>10-execution-lock.md</code></a> §5.</strong> The locked model moves Y3 gross margin from 15% to 39% by self-hosting ASR at scale, and corrects the CAC denominator. Read <code>10</code> for the current numbers; this section is the base case.</p>
+</blockquote>
 <p><strong>Assumptions:</strong> 15-minute rooms, 4.2 average speakers, sampled ASR, $0.57 → $0.45 cost per MAU as the stack matures; 15% store fee in Y1 (Small Business Program), 17% Y2, 22% Y3 as the $1M threshold is crossed and the subscription-year discount only partly offsets it; 9% → 7% monthly churn; Pro mix 20% → 28% → 35%.</p>
 <table>
 <thead>
@@ -1214,45 +1218,42 @@
 <p><strong>The one thing I would not compromise:</strong> no DMs. Every other decision here can be revisited with data. The absence of a private channel is the reason a woman can join a room with five strangers at 11pm, and it is the only feature HelloTalk cannot copy without dismantling its own retention loop.</p>
 <hr />
 <h2 id="12-open-decisions">12. Open decisions</h2>
+<blockquote>
+<p><strong>Resolved in <a href="10-execution-lock.html"><code>10-execution-lock.md</code></a> §1.</strong> The choices are locked there, with reversal triggers.</p>
+</blockquote>
 <table>
 <thead>
 <tr>
 <th>#</th>
 <th>Decision</th>
-<th>My recommendation</th>
-<th>Why it is not obvious</th>
+<th>Status</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
-<td>Free cap: 30 min/day + 90/week vs. 20/day</td>
-<td><strong>30/day + 90/week</strong></td>
-<td>The daily number is marketing; the weekly number is the cost control</td>
+<td>Free cap: 30/day + 90/week</td>
+<td>✅ Locked</td>
 </tr>
 <tr>
 <td>2</td>
-<td>Pro at $19.99 vs $24.99</td>
-<td><strong>$19.99 at launch, test $24.99 at month 6</strong></td>
-<td>$19.99 anchors under a human coach; $24.99 needs the record + voice feedback shipped first</td>
+<td>Pro at $19.99, test $24.99 at M6</td>
+<td>✅ Locked</td>
 </tr>
 <tr>
 <td>3</td>
-<td>Vibe Check: 2 reports drop the room, or 2 reports + audio review</td>
-<td><strong>Drop the room instantly; score only after review</strong></td>
-<td>Instant safety, no brigading</td>
+<td>Vibe Check: drop the room, review the score</td>
+<td>✅ Locked</td>
 </tr>
 <tr>
 <td>4</td>
-<td>AI co-host in free rooms</td>
-<td><strong>No at launch; paid Boosts and Pro only</strong></td>
-<td>It is the single largest variable cost and the fastest way to fake liquidity</td>
+<td>AI co-host: paid only, plus a capped rescue</td>
+<td>✅ Locked</td>
 </tr>
 <tr>
 <td>5</td>
-<td>15-minute rooms vs. 10</td>
-<td><strong>15 for topic rooms, 10 for Practice</strong></td>
-<td>Topics need the runway; language drills do not, and the cost difference is 50%</td>
+<td>15-minute topic rooms, 10-minute Practice</td>
+<td>✅ Locked</td>
 </tr>
 </tbody>
 </table>
