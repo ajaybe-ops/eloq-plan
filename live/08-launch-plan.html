@@ -1,0 +1,1609 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>08 — The launch plan: five answers, one corridor — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.1 · 2026-11-18</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="08-launch-plan.html" class="on">08 · Launch plan</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p><strong>Version 1.1 · 2026-11-18 · Status: definitive for launch</strong></p>
+<p>This is the execution plan. <code>01</code>–<code>07</code> describe the product and its reasoning; this document decides what ships, in what order, with which numbers, and what would make us stop.</p>
+<p>It answers five questions in order of how fast a wrong answer kills the company: <strong>harassment, empty rooms, the job wedge, onboarding, money.</strong> It ends with GTM, the cold-start arithmetic, and the first 90 days.</p>
+<p>Every number is tagged <strong>(V)</strong> verified, <strong>(D)</strong> derived from a stated assumption, or <strong>(H)</strong> hypothesis to be measured. The previous plan's mistake was presenting model output as strategy; this one presents assumptions as assumptions.</p>
+<hr />
+<h2 id="the-plan-on-one-page">The plan on one page</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>The decision</th>
+<th>The number that proves it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Harassment and ghosting</td>
+<td>No DMs, no profiles, no follows. One-tap report ends the call first. Phone before room 1, liveness before room 3. Every dropout becomes an AI room in under 2s.</td>
+<td>Report rate ≤ 3.0 per 1,000 room-minutes and falling; P1 reviewed in ≤ 4h</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Empty rooms</td>
+<td>10-minute 1:1s, 10-minute tables, no open rooms, no extensions. Group ships only after 1:1 liquidity is proven.</td>
+<td>Call completion ≥ 80%; group gated on P90 match ≤ 15s for 4 weeks</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Job seekers</td>
+<td>Peer mock interviews, not coaching. Three scenario rooms. A practice record, not a resume badge.</td>
+<td>8–12% of Plus → Career; record opened by ≥ 40% of Career users</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Onboarding</td>
+<td>5 taps to first audio. Level moves after room 1. Mic check happens during matching.</td>
+<td>Install → first spoken second: median ≤ 60s, P75 ≤ 75s</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Money</td>
+<td>Free 20 human min/day · Plus $12.99 · Career $24.99. Never charge for safety, corrections, or leaving.</td>
+<td>3–5% paid conversion; gross margin &gt; 90%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The one-sentence strategy:</strong> win one language pair, in one time-zone corridor, during four evening hours, by being the only live language app where a woman can take a call without wondering who has her number.</p>
+<hr />
+<h2 id="0-the-brutal-version">0. The brutal version</h2>
+<p>Five things are true and the plan only works if we say them out loud.</p>
+<ol>
+<li><strong>AI does not solve cold start.</strong> It solves <em>the wait</em>. If AI is more than 15% of minutes, we have built a chatbot with a queue animation, and the human network never forms. AI is a bridge, capped and labelled.</li>
+<li><strong>Group rooms are a liquidity liability, not a feature.</strong> One table of four consumes the supply of four 1:1s. It ships after 1:1 works, not with it — regardless of what the prototype demonstrates.</li>
+<li><strong>Verification proves accountability, not character.</strong> A verified predator is still a predator. The product's safety comes from removing private surfaces (no DMs, no profiles), ending calls in one tap, and reviewing fast. Verification only raises the cost of coming back.</li>
+<li><strong>Removing DMs will cost retention.</strong> HelloTalk's DM loop is why people open it daily. We replace it with live sessions, a recap, and a reason to return within 48 hours — not with text. If retention collapses without DMs, the answer is scheduled live sessions, never a chat feature.</li>
+<li><strong>A 10-minute call is not a resume asset.</strong> It is a rep. The job-seeker product sells reps and a record of them; claiming more is the fastest way to lose the segment.</li>
+</ol>
+<hr />
+<h2 id="1-harassment-and-ghosting-the-anti-toxicity-prd">1. Harassment and ghosting — the Anti-Toxicity PRD</h2>
+<h3 id="11-remove-the-surface-then-police-the-remainder">1.1 Remove the surface, then police the remainder</h3>
+<p>HelloTalk's harassment problem is not a moderation problem. It is a <strong>surface</strong> problem: profiles to browse, photos to judge, location to infer, and private messages to send without a witness. You cannot moderate a DM you never see.</p>
+<table>
+<thead>
+<tr>
+<th>HelloTalk surface</th>
+<th>Why it produces harassment</th>
+<th>What Eloq does instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Direct messages</td>
+<td>Private, asynchronous, no witness, no cost to send</td>
+<td><strong>No text channel exists between users.</strong> Not disabled — absent</td>
+</tr>
+<tr>
+<td>Profiles (photo, bio, city, age)</td>
+<td>Selection and targeting; appearance becomes the product</td>
+<td>Display name only, chosen at signup. No photo, bio, city, employer, or links</td>
+</tr>
+<tr>
+<td>Followers / friends</td>
+<td>Turns a conversation into an audience and a return path</td>
+<td>No follows, no friend list, no contact exchange prompt</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>Proximity as a pretext; doxxing risk</td>
+<td>Never collected, never inferred in UI</td>
+</tr>
+<tr>
+<td>Open-ended calls</td>
+<td>Endless rooms, no exit ritual, no shared expectation</td>
+<td>10-minute timebox with a designed ending</td>
+</tr>
+<tr>
+<td>Reporting buried in settings</td>
+<td>The victim has to work to be safe</td>
+<td>One tap from the room, ends the call before it asks anything</td>
+</tr>
+</tbody>
+</table>
+<p>The design position: <strong>make the creepy behaviour structurally useless.</strong> There is no place to send an unsolicited photo, no profile to judge, and no way to contact someone after the call. What remains — live voice — is witnessed by both parties, timeboxed, and reportable in one tap.</p>
+<h3 id="12-the-report-flow-exactly">1.2 The report flow, exactly</h3>
+<p>The rule from the prototype is the rule: <strong>the call ends first, the question comes second.</strong> A person who is being harassed should not have to choose a category while the offender is still in their ears.</p>
+<pre><code>[ … ] → Report
+   │
+   ├─ 0.0s  Call drops for both. No confirm dialog. No &quot;are you sure&quot;.
+   │        The other side sees &quot;Call ended&quot; — never &quot;You were reported&quot;.
+   │
+   ├─ 0.2s  Black screen. Soft green check.
+   │        &quot;Call ended.&quot;  /  &quot;What went wrong?&quot;
+   │
+   ├─ 0.3s  Three rows, full width, 56px:
+   │           Inappropriate
+   │           They left early
+   │           Technical problem
+   │
+   ├─ tap Inappropriate → one optional line (&quot;Anything else we should know?&quot;)
+   │        + &quot;Attach the last 30 seconds&quot; (only if the safety buffer was on)
+   │        + Submit  →  Trust &amp; Safety P1 queue
+   │
+   └─ tap the other two → no moderation case. Product feedback only.
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Detail</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No pre-confirmation</strong></td>
+<td>Tapping Report ends the call instantly</td>
+<td>A confirmation is a chance to talk the victim out of it</td>
+</tr>
+<tr>
+<td><strong>No category quiz</strong></td>
+<td>Three options, not six</td>
+<td>The victim is not a classifier; T&amp;S triages from the clip and history</td>
+</tr>
+<tr>
+<td><strong>Report and block are different</strong></td>
+<td>Block is silent, instant, permanent, pair-level. Report creates a case</td>
+<td>Most people want the person gone, not an investigation</td>
+</tr>
+<tr>
+<td><strong>The reported user is never told</strong></td>
+<td>They see the same neutral "Call ended"</td>
+<td>Retaliation is the second harm</td>
+</tr>
+<tr>
+<td><strong>Left early / Technical are feedback</strong></td>
+<td>They never enter the moderation queue and never affect the other user</td>
+<td>Losing a call to bad Wi-Fi is not misconduct</td>
+</tr>
+<tr>
+<td><strong>One screen, one primary action</strong></td>
+<td>Submit is the only filled button; close is a quiet ×</td>
+<td>Matches the design system</td>
+</tr>
+<tr>
+<td><strong>No case numbers</strong></td>
+<td>"A person reviews this within 24 hours"</td>
+<td>A case number is bureaucracy at the worst moment</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exact copy, the whole screen:</strong></p>
+<blockquote>
+<p><strong>Call ended.</strong>
+What went wrong?</p>
+<p>Inappropriate ›
+They left early ›
+Technical problem ›</p>
+<p><em>Nothing — just leave</em></p>
+</blockquote>
+<p>The green check is not celebration; it is the signal that the call is over and the user is safe. No red, no alarm sound, no "we take this seriously" paragraph.</p>
+<p><strong>What happens next, in the background:</strong></p>
+<ol>
+<li>The pair is excluded from matching <strong>before the report is even submitted</strong> (at the moment the call drops).</li>
+<li>If the option is <em>Inappropriate</em>, the reported account enters <strong>protective exclusion</strong> (definition below) within 60 seconds.</li>
+<li>A human reviewer sees the case with: account age, prior reports, upheld history, the optional clip, and the reporter's account (never exposed to the reported user).</li>
+<li>The reporter never matches the reported user again, regardless of outcome.</li>
+</ol>
+<h3 id="13-shadow-ban-done-honestly-and-where-i-refuse-the-brief">1.3 "Shadow-ban" done honestly — and where I refuse the brief</h3>
+<p>A global silent shadow-ban — the offender keeps using the app with everyone except the reporter — is the industry's favourite safety theatre. It protects the one person who complained and quietly feeds the predator to the next one. We do not do that.</p>
+<p>Three distinct mechanisms, three different names:</p>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>Scope</th>
+<th>Duration</th>
+<th>Visible to offender?</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pair exclusion</strong></td>
+<td>Reporter ↔ reported</td>
+<td>Permanent</td>
+<td>No</td>
+<td>The victim never sees them again. Non-negotiable.</td>
+</tr>
+<tr>
+<td><strong>Protective exclusion</strong></td>
+<td>Same language pair + age band + launch metro</td>
+<td>24h, or until review</td>
+<td>No</td>
+<td>Limits the blast radius while a human decides. Bounded, reviewed.</td>
+</tr>
+<tr>
+<td><strong>Suspension / ban</strong></td>
+<td>Device + phone hash, all matching</td>
+<td>7 days / permanent</td>
+<td>Yes, at the next login</td>
+<td>The actual consequence. Visible, appealable, recorded.</td>
+</tr>
+</tbody>
+</table>
+<p>The brief asked for a shadow-ban "from matching with that demographic". That is the middle row: <strong>protective exclusion</strong>, capped at 24 hours, never indefinite, and always followed by a human decision. An indefinite silent ban is how a company avoids confronting its own report queue.</p>
+<p><strong>Enforcement ladder:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Trigger</th>
+<th>Immediate action</th>
+<th>Review SLA</th>
+<th>Outcome if upheld</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P1</strong></td>
+<td>Sexual content, threats, hate speech, suspected minor, credible scam</td>
+<td>Removed from matching within 60s; session evidence preserved</td>
+<td>≤ 4 hours, 24/5</td>
+<td>Permanent ban, device-level; law enforcement where required</td>
+</tr>
+<tr>
+<td><strong>P2</strong></td>
+<td>Repeated off-topic solicitation, recording without consent, evasion</td>
+<td>Removed from matching; case opened</td>
+<td>≤ 24 hours</td>
+<td>7-day suspension → permanent on repeat</td>
+</tr>
+<tr>
+<td><strong>P3</strong></td>
+<td>Left early, technical, "something else"</td>
+<td>No action on the other user</td>
+<td>Feedback only</td>
+<td>Product fix, not a punishment</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Appeals:</strong> one human appeal for P1/P2. Outcome and reason recorded. Appeal uphold rate target &lt; 15%.</li>
+<li><strong>Staffing:</strong> 2 FTE Trust &amp; Safety at launch, 24/5 coverage, on-call for minor safety. One reviewer per ~25k MAU (<strong>H</strong>), measured by queue depth, not ratio.</li>
+<li><strong>Public transparency:</strong> a quarterly report with report volume, P1 action times, bans, and appeals overturned. This is a trust moat HelloTalk cannot copy without admitting its numbers.</li>
+</ul>
+<h3 id="14-verification-without-the-friction-tax">1.4 Verification without the friction tax</h3>
+<p>The mistake is verifying at install. At install, the user has received nothing, so every second of verification is a reason to leave. <strong>Verify at the moment value begins.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Check</th>
+<th>Cost</th>
+<th>What it unlocks</th>
+<th>Why here</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Install</td>
+<td>Nothing. No account, no email, no password</td>
+<td>$0</td>
+<td>Welcome screen only</td>
+<td>The first tap must test the promise</td>
+</tr>
+<tr>
+<td><strong>Before room 1</strong></td>
+<td>Phone OTP (hashed, never displayed) + device attestation</td>
+<td>~$0.02–0.05</td>
+<td>1:1 and tables</td>
+<td>A reachable adult behind every voice; raises the cost of a throwaway account</td>
+</tr>
+<tr>
+<td><strong>Before room 3</strong></td>
+<td>Selfie liveness + age estimation (Persona/Onfido)</td>
+<td>~$0.60–1.20</td>
+<td>Continued matching, tables</td>
+<td>The user has sunk value; only retained users cost money; catches adults posing as teens and teens posing as adults</td>
+</tr>
+<tr>
+<td><strong>Trusted</strong></td>
+<td>10 completed rooms, 0 upheld reports, 30 days</td>
+<td>$0</td>
+<td>May open a table; new-user pairing</td>
+<td>Supply-side responsibility earned by behaviour, never shown as a badge</td>
+</tr>
+</tbody>
+</table>
+<p>Two rules make this safe enough to defer the selfie:</p>
+<ol>
+<li><strong>Rooms 1–2 pair the new user only with Trusted users.</strong> The most vulnerable moment (a brand-new account meeting a stranger) is matched with the most accountable cohort. The partner sees a quiet "New here" line; no one sees a status trophy.</li>
+<li><strong>Any signal reopens verification immediately.</strong> A report mentioning a minor, a voice that contradicts the stated age, or a device linked to a banned account removes the user from matching pending review — regardless of their self-declared age.</li>
+</ol>
+<p><strong>What we collect:</strong> birth year (not date), hashed phone, display name, language pair, device attestation token. <strong>What we never collect:</strong> real name, email (unless the user later adds it for cross-device), photo, city, employer, contacts, social handles, date of birth, precise location.</p>
+<p><strong>The honest limit:</strong> liveness proves there is one consistent adult human, not that the human is safe. It stops ban evasion and casual impersonation. It does not stop a first-time offender, which is why the report flow and the no-DM surface carry more weight than the check itself.</p>
+<h3 id="15-the-ghosting-fix-the-ai-is-a-bridge-not-a-destination">1.5 The ghosting fix: the AI is a bridge, not a destination</h3>
+<p>Ghosting in a live product has three shapes. Each gets a different fix.</p>
+<table>
+<thead>
+<tr>
+<th>Shape</th>
+<th>What the user experiences</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>No one there</strong> (cold queue)</td>
+<td>"Finding a Spanish speaker…" for 10s</td>
+<td>Inline AI fallback, never a modal</td>
+</tr>
+<tr>
+<td><strong>Partner vanishes</strong></td>
+<td>Mid-sentence silence, then "Mateo left"</td>
+<td>AI takes over in &lt; 2s, same topic, same timer</td>
+</tr>
+<tr>
+<td><strong>Partner is silent</strong></td>
+<td>60s of dead air</td>
+<td>Directed prompt to the silent side; after 90s, offer a graceful exit</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The 10-second rule.</strong> At 10s the queue tells the truth and changes state in place:</p>
+<blockquote>
+<p>No one free right now.
+Ana can practise with you until a person arrives.</p>
+<p><strong>[ Keep waiting for a person ]</strong>  ← primary
+Practise with AI while you wait  ← secondary</p>
+</blockquote>
+<p>The AI is the <em>second</em> choice. A person is still the product. The screen never dead-ends and never lies about who is speaking.</p>
+<p><strong>The handoff contract.</strong> When a human becomes available while an AI room is live:</p>
+<ol>
+<li>The AI says one line: <em>"Mateo is free. I'll hand you over — your topic carries across."</em></li>
+<li>A 3-second crossfade, with a single <em>"Stay with Ana"</em> escape. No new matching screen, no re-handshake, no timer reset.</li>
+<li>The human receives a <strong>one-line brief</strong>, not a transcript: topic, level band, and one phrase the user was practising. No recording, no history, no profile.</li>
+<li>If the user declines ("Stay with Ana"), the handoff does not happen and the AI continues to the session cap.</li>
+</ol>
+<p><strong>The AI's behaviour, so it does not become a lesson:</strong></p>
+<ul>
+<li>Same topic prompt as a human room; one question at a time; waits 1.5s before filling silence.</li>
+<li>Speaks at the user's band, not native speed.</li>
+<li>At most one correction every 90 seconds, through the same cue card as a human correction.</li>
+<li>Never claims to be human. Labelled "Ana · AI partner" in the room and by a badge on the circle.</li>
+<li>Hard cap: 5 minutes per session, 5 minutes per day on free. At the cap: <em>"I'll keep your place. Want to try a person again?"</em></li>
+</ul>
+<p><strong>What we measure, because AI can hide a dead network:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Target</th>
+<th>Action if missed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI share of total minutes</td>
+<td>≤ 15%</td>
+<td>Above 20% for 2 weeks: cut AI hours or concentrate supply; do not celebrate AI minutes</td>
+</tr>
+<tr>
+<td>Human P90 match time</td>
+<td>≤ 15s at peak</td>
+<td>Above 25s: shrink the matching window or drop a pair</td>
+</tr>
+<tr>
+<td>Handoff acceptance</td>
+<td>≥ 70%</td>
+<td>Below 50%: the AI is too good or the human intro is clumsy — fix the intro copy first</td>
+</tr>
+<tr>
+<td>Post-handoff completion</td>
+<td>≥ 80%</td>
+<td>Below 70%: the handoff feels like a bait-and-switch</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The brutal read:</strong> AI fallback is a retention bandage over a supply wound. It buys 8–12 weeks to build liquidity. If the human match rate is not improving while AI minutes grow, we are building the wrong product and the dashboard will say so.</p>
+<h3 id="16-anti-toxicity-launch-gates">1.6 Anti-toxicity launch gates</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Definition</th>
+<th>Gate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Report rate</td>
+<td>Reports per 1,000 room-minutes</td>
+<td>≤ 3.0 and falling for 8 weeks</td>
+</tr>
+<tr>
+<td>P1 time-to-action</td>
+<td>Report → removal from matching</td>
+<td>≤ 4h P95</td>
+</tr>
+<tr>
+<td>Repeat offenders</td>
+<td>Users with ≥ 2 upheld P1/P2 reports</td>
+<td>&lt; 5% of reported users</td>
+</tr>
+<tr>
+<td>Minor exposure</td>
+<td>Rooms with a suspected minor</td>
+<td>Zero confirmed; any confirmed case freezes matching</td>
+</tr>
+<tr>
+<td>Block rate</td>
+<td>Blocks per 100 rooms</td>
+<td>Track; a rising rate with flat reports means people do not trust reporting</td>
+</tr>
+<tr>
+<td>Early-leave rate</td>
+<td>Calls ending &lt; 60s</td>
+<td>&lt; 8%</td>
+</tr>
+<tr>
+<td>New-user exposure</td>
+<td>Rooms 1–2 with a non-Trusted partner</td>
+<td>0%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-empty-rooms-the-clubhouse-fix">2. Empty rooms — the Clubhouse fix</h2>
+<h3 id="21-the-timebox-10-minutes-every-format">2.1 The timebox: 10 minutes, every format</h3>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Length</th>
+<th>Structure</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1:1</strong></td>
+<td><strong>10:00 hard</strong></td>
+<td>One topic, two voices, one correction</td>
+<td>Long enough to warm up and say something real; short enough that a bad match costs 10 minutes, not an evening</td>
+</tr>
+<tr>
+<td><strong>Table</strong></td>
+<td><strong>10:00 hard</strong></td>
+<td>0:30 intro + 3 × 3:00 rounds + 0:30 outro</td>
+<td>Everyone speaks in every round; the end is predictable</td>
+</tr>
+<tr>
+<td><strong>Open room</strong></td>
+<td><strong>Does not exist</strong></td>
+<td>—</td>
+<td>This is the Clubhouse failure: a room with no end has no reason to start</td>
+</tr>
+</tbody>
+</table>
+<p>No extensions at launch. An extension button converts a designed ending into an infinite room and destroys the supply math. If two people want more, the recap offers "Talk again" — a new session, a new match, a new 10 minutes.</p>
+<p><strong>Why 10 and not 5:</strong> five minutes is a greeting plus one question. There is no time for a correction to land or for either person to relax. Ten is the smallest unit that produces the feeling of a conversation; fifteen recreates Clubhouse.</p>
+<h3 id="22-the-countdown-that-does-not-feel-like-a-bomb">2.2 The countdown that does not feel like a bomb</h3>
+<p>The timer is information, not pressure. Rules:</p>
+<table>
+<thead>
+<tr>
+<th>Moment</th>
+<th>What the UI does</th>
+<th>What it never does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10:00 → 2:00</td>
+<td>A 1px progress hairline under the pair label; the numeric timer is muted, tabular, 13px</td>
+<td>No red, no pulsing, no per-second animation</td>
+</tr>
+<tr>
+<td><strong>2:00 left</strong></td>
+<td>One quiet line, same muted style: "Two minutes left"</td>
+<td>No chime, no colour change</td>
+</tr>
+<tr>
+<td><strong>0:20 left</strong></td>
+<td>Prompt card swaps to: "One thing you'll do differently next time."</td>
+<td>No countdown beep, no "hurry"</td>
+</tr>
+<tr>
+<td><strong>0:00</strong></td>
+<td>Soft two-note chime; screen fades to recap; both sides see "Session complete"</td>
+<td>No abrupt cut, no "connection lost"</td>
+</tr>
+<tr>
+<td>Recap</td>
+<td>3 facts + Done; "Talk again" is the one secondary action</td>
+<td>No confetti, no streak, no share</td>
+</tr>
+</tbody>
+</table>
+<p>The ending is a <strong>feature</strong>, not an interruption. A designed ending is what makes a 10-minute session repeatable; an open-ended room is what makes people leave without a goodbye.</p>
+<h3 id="23-speaking-balance-structure-not-surveillance">2.3 Speaking balance: structure, not surveillance</h3>
+<p>The group room is a cluster of equal circles. No stage, no audience count, no speaker panel, no host. Everyone in the room is a participant; there is no listener role to hide in.</p>
+<p><strong>The round is the enforcement.</strong> Turn-taking is enforced by the <em>format</em>, not by muting adults:</p>
+<ul>
+<li><strong>Round 1 (3:00):</strong> the least-spoken person leads. The app highlights the next speaker with a ring and one line: "Lucía, your turn."</li>
+<li><strong>Round 2 (3:00):</strong> rotation to the next least-spoken. The lead picks the next question from the prompt card.</li>
+<li><strong>Round 3 (3:00):</strong> open conversation, with the balance meter visible.</li>
+<li><strong>Pass</strong> is one tap and carries no penalty. Silence is allowed; being put on the spot is not.</li>
+</ul>
+<p><strong>The signals, and their limits:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>What it shows</th>
+<th>What it does not show</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Three dots under a person</td>
+<td>The last three turns that person took</td>
+<td>Rank, score, popularity</td>
+</tr>
+<tr>
+<td>Speaking ring</td>
+<td>Who is talking now</td>
+<td>Who is "best"</td>
+</tr>
+<tr>
+<td>Balance meter</td>
+<td>Share of airtime, one bar</td>
+<td>A grade</td>
+</tr>
+<tr>
+<td>Dominance nudge</td>
+<td>"Give someone else a turn?" — shown only to the dominant speaker, for 10s, after 3 of the last 4 turns or &gt; 45% airtime</td>
+<td>A public callout, a mute, a punishment</td>
+</tr>
+<tr>
+<td>Silence prompt</td>
+<td>After 12s of no speech, a question directed at the quietest person</td>
+<td>"You're being quiet"</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why we do not auto-mute the dominant speaker:</strong> it is paternalistic, it breaks accessibility (some people need longer turns), and it turns a conversation into a conference line. The nudge plus the round structure changes behaviour without a controller. If the nudge fails, the round ends; that is the enforcement.</p>
+<p><strong>Group launch gate (non-negotiable):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Threshold</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1:1 P90 match time</td>
+<td>≤ 15s at peak, 4 consecutive weeks</td>
+</tr>
+<tr>
+<td>Peak concurrent users in the pair</td>
+<td>≥ 300</td>
+</tr>
+<tr>
+<td>Table fill rate</td>
+<td>≥ 80% within 20s of opening</td>
+</tr>
+<tr>
+<td>1:1 D7</td>
+<td>≥ 30%</td>
+</tr>
+</tbody>
+</table>
+<p>Until all four hold, tables stay in the prototype and the waitlist. Shipping group early is how a liquidity problem becomes a ghost-town story.</p>
+<hr />
+<h2 id="3-the-job-seeker-wedge">3. The job-seeker wedge</h2>
+<h3 id="31-who-we-are-actually-serving">3.1 Who we are actually serving</h3>
+<p>Two audiences, one product:</p>
+<ul>
+<li><strong>Students (18–24):</strong> free, casual, price-sensitive, high frequency, low willingness to pay. They are the supply that keeps evenings alive.</li>
+<li><strong>Job seekers (22–35):</strong> dated goal ("interview in 6 weeks"), high willingness to pay, low frequency, high stakes. They are the revenue and the reason the product has an outcome.</li>
+</ul>
+<p>The home screen does not split them into modes. The topic chips do the segmentation: <strong>Interview</strong>, <strong>Everyday</strong>, <strong>Exam</strong>. One product, three intents.</p>
+<p><strong>The wedge is peer mock interviews, not coaching.</strong> Coaching is one-way, expensive, and turns us into a course. Two job seekers interviewing each other is reciprocal, free to supply, and closer to the real thing.</p>
+<h3 id="32-the-three-rooms">3.2 The three rooms</h3>
+<table>
+<thead>
+<tr>
+<th>Room</th>
+<th>Format</th>
+<th>Prompts (examples)</th>
+<th>Recap artifact</th>
+<th>Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mock Interview</strong></td>
+<td>1:1, 10 min, swap roles at 5:00</td>
+<td>"Tell me about yourself." · "Tell me about a time you disagreed with a manager." · "Why this role?"</td>
+<td>3 questions asked, your strongest 60s answer, 1 fix, 1 model phrase</td>
+<td>Free: generic pack. Career: role packs + record</td>
+</tr>
+<tr>
+<td><strong>Workplace Small Talk</strong></td>
+<td>1:1 or table of 4, 10 min</td>
+<td>Standup update · coffee chat · "Can I ask you something?" · saying no · asking for help</td>
+<td>1 phrase you avoided, 1 phrase to use next time</td>
+<td>Free</td>
+</tr>
+<tr>
+<td><strong>Salary Negotiation</strong></td>
+<td>1:1, 10 min, 4 scripted beats</td>
+<td>Offer → counter → silence → close. "That's a little lower than I expected."</td>
+<td>The number you said, the number you avoided, one stronger sentence</td>
+<td>Career</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why Small Talk is free and in the wedge:</strong> it is the highest-frequency anxiety for non-native speakers at work, and it needs no role pack. It also keeps the job-seeker product from becoming a once-a-year purchase.</p>
+<h3 id="33-value-capture-a-practice-record-not-a-resume-badge">3.3 Value capture: a practice record, not a resume badge</h3>
+<p>The recap stays exactly as locked: three facts, one Done button. The paid artifact is generated quietly in the background and lives outside the moment.</p>
+<p><strong>The Practice Record (Career):</strong></p>
+<ul>
+<li>Date, role, and room type.</li>
+<li>The 3 questions asked.</li>
+<li>Your best 60-second answer, transcribed (opt-in at first save).</li>
+<li>One fix and one model phrase.</li>
+<li>One prompt for the next session.</li>
+<li>Export as PDF or a private link. Delete in one tap. Retained 90 days by default.</li>
+</ul>
+<p><strong>What it is not:</strong></p>
+<ul>
+<li>Not a score, percentile, "readiness %", or badge.</li>
+<li>Not a claim that the user is ready for an interview.</li>
+<li>Not shareable to LinkedIn at launch (a public brag invites gaming and misrepresents a 10-minute rep).</li>
+<li>Not a replacement for the recap. The call screen never becomes a dashboard.</li>
+</ul>
+<p><strong>Why this is the honest version of "resume asset":</strong> interviews are won by having said the answer out loud, repeatedly. The record is evidence of reps and a script to rehearse — useful, tangible, and true. Calling it a credential would be a lie that the first hiring manager exposes.</p>
+<h3 id="34-build-and-market-sequence">3.4 Build and market sequence</h3>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>When</th>
+<th>Build</th>
+<th>Market</th>
+<th>Gate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0 — Free wedge</strong></td>
+<td>Now → W4</td>
+<td>Generic Interview topic (already in the prototype), 6 role prompt packs, correction cue</td>
+<td>Campus conversation clubs; job-seeker Discords; "practise out loud, not in your head"</td>
+<td>25% of new users pick Interview at least once</td>
+</tr>
+<tr>
+<td><strong>1 — Peer mock</strong></td>
+<td>W5–W8</td>
+<td>Role swap at 5:00, interview timer beats, record v0 (text only)</td>
+<td>Bootcamp partnerships (2 per corridor), career-centre workshops</td>
+<td>40% of mock rooms complete both roles</td>
+</tr>
+<tr>
+<td><strong>2 — Career tier</strong></td>
+<td>W9–W16</td>
+<td>JD paste → 8 questions, record export, negotiation pack, 30-day sprint</td>
+<td>LinkedIn (the only social channel with intent), SEO "mock interview practice free", student annual</td>
+<td>8–12% of Plus → Career</td>
+</tr>
+<tr>
+<td><strong>3 — Cohorts</strong></td>
+<td>Q2</td>
+<td>Cohort seats, admin-lite for bootcamps (no dashboards), "Interview Week" live event</td>
+<td>B2B2C via bootcamps and universities; employer-branded rooms are <strong>rejected</strong> (trust risk)</td>
+<td>3 paid cohorts, 70% completion</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Positioning for this segment:</strong> <em>"Practise the interview out loud, with someone who is also applying."</em> Not "AI interview coach". Not "get hired". The promise is reps, not outcomes.</p>
+<p><strong>Kill signal:</strong> if fewer than 8% of Interview-topic users start a second mock within 14 days, the wedge is a topic chip, not a business. Keep it free and stop building Career.</p>
+<hr />
+<h2 id="4-the-60-second-onboarding">4. The 60-second onboarding</h2>
+<h3 id="41-the-tap-budget">4.1 The tap budget</h3>
+<p>The target is <strong>install → first spoken second ≤ 60s median</strong>. That is not the same as "account created" or "home screen reached". It is the moment the user says something and someone answers.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Screen</th>
+<th>What the user does</th>
+<th>Taps</th>
+<th>Seconds</th>
+<th>Cumulative</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Install → open</td>
+<td>—</td>
+<td>0</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Welcome</td>
+<td>"Get started"</td>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Age gate</td>
+<td>"I'm 18 or older"</td>
+<td>1</td>
+<td>2</td>
+<td>7</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Language pair</td>
+<td>Prefilled from device locale; "Continue"</td>
+<td>1</td>
+<td>3</td>
+<td>10</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Phone</td>
+<td>Types number; "Send code"; types 6 digits (auto-submit)</td>
+<td>1 + typing</td>
+<td>20–35</td>
+<td>30–45</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Home</td>
+<td>"Talk"</td>
+<td>1</td>
+<td>2</td>
+<td>32–47</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Matching</td>
+<td>Mic test runs here: "Say hi — checking your mic"</td>
+<td>0</td>
+<td>2</td>
+<td>34–49</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>First audio</strong></td>
+<td>Partner answers</td>
+<td>—</td>
+<td>—</td>
+<td><strong>median ≤ 60, P75 ≤ 75</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Five taps, one phone number, one code.</strong> No email, no password, no name, no photo, no goals, no tutorial, no notification prompt.</p>
+<h3 id="42-what-moved-out-of-onboarding-and-why">4.2 What moved out of onboarding, and why</h3>
+<table>
+<thead>
+<tr>
+<th>Removed from first run</th>
+<th>Where it goes</th>
+<th>What it buys</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Level check (20s recording)</strong></td>
+<td>After room 1, inferred from 30s of speech; editable in Settings</td>
+<td>Removes the scariest screen and 20 seconds; fewer match dimensions = more liquidity</td>
+</tr>
+<tr>
+<td><strong>Mic screen</strong></td>
+<td>Folded into matching: live input meter, "Say hi"</td>
+<td>Uses dead time; catches a broken mic before the room, with zero extra taps</td>
+</tr>
+<tr>
+<td><strong>Selfie / liveness</strong></td>
+<td>Before room 3</td>
+<td>Verification cost is paid only by retained users; no friction before first value</td>
+</tr>
+<tr>
+<td><strong>Name</strong></td>
+<td>Auto-assigned ("Alex · B1"), editable later</td>
+<td>Nothing to think about; no real-name collection</td>
+</tr>
+<tr>
+<td><strong>Email / password</strong></td>
+<td>Never at signup; optional Apple/Google later for cross-device</td>
+<td>One less account, one less breach surface</td>
+</tr>
+<tr>
+<td><strong>Goals / interests</strong></td>
+<td>Topic chips on Home</td>
+<td>A goal is a choice, not a form</td>
+</tr>
+<tr>
+<td><strong>Notifications</strong></td>
+<td>After the first recap, contextual</td>
+<td>Ask when the value is known; never during onboarding</td>
+</tr>
+<tr>
+<td><strong>"How it works" carousel</strong></td>
+<td>The welcome sentence</td>
+<td>If it needs a carousel, the promise is not clear</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What we did not remove:</strong> the age gate (existential), the phone gate (accountability), the language pair (the match), and the mic check (moved, not deleted).</p>
+<h3 id="43-the-verification-calendar">4.3 The verification calendar</h3>
+<table>
+<thead>
+<tr>
+<th>Moment</th>
+<th>Check</th>
+<th>Friction</th>
+<th>Conversion target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Before room 1</td>
+<td>Phone OTP + device attestation</td>
+<td>20–35s typing</td>
+<td>≥ 85% of users who reach the phone screen verify</td>
+</tr>
+<tr>
+<td>Room 1–2</td>
+<td>Matched only with Trusted partners; partner sees "New here"</td>
+<td>0s</td>
+<td>70% of verified users complete room 1</td>
+</tr>
+<tr>
+<td>Before room 3</td>
+<td>Liveness + age estimation</td>
+<td>8–12s, one tap</td>
+<td>≥ 80% of room-2 completers pass</td>
+</tr>
+<tr>
+<td>Any P1 report / age signal</td>
+<td>ID check + removal from matching</td>
+<td>Manual</td>
+<td>100% within 4h</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why the phone first:</strong> it is the cheapest credible proof that a real adult is behind the account, it survives reinstalls via hash, and it does not require a selfie before the user has heard a single voice. <strong>Why the selfie later:</strong> it is the highest-friction step, and by room 3 the user has a reason to stay and the platform has a reason to pay for the check.</p>
+<h3 id="44-activation-is-two-rooms-not-one">4.4 Activation is two rooms, not one</h3>
+<p>The first room proves the promise; the second proves the habit. The product pushes one thing after the recap: <strong>"Talk again"</strong> — same topic, new partner, one tap. The first-session target is two rooms in seven days, not one.</p>
+<p>Notifications are asked for <strong>after the first recap</strong>, with the only message we will ever send by default: <em>"Your practice window is open — 6 people are free now."</em> One per week, opt-in, off by default. No streak loss, no "someone is waiting" if it is not true.</p>
+<h3 id="45-funnel-instrumentation-from-day-one">4.5 Funnel instrumentation (from day one)</h3>
+<table>
+<thead>
+<tr>
+<th>Event</th>
+<th>Why it exists</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>install_open</code> → <code>welcome_cta</code></td>
+<td>Is the promise legible?</td>
+</tr>
+<tr>
+<td><code>age_pass</code> / <code>age_block</code></td>
+<td>Gate drop-off and minor attempts</td>
+</tr>
+<tr>
+<td><code>pair_set</code></td>
+<td>Prefill acceptance; how often users change the pair</td>
+</tr>
+<tr>
+<td><code>otp_send</code> → <code>otp_verify</code></td>
+<td>SMS delivery and typing friction, by carrier/country</td>
+</tr>
+<tr>
+<td><code>talk_tap</code> → <code>match_start</code></td>
+<td>The real intent signal</td>
+</tr>
+<tr>
+<td><code>first_audio_second</code></td>
+<td><strong>The only onboarding number that matters</strong></td>
+</tr>
+<tr>
+<td><code>room_complete</code> / <code>early_leave</code></td>
+<td>Quality, not just conversion</td>
+</tr>
+<tr>
+<td><code>recap_view</code> → <code>talk_again</code></td>
+<td>The habit loop</td>
+</tr>
+<tr>
+<td><code>report_open</code> → <code>report_submit</code></td>
+<td>Safety flow friction</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The funnel target:</strong> 55% install → verified · 70% verified → room 1 · 45% room 1 → room 2 within 7 days · 3–5% free → paid by day 30.</p>
+<hr />
+<h2 id="5-monetization-that-does-not-break-the-room">5. Monetization that does not break the room</h2>
+<h3 id="51-principles">5.1 Principles</h3>
+<ol>
+<li><strong>Sell time, priority, and proof.</strong> Never safety, never corrections, never the ability to leave, never the recap's three facts.</li>
+<li><strong>No ads, ever.</strong> An ad in a 10-minute language call is the end of the brand.</li>
+<li><strong>Never enforce the cap mid-conversation.</strong> A call that reaches the limit finishes; the next join is blocked; the paywall appears after the recap.</li>
+<li><strong>Priority never bypasses verification.</strong> It reorders people who passed the same gate.</li>
+</ol>
+<h3 id="52-the-matrix">5.2 The matrix</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Free</strong></th>
+<th><strong>Plus — $12.99/mo · $79.99/yr</strong></th>
+<th><strong>Career — $24.99/mo · $149.99/yr</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Human live minutes</strong></td>
+<td>20/day</td>
+<td>Unlimited, fair use 120/day</td>
+<td>Unlimited, fair use 120/day</td>
+</tr>
+<tr>
+<td><strong>AI practice</strong></td>
+<td>5 min/day (fallback)</td>
+<td>Unlimited, fair use 60/day</td>
+<td>Unlimited + interview mode</td>
+</tr>
+<tr>
+<td><strong>Priority matching</strong></td>
+<td>—</td>
+<td>Queue priority</td>
+<td>Highest queue priority</td>
+</tr>
+<tr>
+<td><strong>1:1 + tables</strong></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Corrections</strong></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Recap</strong></td>
+<td>3 facts</td>
+<td>Same 3 facts</td>
+<td>Same 3 facts</td>
+</tr>
+<tr>
+<td><strong>Practice record</strong></td>
+<td>—</td>
+<td>—</td>
+<td>✅ + PDF export</td>
+</tr>
+<tr>
+<td><strong>Interview packs</strong></td>
+<td>Generic topic</td>
+<td>Generic topic</td>
+<td>Role packs + JD-tailored prompts</td>
+</tr>
+<tr>
+<td><strong>Negotiation room</strong></td>
+<td>—</td>
+<td>—</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Word bank</strong></td>
+<td>20 words</td>
+<td>Unlimited</td>
+<td>Unlimited + role vocabulary</td>
+</tr>
+<tr>
+<td><strong>Themes / accessibility</strong></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Safety tools</strong></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Ads</strong></td>
+<td><strong>None</strong></td>
+<td>None</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Student annual:</strong> Plus $49.99/yr, Career $99.99/yr, verified by student status, 12-month cap. The audience is students; a student price is a distribution strategy, not a discount habit.</p>
+<p><strong>Two corrections to the earlier plan:</strong></p>
+<ul>
+<li><strong>The recap is not paywalled.</strong> <code>05</code> proposed "Full (words, 2 fixes, next step)" for Plus. That contradicts the locked three-fact recap and turns the learning loop into a demo. Everyone gets the same recap; Career sells the <em>record</em> and the <em>role packs</em>.</li>
+<li><strong>The AI is not a paid feature first.</strong> It is the fallback that protects the free experience. Plus gets more of it, but no one is ever charged to avoid an empty queue.</li>
+</ul>
+<h3 id="53-why-these-prices">5.3 Why these prices</h3>
+<ul>
+<li><strong>$12.99 / $79.99 is exact parity with HelloTalk VIP (V, 2026-11-15).</strong> Parity makes the comparison one sentence: <em>same price, and it actually connects you.</em> Undercutting at $9.99 signals a weaker product.</li>
+<li><strong>$24.99 Career anchors against a human interview coach ($100–300/session)</strong>, not against a language app. It is the only tier where role-specific content and a record justify a different price.</li>
+<li><strong>Annual is the default toggle</strong>, monthly one tap away. Annual funds verification upfront and is the retention product.</li>
+</ul>
+<h3 id="54-unit-economics-and-the-ai-trap">5.4 Unit economics and the AI trap</h3>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Estimate</th>
+<th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio relay (SFU)</td>
+<td>$0.004–0.010 / participant-hour</td>
+<td>LiveKit/Daily/Agora list pricing (<strong>H</strong>)</td>
+</tr>
+<tr>
+<td>AI fallback</td>
+<td>$0.03–0.06 / minute</td>
+<td>Realtime speech-to-speech (<strong>H</strong>)</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>$0.60–1.20, once, at room 3</td>
+<td>Persona/Onfido range (<strong>H</strong>)</td>
+</tr>
+<tr>
+<td>Moderation</td>
+<td>$0.15–0.30 / active user / month</td>
+<td>Reviewer cost ÷ caseload (<strong>H</strong>)</td>
+</tr>
+<tr>
+<td>Infra / storage / push</td>
+<td>~$0.05 / MAU / month</td>
+<td>(<strong>H</strong>)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The AI trap, stated plainly:</strong> 5 free AI minutes/day × 30 days × $0.06 = <strong>$9/month per user who maxes it</strong> — more than a Plus subscription. The cap only works if usage is rare. Guard: AI share ≤ 15% of minutes; if free AI COGS exceeds $0.60/MAU/month, cut the free cap to 3 min/day before touching price.</p>
+<p><strong>Illustrative margin at 200 human minutes/month:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Free</th>
+<th>Plus</th>
+<th>Career</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Relay + AI + moderation + infra</td>
+<td>~$0.40</td>
+<td>~$0.60</td>
+<td>~$0.65</td>
+</tr>
+<tr>
+<td>Net revenue after 15% store fee</td>
+<td>$0</td>
+<td>$11.04</td>
+<td>$21.24</td>
+</tr>
+<tr>
+<td><strong>Gross margin</strong></td>
+<td>subsidised</td>
+<td><strong>~95%</strong></td>
+<td><strong>~97%</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Break-even conversion ≈ 3.6%</strong> of monthly actives. That is the business: a cheap live product with a generous free tier, not a $5/minute AI tutor.</p>
+<h3 id="55-the-north-star-and-the-guardrails">5.5 The North Star and the guardrails</h3>
+<p><strong>North Star: Weekly Human Speaking Minutes per Weekly Active User (WHSM/WAU).</strong></p>
+<p>Measured by voice-activity detection on the user's own speech, in rooms with a verified human partner. AI minutes, listening time, and room duration are excluded.</p>
+<table>
+<thead>
+<tr>
+<th>Why this metric</th>
+<th>Why not the alternatives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>It measures the actual behaviour the product exists to produce: the user speaking, with a human, repeatedly</td>
+<td><strong>Total minutes</strong> grows with marketing, long calls, and AI; it says nothing about habit</td>
+</tr>
+<tr>
+<td>It is per active user, so it cannot be inflated by buying traffic</td>
+<td><strong>DAU</strong> rewards streaks and daily guilt in a product designed for 3×/week</td>
+</tr>
+<tr>
+<td>It is human-only, so AI cannot fake it</td>
+<td><strong>Sessions</strong> rewards 30-second joins; <strong>words</strong> rewards button-mashing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Targets:</strong> 30 min by week 12 · 40 min by month 6 · activation (2 human rooms in 7 days) ≥ 45%.</p>
+<p><strong>Guardrails, with actions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Guardrail</th>
+<th>Threshold</th>
+<th>Action if breached</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI share of minutes</td>
+<td>≤ 15%</td>
+<td>&gt; 20% for 2 weeks: cut AI hours, concentrate supply, do not grow</td>
+</tr>
+<tr>
+<td>Report rate</td>
+<td>≤ 3.0 / 1k room-minutes, falling</td>
+<td>Freeze growth; audit matching</td>
+</tr>
+<tr>
+<td>P90 human match</td>
+<td>≤ 15s at peak</td>
+<td>Shrink hours or cut a pair</td>
+</tr>
+<tr>
+<td>Call completion</td>
+<td>≥ 80%</td>
+<td>Diagnose audio vs matching vs creepiness separately</td>
+</tr>
+<tr>
+<td>Early leave (&lt; 60s)</td>
+<td>&lt; 8%</td>
+<td>Review onboarding copy and match quality</td>
+</tr>
+<tr>
+<td>Silent user (&lt; 60s spoken)</td>
+<td>&lt; 15% of calls</td>
+<td>Prompt design, not more features</td>
+</tr>
+<tr>
+<td>Dominance incidents</td>
+<td>&lt; 10% of group rooms</td>
+<td>Tighten round structure</td>
+</tr>
+<tr>
+<td>D7 / D30</td>
+<td>≥ 30% / ≥ 15%</td>
+<td>Re-scope to goal-based cohorts before adding features</td>
+</tr>
+<tr>
+<td>Paid conversion</td>
+<td>3–5%</td>
+<td>Price test, not a feature wall</td>
+</tr>
+<tr>
+<td>Gross margin</td>
+<td>&gt; 90%</td>
+<td>Cut free AI cap first, then human cap</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Counter-metrics against mindless clicking:</strong> average session length 8–12 minutes (not 25), sessions per user per week ≤ 6 (monitor, don't cap), and the ratio of completed human rooms to AI rooms. A dashboard that celebrates total minutes while the human ratio falls is celebrating the wrong product.</p>
+<hr />
+<h2 id="6-go-to-market">6. Go-to-market</h2>
+<h3 id="61-the-message">6.1 The message</h3>
+<p><strong>One line:</strong> <em>Ten minutes with a real person. No DMs. No profiles. No waiting.</em></p>
+<table>
+<thead>
+<tr>
+<th>Proof point</th>
+<th>Copy</th>
+<th>What it replaces</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Verified adults</strong></td>
+<td>"Everyone you meet is phone-verified. Liveness-checked before your third call."</td>
+<td>HelloTalk's 13+ open network</td>
+</tr>
+<tr>
+<td><strong>No private messaging</strong></td>
+<td>"There is no inbox. The conversation is the product."</td>
+<td>Creepy DMs, unanswered messages</td>
+</tr>
+<tr>
+<td><strong>No waiting</strong></td>
+<td>"Matched in seconds, or Ana practises with you until a person arrives."</td>
+<td>Ghosting, empty queues</td>
+</tr>
+<tr>
+<td><strong>It ends</strong></td>
+<td>"Ten minutes. A recap. A reason to come back."</td>
+<td>Clubhouse's endless rooms</td>
+</tr>
+<tr>
+<td><strong>For the interview</strong></td>
+<td>"Practise the answer out loud, with someone who is also applying."</td>
+<td>Paid coaching, silent flashcards</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What we do not say:</strong> "make friends", "community", "AI tutor", "fluency in 30 days", "join 10 million learners". Every one of those is a promise the product does not keep.</p>
+<h3 id="62-the-beachhead-one-pair-one-corridor-four-hours">6.2 The beachhead: one pair, one corridor, four hours</h3>
+<table>
+<thead>
+<tr>
+<th>Decision</th>
+<th>Choice</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pair</strong></td>
+<td>English ↔ Spanish only for 8 weeks</td>
+<td>The largest pair by demand; adding Portuguese halves liquidity</td>
+</tr>
+<tr>
+<td><strong>Corridor</strong></td>
+<td>Mexico City / Guadalajara / Monterrey ↔ Austin / Houston / Dallas</td>
+<td>Same time zone; nearshoring job demand; university density on both sides</td>
+</tr>
+<tr>
+<td><strong>Audience</strong></td>
+<td>18–30 students and early-career job seekers</td>
+<td>High frequency on one side, high willingness to pay on the other</td>
+</tr>
+<tr>
+<td><strong>Hours</strong></td>
+<td>18:00–23:00 local, seven days</td>
+<td>Concentration is the only free liquidity lever</td>
+</tr>
+<tr>
+<td><strong>Geography</strong></td>
+<td>Queue is geo-gated to the corridor; waitlist elsewhere</td>
+<td>A global launch guarantees empty rooms everywhere</td>
+</tr>
+</tbody>
+</table>
+<p>This is deliberately small. The first 10,000 users should come from a place where we can fill a queue at 8pm on a Tuesday, not from a viral video that fills it at 4am.</p>
+<h3 id="63-supply-seeding-without-fake-rooms">6.3 Supply seeding without fake rooms</h3>
+<table>
+<thead>
+<tr>
+<th>Tactic</th>
+<th>Detail</th>
+<th>Cost</th>
+<th>Why it is honest</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Founding speakers</strong></td>
+<td><strong>600 total — 300 per side</strong> (English/Spanish), recruited via universities, language schools, and job communities. 3 months of Career free, 3 sessions/week commitment; target 50% online at peak = 300 concurrent</td>
+<td>~$0 (product cost only)</td>
+<td>They are real users with a real reason to be there</td>
+</tr>
+<tr>
+<td><strong>Concentrated hours</strong></td>
+<td>Promote 18:00–23:00 on Home and in onboarding; outside hours, say "quiet hours — Ana can practise"</td>
+<td>$0</td>
+<td>The app tells the truth about supply</td>
+</tr>
+<tr>
+<td><strong>Campus ambassadors</strong></td>
+<td>2 per city, paid per activated user (not per install)</td>
+<td>$3–5k/month</td>
+<td>Buys distribution, not presence</td>
+</tr>
+<tr>
+<td><strong>Reciprocity</strong></td>
+<td>Free minutes are earned by helping: 1 minute given = 1 minute received, soft-capped</td>
+<td>$0</td>
+<td>Protects the giver side from charity-queue burnout</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What we removed from <code>07</code>:</strong> paid seed hosts at $8–12/hour. Paying people to sit in rooms creates a two-class product (paid host, unpaid user), breaks the "no host" thesis, and does not scale. Pay for recruitment and ambassadorship instead; never for presence.</p>
+<h3 id="64-channels-and-the-90-day-sequence">6.4 Channels and the 90-day sequence</h3>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Motion</th>
+<th>Target</th>
+<th>Gate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Universities</strong></td>
+<td>Conversation-club takeover: "install, verify, talk in 60 seconds"</td>
+<td>40% of alpha</td>
+<td>2 cities, 4 campuses</td>
+</tr>
+<tr>
+<td><strong>Bootcamps / career centres</strong></td>
+<td>Free mock-interview workshops; Career seats for cohorts</td>
+<td>20% of alpha, 30% of Career</td>
+<td>2 partners signed</td>
+</tr>
+<tr>
+<td><strong>Job-seeker communities</strong> (Discord, Slack, r/jobs)</td>
+<td>AMAs on interview speaking, not ads</td>
+<td>15%</td>
+<td>3 communities</td>
+</tr>
+<tr>
+<td><strong>Reddit r/languagelearning, r/expats</strong></td>
+<td>Value posts on safety design and practice method</td>
+<td>10%</td>
+<td>No astroturfing</td>
+</tr>
+<tr>
+<td><strong>LinkedIn</strong></td>
+<td>Founder posts on hiring bias against non-native speakers; interview sprint</td>
+<td>Career segment</td>
+<td>1 post/week, no ads before liquidity</td>
+</tr>
+<tr>
+<td><strong>TikTok / Reels</strong></td>
+<td>"POV: your interview answer" + "no DMs" safety story</td>
+<td>Top of funnel</td>
+<td>Only after D7 ≥ 25%</td>
+</tr>
+<tr>
+<td><strong>ASO</strong></td>
+<td>"language exchange without creeps", "mock interview practice", "practice Spanish speaking"</td>
+<td>Always-on</td>
+<td>Store listing A/B</td>
+</tr>
+<tr>
+<td><strong>PR</strong></td>
+<td>The anti-HelloTalk safety story + day-90 transparency report</td>
+<td>Launch week</td>
+<td>Real numbers only</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Sequence:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Weeks</th>
+<th>What ships</th>
+<th>Gate to next phase</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pre-launch</strong></td>
+<td>−4 → 0</td>
+<td>5-tap funnel, phone OTP, report flow, safety buffer, AI handoff, 6 interview packs; 2,000 waitlist; 300 founding speakers</td>
+<td>50 test calls, 0 P1 defects</td>
+</tr>
+<tr>
+<td><strong>Closed alpha</strong></td>
+<td>1–4</td>
+<td>1:1 only, one pair, 18:00–23:00, 500 users</td>
+<td>P90 match ≤ 20s; D7 ≥ 30%; report rate ≤ 3.0</td>
+</tr>
+<tr>
+<td><strong>Open beta</strong></td>
+<td>5–8</td>
+<td>2,000 users, second metro cluster, group behind the liquidity gate</td>
+<td>P90 ≤ 15s; completion ≥ 80%</td>
+</tr>
+<tr>
+<td><strong>Career launch</strong></td>
+<td>9–12</td>
+<td>Career tier, practice record, negotiation pack, bootcamp cohorts</td>
+<td>8% Plus → Career</td>
+</tr>
+<tr>
+<td><strong>Public launch</strong></td>
+<td>12+</td>
+<td>Corridor-wide, transparency report, paid acquisition unlocked</td>
+<td>D30 ≥ 15%; margin &gt; 90%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="65-how-this-beats-hellotalk-specifically">6.5 How this beats HelloTalk specifically</h3>
+<p>We do not out-network a 20-million-user app. We out-trust it in one corridor and make the comparison unavoidable.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>HelloTalk</th>
+<th>Eloq</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Profiles and photos</td>
+<td>Central to discovery</td>
+<td>None</td>
+</tr>
+<tr>
+<td>DMs</td>
+<td>The retention loop — and the harassment vector</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Verification</td>
+<td>Optional VIP badge</td>
+<td>Phone before room 1, liveness before room 3</td>
+</tr>
+<tr>
+<td>Time</td>
+<td>Open-ended, asynchronous</td>
+<td>10 minutes, designed ending</td>
+</tr>
+<tr>
+<td>Empty queue</td>
+<td>Wait for a reply, sometimes days</td>
+<td>AI in 10s, human handoff in &lt; 3s</td>
+</tr>
+<tr>
+<td>Outcome</td>
+<td>"Talk to natives"</td>
+<td>A recap with three facts; a practice record for interviews</td>
+</tr>
+<tr>
+<td>Business</td>
+<td>Ads + VIP</td>
+<td>Subscription, no ads</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The switch message:</strong> <em>"You don't need 20 million people. You need one person, right now, who is also learning your language."</em></p>
+<p><strong>The retention risk, again:</strong> removing DMs removes the daily open. The replacement must be a <strong>live</strong> reason to return: a 48-hour "practice window" notification (opt-in), a weekly goal of 3 sessions, and the recap's next prompt. If D7 falls below 20%, the answer is scheduled live tables and cohorts — never an inbox.</p>
+<h3 id="66-the-cold-start-arithmetic-the-part-most-plans-hide">6.6 The cold-start arithmetic (the part most plans hide)</h3>
+<p>A 10-minute session, a two-sided queue, and a 10-second wait imply a lot of simultaneous supply. Using Little's Law as a rough planning model:</p>
+<ul>
+<li>With <strong>N</strong> users online in a pair at peak and 10-minute sessions, each side produces <strong>N/20</strong> arrivals per minute.</li>
+<li>A 10-second median wait needs roughly <strong>120+ concurrent users per pair</strong>, and a 15-second P90 needs a buffer of <strong>200–300</strong> — because some of those users are already in calls, not waiting. <strong>(D)</strong></li>
+<li>300 concurrent users at 10 minutes each is <strong>1,800 sessions per hour</strong> — which is why four concentrated hours beat 24/7 coverage with the same DAU.</li>
+</ul>
+<p><strong>What this means for the plan:</strong></p>
+<ol>
+<li><strong>300 concurrent users at 8pm is the minimum viable liquidity</strong>, drawn from a roster of roughly 600 founding speakers (half show up on a given night). At 150 per side, waits are measured in tens of seconds, not units.</li>
+<li><strong>A 500–1,000 MAU beta can sustain one pair for four hours a day.</strong> It cannot sustain two pairs or 24 hours. Every extra pair divides the same supply.</li>
+<li><strong>AI covers the gaps, but it does not create the network.</strong> If 30% of peak sessions are AI, the human queue is too thin and the "match in seconds" promise is being kept by a machine.</li>
+<li><strong>The 10-second claim is a supply promise, not an engineering one.</strong> If we cannot staff 18:00–23:00, we say "peak hours" on Home rather than fake a countdown.</li>
+</ol>
+<p><strong>Three honest levers, in order:</strong> concentrate hours → narrow pairs → seed recruit. Paid marketing before liquidity buys people a bad first impression at scale.</p>
+<hr />
+<h2 id="7-what-this-plan-changes-in-the-document-set">7. What this plan changes in the document set</h2>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Change</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>02-flows.md</code></td>
+<td>12s → 10s everywhere; level check moves after room 1 in the launch funnel; report sheet is 3 options, not 6 chips</td>
+<td>Matches the prototype and the 60-second target</td>
+</tr>
+<tr>
+<td><code>04-safety.md</code></td>
+<td>Phone before room 1, liveness before room 3; 3-option report; P1 removal at 60s; minor reports are immediate removal, not a 24h suspension</td>
+<td>One verification model, one report flow</td>
+</tr>
+<tr>
+<td><code>05-monetization.md</code></td>
+<td>Recap is the same 3 facts on every tier; Career sells the record and role packs; free AI cap guarded by COGS</td>
+<td>The learning loop is not a paywall</td>
+</tr>
+<tr>
+<td><code>06-mvp.md</code></td>
+<td>5-tap launch funnel; verification split; 3 report options; one pair at launch; group gated, not dated</td>
+<td>Scope follows liquidity</td>
+</tr>
+<tr>
+<td><code>07-risks.md</code></td>
+<td>Remove paid seed hosts; "before room 2" → "before room 3"; paid hosts → founding speakers</td>
+<td>No two-class rooms</td>
+</tr>
+<tr>
+<td><code>README.md</code></td>
+<td>Version 1.1; link this document; "twelve seconds" → "ten"</td>
+<td>Index truth</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8-the-first-90-days">8. The first 90 days</h2>
+<p><strong>Pre-launch (weeks −4 → 0)</strong></p>
+<ul>
+<li>[ ] 5-tap funnel live; <code>first_audio_second</code> instrumented</li>
+<li>[ ] Phone OTP + device attestation; liveness vendor contracted</li>
+<li>[ ] Report → ended → 3 options → P1 queue, end to end</li>
+<li>[ ] Safety buffer disclosed, on by default, opt-out; 60s local, upload only on report</li>
+<li>[ ] AI fallback + human handoff with a one-line brief</li>
+<li>[ ] 6 interview prompt packs; 3 Everyday packs; 2 Exam packs</li>
+<li>[ ] 600 founding speakers recruited (300 per side); 2,000 waitlist</li>
+<li>[ ] 50 test calls; 0 P1 defects; audio setup ≥ 97%</li>
+</ul>
+<p><strong>Weeks 1–4 — closed alpha (500 users, 1 pair, 1:1 only)</strong></p>
+<ul>
+<li>[ ] P90 match ≤ 20s at peak; completion ≥ 75%</li>
+<li>[ ] D7 ≥ 30%; two rooms in 7 days ≥ 35%</li>
+<li>[ ] Report rate ≤ 3.0; P1 time-to-action ≤ 4h</li>
+<li>[ ] AI share ≤ 20%; handoff acceptance ≥ 60%</li>
+</ul>
+<p><strong>Weeks 5–8 — open beta (2,000 users, 1 pair, 2 clusters)</strong></p>
+<ul>
+<li>[ ] P90 ≤ 15s; completion ≥ 80%</li>
+<li>[ ] AI share ≤ 15%</li>
+<li>[ ] Group tables behind the gate; 80% fill within 20s</li>
+<li>[ ] Interview topic chosen by ≥ 25% of new users</li>
+</ul>
+<p><strong>Weeks 9–12 — Career + public launch</strong></p>
+<ul>
+<li>[ ] Career tier and practice record shipped; 8% Plus → Career</li>
+<li>[ ] 3 bootcamp cohorts; 2 campus programs</li>
+<li>[ ] Transparency report #1 published with real numbers</li>
+<li>[ ] D30 ≥ 15%; margin &gt; 90%; paid conversion 3–5%</li>
+</ul>
+<p><strong>Open decisions (owner: founder, before build week 1)</strong></p>
+<ol>
+<li><strong>Safety buffer default:</strong> on with disclosure (recommended) vs off. Off makes reports unenforceable; on is a copy change, not a privacy scandal, if it is stated in one sentence.</li>
+<li><strong>Level inference post-call:</strong> recommended. It removes 20 seconds and one match dimension; accept slightly worse first-call pairing for materially better liquidity.</li>
+<li><strong>Geo-gated queue:</strong> recommended for 8 weeks. The alternative is a global launch with empty queues in every time zone.</li>
+<li><strong>Price test:</strong> $12.99 vs $9.99 at the paywall (P-2). Decide with data, not taste.</li>
+<li><strong>Group timing:</strong> week 8+ behind the gate (recommended) vs launch. Launching tables early is the Clubhouse mistake with extra steps.</li>
+</ol>
+<hr />
+<p><strong>The standard this plan is held to:</strong> a 24-year-old in Mexico City, interview in three weeks, opens the app at 8:40pm, is talking to a real person by 8:41, says the answer out loud three times, gets one correction, sees three facts, and comes back tomorrow without being nagged. If that works, the rest is arithmetic.</p>
+<footer>Live v1.1 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>

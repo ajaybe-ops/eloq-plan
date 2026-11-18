@@ -11,7 +11,7 @@
 <div class="layout">
 <nav>
   <div class="brand">Live</div>
-  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.1 · 2026-11-18</div>
   <a href="index.html">Start here</a>
   <hr>
   <a href="01-concept.html">01 · Concept & thesis</a>
@@ -21,6 +21,7 @@
   <a href="05-monetization.html">05 · Pricing</a>
   <a href="06-mvp.html">06 · MVP scope</a>
   <a href="07-risks.html">07 · Risks</a>
+  <a href="08-launch-plan.html">08 · Launch plan</a>
   <a href="prototype.html">▶ Prototype</a>
   <hr>
   <a href="../index.html">← Eloq plan (other set)</a>
@@ -60,7 +61,7 @@
 <tr>
 <td>4</td>
 <td><strong>The interface disappears during speech</strong></td>
-<td>Controls fade to 30% opacity after 8s of no touch; a tap restores</td>
+<td>Controls fade to 25% opacity after 6s of no touch; a tap restores</td>
 <td>Persistent chrome over a conversation</td>
 </tr>
 <tr>
@@ -199,7 +200,7 @@
 <tr>
 <td><code>warm</code></td>
 <td><code>#F2B705</code></td>
-<td><code>#A97400</code></td>
+<td><code>#8A5F00</code></td>
 <td>Correction cue, gentle warning</td>
 </tr>
 <tr>
@@ -305,9 +306,9 @@
 <td>Room, table</td>
 </tr>
 <tr>
-<td><strong>Chip toast</strong></td>
-<td>Incoming correction, 1 line, 6s auto-dismiss</td>
-<td>Room</td>
+<td><strong>Cue card</strong></td>
+<td>Correction label, one model phrase, the phrase you said, 6s auto-dismiss, tap to dismiss</td>
+<td>Room, table</td>
 </tr>
 <tr>
 <td><strong>Sheet</strong></td>
@@ -338,13 +339,13 @@ A <strong>prompt card</strong>, collapsed to a single line: <em>"Ask about a job
 Three circles on one row, evenly spaced:
 <code>Leave</code> (56, ghost, left) · <strong><code>Mute</code></strong> (72, filled, centre) · <code>More</code> (56, ghost, right).</p>
 <p>Mute is the only filled control in the room. When muted, it fills <code>alert</code>-tinted neutral, the icon becomes a struck mic, and a 13px label under it reads <code>Muted</code> — three signals, none of them colour alone.</p>
-<p><strong>More sheet:</strong> <code>Correct something</code> · <code>Translate a word</code> · <code>Change topic</code> · <code>Report</code> · <code>Block</code>.
+<p><strong>More sheet:</strong> <code>Correct my Spanish</code> · <code>Change topic</code> · <code>Report</code> · <code>Block</code>.
 <code>Report</code> and <code>Block</code> are separated by 16px and sit at the bottom, in <code>alert</code>, never adjacent to a positive action.</p>
 <p><strong>What is deliberately absent:</strong> no participant list, no room title bar with a count, no "share", no emoji bar, no reaction animations, no waveform visualiser. A waveform is the fastest way to make a calm screen noisy.</p>
 <hr />
 <h2 id="5-onboarding-wireframed-in-words">5. Onboarding, wireframed in words</h2>
 <blockquote>
-<p><strong>Second north-star screen.</strong> 75 seconds, six taps, one sentence per screen.</p>
+<p><strong>Second north-star screen.</strong> Under 60 seconds, five taps, one sentence per screen (<code>08</code> §4).</p>
 </blockquote>
 <table>
 <thead>
@@ -394,7 +395,7 @@ Three circles on one row, evenly spaced:
 </table>
 <p><strong>Onboarding rules:</strong>
 - No account creation before the first room. The sign-in prompt appears after the recap, titled "Save your progress".
-- No notification permission request during onboarding. It is asked after the second completed room, with a reason.
+- No notification permission request during onboarding. It is asked after the first completed room, with a reason.
 - Every screen is skippable except the age gate.
 - The estimated level is always editable and never shown as a judgment ("Sounds like B1" not "You are B1").</p>
 <hr />
@@ -459,7 +460,7 @@ Three circles on one row, evenly spaced:
 <li>A red badge on the app icon.</li>
 <li>A "share your recap" prompt. Recaps are private until the user chooses otherwise.</li>
 </ol>
-<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+<footer>Live v1.1 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
 </main>
 </div>
 </body>

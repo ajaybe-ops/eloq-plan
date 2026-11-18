@@ -11,7 +11,7 @@
 <div class="layout">
 <nav>
   <div class="brand">Live</div>
-  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.1 · 2026-11-18</div>
   <a href="index.html">Start here</a>
   <hr>
   <a href="01-concept.html">01 · Concept & thesis</a>
@@ -21,6 +21,7 @@
   <a href="05-monetization.html">05 · Pricing</a>
   <a href="06-mvp.html">06 · MVP scope</a>
   <a href="07-risks.html">07 · Risks</a>
+  <a href="08-launch-plan.html">08 · Launch plan</a>
   <a href="prototype.html">▶ Prototype</a>
   <hr>
   <a href="../index.html">← Eloq plan (other set)</a>
@@ -112,29 +113,34 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>Unverified</strong></td>
-<td>Email or Apple/Google sign-in</td>
-<td>Nothing — cannot enter a live room</td>
+<td><strong>Anonymous</strong></td>
+<td>Nothing — no account, no email, no password</td>
+<td>Welcome screen only</td>
 </tr>
 <tr>
-<td><strong>Verified</strong></td>
-<td>Phone number + selfie liveness check (vendor: Persona/Onfido, ~$0.60–1.20 per check, <strong>H</strong>)</td>
-<td>1:1 and table matching</td>
+<td><strong>Phone-verified</strong></td>
+<td>Phone OTP + device attestation (~$0.02–0.05 per check)</td>
+<td>1:1 rooms 1–2, matched only with Trusted users</td>
+</tr>
+<tr>
+<td><strong>Liveness-verified</strong></td>
+<td>Selfie liveness + age estimation (vendor: Persona/Onfido, ~$0.60–1.20 per check, <strong>H</strong>)</td>
+<td>Continued matching from room 3, tables</td>
 </tr>
 <tr>
 <td><strong>Trusted</strong></td>
 <td>10 completed rooms, 0 upheld reports, 30 days</td>
-<td>May open a table; lighter re-verification</td>
+<td>May open a table; eligible to pair with new users</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li>Verification happens <strong>after the first room, before the second</strong>. The first room is with a verified user only, and the new user is flagged as new to their partner ("New here — be kind").</li>
+<li><strong>The phone gate is before the first room; liveness is before the third.</strong> The first two rooms are with Trusted users only, and the new user is flagged as new to their partner ("New here — be kind"). No one is asked for a selfie before they have heard a single voice.</li>
 <li>Display name is chosen by the user; <strong>real names, photos, locations, and links are not collected at all.</strong> No field exists to put them in. This is stronger than a filter.</li>
 <li>One verified identity per device family. Device fingerprint + phone hash for ban enforcement; both stored hashed, deleted after 12 months of inactivity.</li>
 <li>Verification is not a badge to show off — there is no visible "verified" trophy in the room. It is a gate, not a status.</li>
 </ul>
-<p><strong>Cost note:</strong> verification is the largest per-user fixed cost (~$0.90, H). At 100k verified users that is ~$90k. It is the price of the product existing, and it belongs in the unit economics (<code>05</code> §5), not in a hidden growth budget.</p>
+<p><strong>Cost note:</strong> liveness is the largest per-user fixed cost (~$0.90, H). Because it happens before room 3, it is paid only for users who have already completed two calls — at 100k activated users that is ~$90k, against ~180k installs. It is the price of the product existing, and it belongs in the unit economics (<code>05</code> §3), not in a hidden growth budget.</p>
 <hr />
 <h2 id="4-pre-call-and-in-call-controls">4. Pre-call and in-call controls</h2>
 <table>
@@ -155,7 +161,7 @@
 </tr>
 <tr>
 <td><strong>One-tap report</strong></td>
-<td>Ends the call instantly for the reporter, opens 6 reason chips, optionally records a 20-second voice note</td>
+<td>Ends the call instantly for both, then three options; only Inappropriate opens a T&amp;S case</td>
 </tr>
 <tr>
 <td><strong>Block</strong></td>
@@ -166,8 +172,8 @@
 <td>Local mute is instant; the other side sees "muted", not the reason</td>
 </tr>
 <tr>
-<td><strong>Recording indicator</strong></td>
-<td>If either side records (see §5), both see a persistent amber bar and the room cannot start without acknowledgement</td>
+<td><strong>Recording notice</strong></td>
+<td>No record control exists for users. The local safety buffer is disclosed in one line at room start; recording the call by either party is prohibited and reportable</td>
 </tr>
 <tr>
 <td><strong>Leave</strong></td>
@@ -177,12 +183,14 @@
 </table>
 <p><strong>Report copy — exact:</strong></p>
 <blockquote>
-<p><strong>What happened?</strong>
-Sexual or inappropriate · Harassment or threats · Hate speech · They seem under 18 · Scam or spam · Something else</p>
-<p><em>Optional: hold to record 20 seconds.</em></p>
-<p><strong>Submit</strong> · <em>Cancel</em></p>
+<p><strong>Call ended.</strong>
+What went wrong?</p>
+<p>Inappropriate ›
+They left early ›
+Technical problem ›</p>
+<p><em>Nothing — just leave</em></p>
 </blockquote>
-<p>One screen. No "are you sure", no "this will notify the other person".</p>
+<p>One screen. No "are you sure", no "this will notify the other person". <strong>Inappropriate</strong> opens one optional line ("Anything else we should know?") plus "Attach the last 30 seconds" when the buffer is on. The reporter is never asked to classify the offence — Trust &amp; Safety triages from the clip and account history. <strong>They left early</strong> and <strong>Technical problem</strong> are product feedback and never create a moderation case.</p>
 <hr />
 <h2 id="5-recording-and-evidence-the-hard-trade-off">5. Recording and evidence: the hard trade-off</h2>
 <p><strong>Default: no recording, no server-side audio retention.</strong> Audio is relayed, not stored. This is a real promise and it is in the privacy policy in one sentence.</p>
@@ -243,26 +251,26 @@ Sexual or inappropriate · Harassment or threats · Hate speech · They seem und
 <tbody>
 <tr>
 <td>1</td>
-<td>First upheld minor report</td>
-<td>24h suspension + mandatory policy read</td>
-<td>Yes</td>
+<td>Suspected or self-declared minor</td>
+<td><strong>Immediate removal from matching</strong>, safeguarding review, ID verification</td>
+<td>Yes, with safeguarding support</td>
 </tr>
 <tr>
 <td>2</td>
-<td>Sexual harassment, threats, hate speech</td>
-<td>7-day suspension, removed from matching</td>
-<td>Yes, human review</td>
+<td>Sexual harassment, threats, hate speech (P1)</td>
+<td><strong>Permanent ban, device-level</strong>; evidence preserved</td>
+<td>One human review</td>
 </tr>
 <tr>
 <td>3</td>
-<td>Second offence, or any physical threat</td>
-<td>Permanent ban, device-level</td>
-<td>Yes, one review</td>
+<td>Solicitation, recording without consent, ban evasion (P2)</td>
+<td>7-day suspension; permanent on repeat</td>
+<td>Yes</td>
 </tr>
 <tr>
 <td>4</td>
 <td>Scam/romance fraud pattern</td>
-<td>Permanent ban, payment processor notified</td>
+<td>Permanent ban; payment processor notified</td>
 <td>No</td>
 </tr>
 <tr>
@@ -274,7 +282,7 @@ Sexual or inappropriate · Harassment or threats · Hate speech · They seem und
 </tbody>
 </table>
 <ul>
-<li><strong>Target time-to-action:</strong> 24 hours for sexual/harassment reports, 4 hours for minor-safety, immediate automated mute on report submission. These are commitments, not aspirations; they appear in the launch checklist (<code>06</code> §4).</li>
+<li><strong>Target time-to-action:</strong> 4 hours for P1 (sexual, threats, hate, minor-safety), 24 hours for everything else; immediate automated removal from matching on report submission. These are commitments, not aspirations; they appear in the launch checklist (<code>06</code> §4).</li>
 <li><strong>Moderation staffing:</strong> 2 FTE Trust &amp; Safety at launch, 24/5 coverage, on-call escalation for minor-safety. Ratio target: 1 reviewer per 25k monthly active users (<strong>H</strong>; measure queue depth, not ratio).</li>
 <li><strong>Reviewer wellbeing:</strong> rotating exposure limits, counselling budget, no reviewer sees the same case twice.</li>
 </ul>
@@ -351,7 +359,7 @@ Sexual or inappropriate · Harassment or threats · Hate speech · They seem und
 <tr>
 <td>Time to action</td>
 <td>Report → enforcement</td>
-<td>P50 ≤ 12h, P95 ≤ 24h</td>
+<td>P1 ≤ 4h; all ≤ 24h (P95)</td>
 </tr>
 <tr>
 <td>Minor exposure</td>
@@ -380,7 +388,7 @@ Sexual or inappropriate · Harassment or threats · Hate speech · They seem und
 <strong>One tap ends any call and sends it to a human reviewer.</strong></p>
 </blockquote>
 <p>If any of those becomes untrue, the copy changes before the feature ships — not after.</p>
-<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+<footer>Live v1.1 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
 </main>
 </div>
 </body>

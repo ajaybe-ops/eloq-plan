@@ -8,162 +8,206 @@
   :root{
     --bg:#0B0C0E; --surface:#141619; --line:#24272C; --ink:#F2F1EC; --muted:#9AA0A6;
     --signal:#3DDC97; --warm:#F2B705; --alert:#FF6B5A;
-    --r-card:16px; --r-pill:999px;
   }
   html[data-theme="light"]{
-    --bg:#FBFBF9; --surface:#FFFFFF; --line:#E5E4DF; --ink:#141518; --muted:#6B7076;
-    --signal:#0F7A5A; --warm:#A97400; --alert:#B4402E;
+    --bg:#FBFBF9; --surface:#FFFFFF; --line:#E7E6E1; --ink:#141518; --muted:#6B7076;
+    --signal:#0F7A5A; --warm:#8A5F00; --alert:#B4402E;
   }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  body{margin:0;background:#07080a;color:var(--ink);
-    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
-    min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
-    background-image:radial-gradient(1200px 600px at 50% -10%, #12161a 0%, #07080a 60%)}
+  [hidden]{display:none!important}
+  body{margin:0;background:#07080a;color:var(--ink);min-height:100vh;
+    font:17px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+    display:flex;align-items:center;justify-content:center;padding:24px;
+    background-image:radial-gradient(1000px 500px at 50% -10%,#12161a 0%,#07080a 60%)}
   html[data-theme="light"] body{background:#efeee9;background-image:none}
-
-  .wrap{display:flex;gap:36px;align-items:center;justify-content:center;flex-wrap:wrap}
-  .phone{width:390px;height:min(800px,calc(100dvh - 48px));background:var(--bg);border-radius:44px;position:relative;
-    box-shadow:0 0 0 10px #1b1d21, 0 40px 80px -20px rgba(0,0,0,.8);overflow:hidden;
-    display:flex;flex-direction:column}
-  html[data-theme="light"] .phone{box-shadow:0 0 0 10px #d9d8d2, 0 40px 80px -20px rgba(0,0,0,.25)}
-  .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:110px;height:26px;
+  .wrap{display:flex;gap:40px;align-items:center;justify-content:center;flex-wrap:wrap}
+  .phone{width:390px;height:min(800px,calc(100dvh - 48px));background:var(--bg);border-radius:44px;
+    position:relative;box-shadow:0 0 0 10px #1b1d21,0 40px 80px -20px rgba(0,0,0,.8);
+    overflow:hidden;display:flex;flex-direction:column}
+  html[data-theme="light"] .phone{box-shadow:0 0 0 10px #d9d8d2,0 40px 80px -20px rgba(0,0,0,.25)}
+  .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:104px;height:24px;
     background:#000;border-radius:20px;z-index:20}
-  .screen{display:none;flex:1;flex-direction:column;padding:44px 20px 28px;gap:0;animation:fade .22s ease-out}
+  .screen{display:none;flex:1;flex-direction:column;padding:56px 24px 32px;animation:fade .18s ease-out}
   .screen.on{display:flex}
   @keyframes fade{from{opacity:0}to{opacity:1}}
-  @media (prefers-reduced-motion:reduce){.screen.on{animation:none}*{transition:none!important}}
-
+  @media (prefers-reduced-motion:reduce){.screen.on{animation:none}.toast.on{animation:none}*{transition:none!important}}
   .step{font:500 11px/1 ui-sans-serif,system-ui;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--muted);padding-top:8px;margin-bottom:18px}
-  h1{font-size:32px;line-height:1.18;font-weight:650;letter-spacing:-.02em;margin:0 0 12px}
-  h2{font-size:22px;line-height:1.25;font-weight:650;letter-spacing:-.01em;margin:0 0 10px}
-  p{margin:0 0 12px;color:var(--muted);font-size:16px;line-height:1.5}
+    color:var(--muted);margin-bottom:26px}
+  h1{font-size:34px;line-height:1.14;font-weight:640;letter-spacing:-.025em;margin:0 0 14px}
+  h2{font-size:26px;line-height:1.2;font-weight:640;letter-spacing:-.02em;margin:0 0 8px}
+  p{margin:0;color:var(--muted);font-size:16px;line-height:1.5}
   .grow{flex:1}
-  .btn{width:100%;height:56px;border-radius:16px;border:0;background:var(--signal);color:#08130f;
-    font:600 16px/1 -apple-system,system-ui;cursor:pointer}
+  .btn{width:100%;height:58px;border-radius:16px;border:0;background:var(--signal);color:#08130f;
+    font:600 16.5px/1 -apple-system,system-ui;cursor:pointer}
   html[data-theme="light"] .btn{color:#fff}
-  .btn.ghost{background:transparent;color:var(--muted);height:44px;font-weight:500;font-size:15px}
-  .btn:disabled{opacity:.35;cursor:not-allowed}
-  .btn:focus-visible,.chip:focus-visible,.circ:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
-
-  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 18px}
-  .chip{height:40px;padding:0 16px;border-radius:var(--r-pill);border:1px solid var(--line);
-    background:transparent;color:var(--ink);font:500 15px/38px -apple-system,system-ui;cursor:pointer}
-  .chip[aria-pressed="true"]{background:rgba(61,220,151,.12);border-color:var(--signal);color:var(--signal)}
-  html[data-theme="light"] .chip[aria-pressed="true"]{background:rgba(15,122,90,.08)}
-  .note{font-size:12.5px;color:var(--muted);line-height:1.45;margin-top:10px}
-
-  /* mic */
-  .micwrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
-  .micring{width:150px;height:150px;border-radius:50%;border:2px solid var(--line);
-    display:grid;place-items:center;transition:border-color .14s,box-shadow .14s}
-  .micring.live{border-color:var(--signal);box-shadow:0 0 0 12px rgba(61,220,151,.08)}
-  .micring span{font-size:13px;color:var(--muted)}
-  .bars{display:flex;gap:3px;align-items:flex-end;height:36px}
+  .btn.ghost{background:transparent;color:var(--muted);height:46px;font-weight:500;font-size:15.5px}
+  .btn:disabled{opacity:.3;cursor:not-allowed}
+  .btn:focus-visible,.chip:focus-visible,.circ:focus-visible,.gpc:focus-visible,.x:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{height:42px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:transparent;
+    color:var(--ink);font:500 15.5px/40px -apple-system,system-ui;cursor:pointer;transition:all .14s}
+  .chip[aria-pressed="true"]{border-color:var(--signal);color:var(--signal);background:rgba(61,220,151,.10)}
+  html[data-theme="light"] .chip[aria-pressed="true"]{background:rgba(15,122,90,.07)}
+  .fieldlabel{font-size:13px;color:var(--muted);margin:2px 0 8px}
+  .field{width:100%;height:58px;border-radius:16px;border:1px solid var(--line);background:var(--surface);
+    color:var(--ink);font:500 18px/1 -apple-system,system-ui;padding:0 18px;letter-spacing:.02em}
+  .field:focus{outline:none;border-color:var(--signal)}
+  .hint{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.45}
+  .micwrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px}
+  .micring{width:156px;height:156px;border-radius:50%;border:2px solid var(--line);display:grid;
+    place-items:center;transition:border-color .14s,box-shadow .14s;cursor:pointer}
+  .micring.live{border-color:var(--signal);box-shadow:0 0 0 14px rgba(61,220,151,.07)}
+  .bars{display:flex;gap:3px;align-items:flex-end;height:38px}
   .bars i{width:4px;background:var(--signal);border-radius:2px;height:6px;transition:height .09s}
-
-  /* home */
-  .livecard{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-card);
-    padding:18px;margin:8px 0 18px}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);display:inline-block;margin-right:8px}
-  .count{font-size:13px;color:var(--muted)}
-  .big{font-size:15px;color:var(--ink);margin:10px 0 0}
-
-  /* matching */
-  .pulse{width:170px;height:170px;border-radius:50%;margin:60px auto 26px;
-    border:2px solid var(--signal);display:grid;place-items:center;
-    animation:pulse 1.6s ease-in-out infinite}
-  .pulse .core{width:78px;height:78px;border-radius:50%;background:rgba(61,220,151,.14);
-    display:grid;place-items:center;font-size:22px}
-  @keyframes pulse{0%,100%{transform:scale(.97);opacity:.75}50%{transform:scale(1.03);opacity:1}}
+  .livecard{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px;margin:22px 0 0}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--signal);display:inline-block;margin-right:9px}
+  .count{font-size:13.5px;color:var(--muted)}
+  .big{font-size:16px;margin:12px 0 0}
+  .seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;
+    padding:4px;gap:2px;margin:18px 0 0}
+  .seg button{height:36px;padding:0 18px;border:0;border-radius:999px;background:transparent;color:var(--muted);
+    font:500 14px/1 -apple-system,system-ui;cursor:pointer}
+  .seg button[aria-pressed="true"]{background:var(--bg);color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+  .pulse{width:176px;height:176px;border-radius:50%;margin:56px auto 26px;border:2px solid var(--signal);
+    display:grid;place-items:center;animation:pulse 1.6s ease-in-out infinite;
+    transition:opacity .4s,transform .4s,border-color .4s}
+  .pulse .core{width:80px;height:80px;border-radius:50%;background:rgba(61,220,151,.14);display:grid;place-items:center}
+  .pulse.done{animation:none;opacity:.4;transform:scale(.9);border-color:var(--line)}
+  @keyframes pulse{0%,100%{transform:scale(.97);opacity:.72}50%{transform:scale(1.03);opacity:1}}
   .center{text-align:center}
-
-  /* room */
-  .roomtop{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
-  .timer{font-variant-numeric:tabular-nums;font-size:13px}
-  .conn{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12.5px;color:var(--muted)}
-  .presence{flex:1;display:flex;align-items:center;justify-content:center;gap:40px}
-  .p{display:flex;flex-direction:column;align-items:center;gap:10px}
-  .pc{width:88px;height:88px;border-radius:50%;background:var(--surface);border:1px solid var(--line);
-    display:grid;place-items:center;font-size:15px;color:var(--ink);transition:all 1.2s ease}
-  .pc.speaking{width:104px;height:104px;box-shadow:0 0 0 6px rgba(61,220,151,.13);border-color:var(--signal)}
-  .pn{font-size:12.5px;color:var(--muted)}
-  .balance{width:240px;height:6px;border-radius:3px;background:var(--line);margin:18px auto 0;
-    display:flex;overflow:hidden;transition:background .2s}
-  .balance i{display:block;height:100%;transition:width 1.2s ease}
+  .fallback{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;
+    margin-top:6px;animation:fade .22s ease-out}
+  .fallback p{font-size:14.5px;margin-bottom:14px}
+  .fallback .btn{height:52px;font-size:15.5px}
+  .fallback .btn.ghost{height:44px}
+  .roomtop{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--muted)}
+  .timer{font-variant-numeric:tabular-nums}
+  .conn{width:8px;height:8px;border-radius:50%;background:var(--signal);display:inline-block;margin-left:10px}
+  .connlabel{font-size:12.5px;color:var(--muted);margin-left:6px}
+  .stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .presence{display:flex;align-items:center;justify-content:center;gap:48px}
+  .p{display:flex;flex-direction:column;align-items:center;gap:12px}
+  .pc{width:92px;height:92px;border-radius:50%;background:var(--surface);border:1px solid var(--line);
+    display:grid;place-items:center;font-size:16px;transition:all 1.1s ease;position:relative}
+  .pc.speaking{width:108px;height:108px;box-shadow:0 0 0 6px rgba(61,220,151,.12);border-color:var(--signal)}
+  .pn{font-size:13px;color:var(--muted)}
+  .badge{position:absolute;top:-3px;right:-3px;width:26px;height:26px;border-radius:50%;
+    background:var(--surface);border:1px solid var(--line);display:grid;place-items:center;
+    color:var(--muted);font:600 9px/1 -apple-system,system-ui;letter-spacing:.04em}
+  .badge svg{width:13px;height:13px}
+  .balance{width:236px;height:5px;border-radius:3px;background:var(--line);margin:22px auto 0;
+    display:flex;overflow:hidden;transition:box-shadow .2s}
+  .balance i{display:block;height:100%;transition:width 1.1s ease}
   .balance .you{background:var(--signal)}
-  .balance .them{background:var(--muted);opacity:.55}
-  .balance.warm{outline:1px solid var(--warm);outline-offset:3px}
-
-  .prompt{background:var(--surface);border:1px solid var(--line);border-radius:14px;
-    padding:14px 16px;margin:22px 0 0;font-size:15px;cursor:pointer}
-  .prompt small{display:block;color:var(--muted);font-size:12px;margin-bottom:4px;letter-spacing:.04em}
-  .prompt .more{display:none;margin-top:10px;color:var(--muted);font-size:13.5px;line-height:1.6}
+  .balance .them{background:var(--muted);opacity:.5}
+  .balance.warm{box-shadow:0 0 0 3px rgba(242,183,5,.22)}
+  .prompt{margin:26px 0 24px;font-size:15.5px;color:var(--ink);cursor:pointer;line-height:1.45;
+    border-left:2px solid var(--line);padding-left:14px;transition:border-color .14s}
+  .prompt:hover{border-color:var(--signal)}
+  .prompt .more{display:none;margin-top:12px;color:var(--muted);font-size:14px;line-height:1.7}
   .prompt.open .more{display:block}
-
-  .controls{display:flex;justify-content:space-between;align-items:center;padding:0 12px 4px}
+  .cluster{display:grid;grid-template-columns:repeat(2,96px);gap:20px 40px;justify-content:center}
+  .gp{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .gpc{width:76px;height:76px;border-radius:50%;background:var(--surface);border:1px solid var(--line);
+    display:grid;place-items:center;font-size:15px;transition:all .8s ease;position:relative}
+  .gpc.speaking{box-shadow:0 0 0 5px rgba(61,220,151,.12);border-color:var(--signal)}
+  .gpc.dominant{border-color:var(--warm);box-shadow:0 0 0 5px rgba(242,183,5,.15)}
+  .dots{display:flex;gap:4px;height:5px}
+  .dots i{width:4px;height:4px;border-radius:50%;background:var(--line);transition:background .3s}
+  .dots i.on{background:var(--signal)}
+  .hintline{font-size:13px;color:var(--warm);margin-top:18px;text-align:center;animation:fade .2s}
+  .controls{display:flex;justify-content:space-between;align-items:center;padding:0 16px 8px;
+    transition:opacity .4s;opacity:1}
+  .controls.idle{opacity:.25}
+  .controls.four{padding:0 2px 6px}
   .circ{border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);
     display:grid;place-items:center;cursor:pointer;transition:all .14s}
-  .circ.sm{width:56px;height:56px}
-  .circ.big{width:72px;height:72px;background:var(--surface)}
-  .circ.big.muted{background:rgba(255,107,90,.16);border-color:var(--alert)}
-  .mlabel{display:block;text-align:center;font-size:11px;color:var(--muted);margin-top:-2px}
-
-  .toast{position:absolute;left:20px;right:20px;bottom:150px;background:var(--surface);
-    border:1px solid var(--warm);border-radius:12px;padding:12px 14px;font-size:13.5px;
-    color:var(--ink);display:none;animation:fade .2s}
-  .toast.on{display:block}
-  .toast b{color:var(--warm);font-weight:600;display:block;font-size:11px;letter-spacing:.08em;
-    text-transform:uppercase;margin-bottom:4px}
-
-  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);
-    border-radius:24px 24px 0 0;padding:22px 20px 30px;transform:translateY(110%);
-    transition:transform .22s cubic-bezier(.2,.8,.2,1);border-top:1px solid var(--line);z-index:15}
+  .circ.sm{width:52px;height:52px}
+  .circ.big{width:70px;height:70px;background:var(--surface)}
+  .controls.four .circ.big{width:64px;height:64px}
+  .circ.big.muted{background:rgba(255,107,90,.14);border-color:var(--alert)}
+  .circ.raised{border-color:var(--signal);background:rgba(61,220,151,.10);color:var(--signal)}
+  .mlabel{display:block;text-align:center;font-size:11px;color:var(--muted);margin-top:4px}
+  .toast{position:absolute;left:24px;right:24px;bottom:168px;background:var(--surface);border:1px solid var(--line);
+    border-radius:16px;padding:12px 15px 13px;display:none;box-shadow:0 18px 50px -20px rgba(0,0,0,.9);
+    z-index:12;cursor:pointer;text-align:left}
+  .toast.on{display:block;animation:toastIn .2s ease-out}
+  @keyframes toastIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .toast:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+  .toasthead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
+  .toasthead b{color:var(--warm);font-weight:600;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+  .toasthead span{font-size:11.5px;color:var(--muted)}
+  .toast .fix{margin:0;font-size:15px;line-height:1.45;color:var(--ink)}
+  .toast .said{margin:4px 0 0;font-size:13px;line-height:1.4;color:var(--muted)}
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:24px 24px 0 0;
+    padding:10px 24px 34px;transform:translateY(110%);transition:transform .22s cubic-bezier(.2,.8,.2,1);
+    border-top:1px solid var(--line);z-index:15;max-height:86%;overflow:auto}
   .sheet.on{transform:translateY(0)}
-  .sheet h3{margin:0 0 14px;font-size:16px;font-weight:600}
-  .row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;
-    border-bottom:1px solid var(--line);font-size:15px;cursor:pointer}
+  .handle{width:36px;height:4px;border-radius:2px;background:var(--line);margin:6px auto 20px}
+  .sheet h3{margin:0 0 6px;font-size:17px;font-weight:600}
+  .sheet p{font-size:13.5px;color:var(--muted);margin-bottom:14px}
+  .sheethead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+  .sheethead h3{margin:0 0 6px}
+  .x{background:none;border:0;color:var(--muted);font:400 20px/1 -apple-system,system-ui;padding:0 2px;
+    cursor:pointer;margin-top:-2px}
+  .x:hover{color:var(--ink)}
+  .row{display:flex;align-items:center;justify-content:space-between;padding:17px 0;
+    border-bottom:1px solid var(--line);font-size:15.5px;cursor:pointer}
   .row:last-child{border:0}
   .row.danger{color:var(--alert)}
-  .handle{width:36px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 16px}
-
-  /* recap */
-  .stat{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:15px}
-  .stat span:last-child{color:var(--muted);font-variant-numeric:tabular-nums}
-  .fix{background:var(--surface);border:1px solid var(--warm);border-radius:12px;padding:12px 14px;
-    margin:12px 0;font-size:14px;line-height:1.5}
-  .fix b{color:var(--warm);font-weight:600;font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:5px}
-
-  /* side notes + chrome */
-  .side{width:280px;font-size:13.5px;line-height:1.55;color:#9AA0A6}
-  .side h4{font:600 11px/1 ui-sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6b7076;margin:0 0 10px}
+  .row .chev{color:var(--muted);font-size:13px}
+  .stat{display:flex;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--line);font-size:16px}
+  .stat:last-child{border:0}
+  .stat span:last-child{color:var(--ink);font-variant-numeric:tabular-nums;font-weight:500}
+  .banner{background:rgba(61,220,151,.08);border:1px solid rgba(61,220,151,.25);border-radius:12px;
+    padding:10px 12px;font-size:13px;margin-top:14px;line-height:1.45}
+  .ended{align-items:center;text-align:center;padding-top:96px}
+  .check{width:58px;height:58px;border-radius:50%;border:1px solid rgba(61,220,151,.4);
+    background:rgba(61,220,151,.08);display:grid;place-items:center;margin-bottom:22px;color:var(--signal)}
+  .ended h2{font-size:24px;margin-bottom:6px}
+  .ended .sub{font-size:15px;margin-bottom:26px}
+  .rrow{width:100%;display:flex;align-items:center;justify-content:space-between;padding:18px 2px;
+    border:0;border-bottom:1px solid var(--line);background:none;color:var(--ink);font:400 16px/1.3 -apple-system,system-ui;
+    text-align:left;cursor:pointer}
+  .rrow:last-of-type{border:0}
+  .rrow span{color:var(--muted);font-size:13px}
+  .side{width:254px;font-size:13.5px;line-height:1.6;color:#9AA0A6;max-height:calc(100dvh - 48px);overflow:auto}
+  .side h4{font:600 11px/1 ui-sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#6b7076;margin:0 0 12px}
+  .side h3{font-size:15px;color:#e8e8e3;font-weight:600;margin:0 0 8px;line-height:1.4}
   .side p{margin:0 0 12px;color:#9AA0A6;font-size:13.5px}
   .side b{color:#e8e8e3;font-weight:600}
+  html[data-theme="light"] .side h3,html[data-theme="light"] .side b{color:#141518}
+  .proto{font-size:11.5px!important;line-height:1.5!important;color:#6b7076!important;border-top:1px solid #24272c;
+    padding-top:12px;margin-top:16px!important}
+  html[data-theme="light"] .proto{border-color:#e7e6e1}
   .toolbar{position:fixed;top:16px;right:16px;display:flex;gap:8px;z-index:40}
-  .tool{background:#15181c;border:1px solid #262a30;color:#cfd3d8;border-radius:9px;
-    padding:8px 12px;font:500 12.5px/1 -apple-system,system-ui;cursor:pointer}
+  .tool{background:#15181c;border:1px solid #262a30;color:#cfd3d8;border-radius:9px;padding:8px 12px;
+    font:500 12.5px/1 -apple-system,system-ui;cursor:pointer}
   .tool:hover{border-color:#3a4048}
-  @media (max-width:820px){
+  .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  @media (max-width:880px){
     body{padding:0;display:block}
     .wrap{display:block}
     .side{display:none}
     .phone{width:100%;height:100dvh;border-radius:0;box-shadow:none}
     .notch{display:none}
-    .screen{padding-top:28px}
+    .screen{padding-top:34px}
   }
 </style>
 </head>
 <body>
 <div class="toolbar">
-  <button class="tool" id="theme">Light theme</button>
+  <button class="tool" id="queue" title="Prototype control: forces an empty 1:1 queue">Queue: empty</button>
+  <button class="tool" id="theme">Light</button>
   <button class="tool" id="reset">Restart</button>
 </div>
 
 <div class="wrap">
 <div class="phone" id="phone">
   <div class="notch"></div>
+  <div class="sr" id="sr" aria-live="polite"></div>
 
-  <!-- 1 welcome -->
+  <!-- welcome -->
   <section class="screen on" data-s="welcome">
     <div class="step">Live</div>
     <div class="grow"></div>
@@ -171,325 +215,890 @@
     <p>No profiles. No scheduling. Ten minutes is enough.</p>
     <div class="grow"></div>
     <button class="btn" data-go="age">Get started</button>
-    <div class="note">A prototype. Tap through it — every screen is real UI, no mockup images.</div>
+    <div class="hint">A prototype. Tap through it.</div>
   </section>
 
-  <!-- 2 age -->
+  <!-- age -->
   <section class="screen" data-s="age">
-    <div class="step">Step 1 of 6</div>
-    <h2>How old are you?</h2>
-    <p>We only match adults. Under-18 access needs a different safety model, and it is not ready.</p>
+    <div class="step">1 of 5</div>
+    <h2>Are you 18 or older?</h2>
+    <p>We only match adults. Under-18 access needs a different safety model.</p>
     <div class="grow"></div>
-    <button class="btn" data-go="langs">I'm 18 or older</button>
-    <button class="btn ghost" disabled>I'm under 18 — not available</button>
+    <button class="btn" data-go="langs">Yes, I'm 18 or older</button>
+    <button class="btn ghost" disabled>I'm under 18</button>
   </section>
 
-  <!-- 3 languages -->
+  <!-- languages -->
   <section class="screen" data-s="langs">
-    <div class="step">Step 2 of 6</div>
-    <h2>What do you speak?</h2>
-    <div class="chips" id="l1">
-      <button class="chip" aria-pressed="false">English</button>
+    <div class="step">2 of 5</div>
+    <h2>Your languages</h2>
+    <div class="fieldlabel">I speak</div>
+    <div class="chips" id="l1" style="margin-bottom:16px">
+      <button class="chip" aria-pressed="true">English</button>
       <button class="chip" aria-pressed="false">Spanish</button>
       <button class="chip" aria-pressed="false">Portuguese</button>
-      <button class="chip" aria-pressed="true" disabled>Japanese · no one online</button>
     </div>
-    <h2 style="margin-top:8px">What do you want to practise?</h2>
+    <div class="fieldlabel">I'm learning</div>
     <div class="chips" id="l2">
       <button class="chip" aria-pressed="false">English</button>
       <button class="chip" aria-pressed="true">Spanish</button>
       <button class="chip" aria-pressed="false">Portuguese</button>
     </div>
+    <div class="hint">Only pairs with people online are offered. Picking a language already in the other row swaps them.</div>
     <div class="grow"></div>
     <button class="btn" data-go="level">Continue</button>
-    <div class="note">Only pairs with live supply are selectable. The app tells you the truth instead of queueing you into an empty room.</div>
   </section>
 
-  <!-- 4 level -->
+  <!-- level -->
   <section class="screen" data-s="level">
-    <div class="step">Step 3 of 6</div>
-    <h2>Say this out loud</h2>
+    <div class="step">3 of 5</div>
+    <h2>Say one sentence</h2>
     <p>“I'm preparing for a job interview next month.”</p>
     <div class="micwrap">
       <div class="micring" id="lvring"><div class="bars" id="lvbars"></div></div>
-      <span class="note" id="lvcopy">Tap to record 20 seconds</span>
+      <span class="hint" id="lvcopy" style="margin:0">Tap to record 20 seconds</span>
     </div>
     <div class="grow"></div>
-    <button class="btn" data-go="intent" id="lvnext">Skip — use A2</button>
+    <button class="btn ghost" data-go="verify" id="lvnext">Skip for now</button>
   </section>
 
-  <!-- 5 intent -->
-  <section class="screen" data-s="intent">
-    <div class="step">Step 4 of 6</div>
-    <h2>What are you practising for?</h2>
-    <div class="chips" id="intent">
-      <button class="chip" aria-pressed="true">Job interview</button>
-      <button class="chip" aria-pressed="false">Everyday conversation</button>
-      <button class="chip" aria-pressed="false">Exam</button>
-      <button class="chip" aria-pressed="false">Just talking</button>
-    </div>
+  <!-- verify -->
+  <section class="screen" data-s="verify">
+    <div class="step">4 of 5</div>
+    <h2>Verify your number</h2>
+    <p>One code. We keep a hash of the number, never the number itself — and no name, photo, or email.</p>
     <div class="grow"></div>
-    <button class="btn" data-go="mic">Continue</button>
+    <input class="field" id="phone" inputmode="tel" placeholder="+1 555 000 0000" aria-label="Phone number">
+    <div class="hint" id="vhint">One code by SMS. No marketing.</div>
+    <button class="btn" id="vbtn" style="margin-top:16px">Send code</button>
   </section>
 
-  <!-- 6 mic -->
+  <!-- mic -->
   <section class="screen" data-s="mic">
-    <div class="step">Step 5 of 6</div>
-    <h2>Let's check your mic</h2>
+    <div class="step">5 of 5</div>
+    <h2>Check your mic</h2>
     <p>Say anything. If the bars move, you're fine.</p>
     <div class="micwrap">
       <div class="micring live"><div class="bars" id="micbars"></div></div>
+      <span class="hint" id="fixhint" hidden>Try headphones, or move somewhere quieter.</span>
     </div>
     <div class="grow"></div>
     <button class="btn" data-go="home">Sounds good</button>
-    <button class="btn ghost">Fix audio</button>
+    <button class="btn ghost" id="fixaudio">Fix audio</button>
   </section>
-
-  <!-- 7 home -->
+  <!-- home -->
   <section class="screen" data-s="home">
     <div class="step">Home</div>
-    <h2 style="margin-bottom:4px">English ↔ Spanish</h2>
-    <p style="margin-bottom:0">B1 · Job interview</p>
+    <h2 id="homepair" style="margin-bottom:0">English ↔ Spanish</h2>
+    <div class="seg" role="group" aria-label="Room type">
+      <button id="modesolo" aria-pressed="true">1:1</button>
+      <button id="modegroup" aria-pressed="false">Group</button>
+    </div>
+    <div class="chips" id="topic" style="margin:14px 0 0">
+      <button class="chip" aria-pressed="true">Interview</button>
+      <button class="chip" aria-pressed="false">Everyday</button>
+      <button class="chip" aria-pressed="false">Exam</button>
+    </div>
     <div class="livecard">
-      <div class="count"><span class="dot"></span>14 people online right now</div>
-      <div class="big">Average wait: 9 seconds</div>
+      <div class="count"><span class="dot"></span><span id="livecount">14 people online</span></div>
+      <div class="big" id="livewait">Usually matched in 9 seconds</div>
     </div>
     <div class="grow"></div>
-    <button class="btn" data-go="match">Talk</button>
-    <button class="btn ghost" data-go="match">Join a table of 4</button>
-    <div class="note">14 min left today · Free plan</div>
+    <button class="btn" id="talkbtn">Talk</button>
+    <div class="hint">14 min left today · Free</div>
   </section>
 
-  <!-- 8 matching -->
+  <!-- matching -->
   <section class="screen" data-s="match">
-    <div class="step">Finding someone</div>
-    <div class="pulse"><div class="core">🎙</div></div>
+    <div class="step" id="matchstep">Finding someone</div>
+    <div class="pulse" id="pulse"><div class="core"><svg width="30" height="30" viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+      <rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div></div>
     <div class="center">
-      <h2 style="font-size:19px">Finding someone who wants to practise English</h2>
-      <p id="matchcopy">Usually under 10 seconds</p>
+      <h2 style="font-size:20px;font-weight:600" id="matchtitle">Finding a Spanish speaker…</h2>
+      <p id="matchsub" style="margin-top:8px">Usually under 10 seconds</p>
+    </div>
+    <div class="fallback" id="fallback" hidden>
+      <p>Practice with AI while you wait — Ana can hold the room until a person arrives.</p>
+      <button class="btn" id="keepwaiting">Keep waiting for a person</button>
+      <button class="btn ghost" id="tryai">Practise with AI while you wait</button>
     </div>
     <div class="grow"></div>
     <button class="btn ghost" data-go="home">Cancel</button>
   </section>
 
-  <!-- 9 room -->
+  <!-- 1:1 room -->
   <section class="screen" data-s="room">
     <div class="roomtop">
-      <div>English ↔ Spanish</div>
-      <div class="timer" id="timer">00:00</div>
-    </div>
-    <div class="conn"><span class="dot"></span> Connected · Mateo · B1</div>
-
-    <div class="presence">
-      <div class="p"><div class="pc" id="me">You</div><div class="pn" id="mename">You</div></div>
-      <div class="p"><div class="pc speaking" id="them">M</div><div class="pn">Mateo</div></div>
+      <div id="roompair">English ↔ Spanish</div>
+      <div><span class="timer" id="timer">00:00</span><span class="conn" role="img" aria-label="Connected"></span><span class="connlabel">Connected</span></div>
     </div>
 
-    <div class="balance" id="balance"><i class="you" style="width:50%"></i><i class="them" style="width:50%"></i></div>
+    <div class="stage">
+      <div class="presence">
+        <div class="p"><div class="pc" id="me">You</div><div class="pn">You</div></div>
+        <div class="p">
+          <div class="pc speaking" id="thempc">
+            <span id="themletter">M</span>
+            <span class="badge" id="jobbadge" hidden aria-label="Interview practice">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                <rect x="3.5" y="7" width="17" height="12" rx="2"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12h17"/>
+              </svg>
+            </span>
+            <span class="badge" id="aibadge" hidden>AI</span>
+          </div>
+          <div class="pn" id="themname">Mateo · B1</div>
+        </div>
+      </div>
+      <div class="balance" id="balance"><i class="you" style="width:50%"></i><i class="them" style="width:50%"></i></div>
+    </div>
 
     <div class="prompt" id="prompt" role="button" tabindex="0">
-      <small>Prompt</small>
-      Ask about a job he wants.
-      <div class="more">· What would your first week look like?<br>· What is the hardest part of that job?<br>· Why do you want it?</div>
+      <span id="prompttext">Ask about a job he wants.</span>
+      <div class="more" id="promptmore">· What would your first week look like?<br>· What is the hardest part of that job?<br>· Why do you want it?</div>
     </div>
 
-    <div class="toast" id="toast"><b>Gentle correction</b>Try: “I've been working there since 2020.”</div>
-
-    <div class="grow"></div>
-    <div class="controls">
-      <div><button class="circ sm" id="leave" aria-label="Leave"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button><span class="mlabel">Leave</span></div>
-      <div><button class="circ big" id="mute" aria-label="Mute"><svg id="micicon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><span class="mlabel" id="mlabel">Mute</span></div>
-      <div><button class="circ sm" id="more" aria-label="More"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></button><span class="mlabel">More</span></div>
+    <div class="controls" id="controls">
+      <div><button class="circ sm" id="leave" aria-label="Leave"><svg width="22" height="22" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <span class="mlabel">Leave</span></div>
+      <div><button class="circ big" id="mute" aria-label="Mute" aria-pressed="false"><svg id="micicon" width="26" height="26" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/>
+        <path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><span class="mlabel" id="mlabel">Mute</span></div>
+      <div><button class="circ sm" id="more" aria-label="More"><svg width="22" height="22" viewBox="0 0 24 24"
+        fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></button>
+        <span class="mlabel">More</span></div>
     </div>
   </section>
 
-  <!-- 10 recap -->
+  <!-- group room -->
+  <section class="screen" data-s="group">
+    <div class="roomtop">
+      <div id="grouppair">English ↔ Spanish · Table of 4</div>
+      <div><span class="timer" id="gtimer">00:00</span><span class="conn" role="img" aria-label="Connected"></span><span class="connlabel">Connected</span></div>
+    </div>
+
+    <div class="stage">
+      <div class="cluster">
+        <div class="gp"><div class="gpc" id="g0">You</div><div class="pn">You</div><div class="dots" id="d0"><i></i><i></i><i></i></div></div>
+        <div class="gp"><div class="gpc speaking" id="g1">M</div><div class="pn">Mateo</div><div class="dots" id="d1"><i></i><i></i><i></i></div></div>
+        <div class="gp"><div class="gpc" id="g2">L</div><div class="pn">Lucía</div><div class="dots" id="d2"><i></i><i></i><i></i></div></div>
+        <div class="gp"><div class="gpc" id="g3">K</div><div class="pn">Kenji</div><div class="dots" id="d3"><i></i><i></i><i></i></div></div>
+      </div>
+      <div class="hintline" id="turnhint" hidden>Give someone else a turn?</div>
+    </div>
+
+    <div class="prompt" id="gprompt" role="button" tabindex="0">
+      What did you want to be at 18?
+      <div class="more">· What changed since then?<br>· What would you tell your 18-year-old self?<br>· Who inspired that choice?</div>
+    </div>
+
+    <div class="controls four" id="gcontrols">
+      <div><button class="circ sm" id="gleave" aria-label="Leave"><svg width="22" height="22" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <span class="mlabel">Leave</span></div>
+      <div><button class="circ big" id="gmute" aria-label="Mute" aria-pressed="false"><svg id="gmicicon" width="24" height="24" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/>
+        <path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button><span class="mlabel" id="gmlabel">Mute</span></div>
+      <div><button class="circ sm" id="hand" aria-label="Raise hand" aria-pressed="false"><svg width="22" height="22" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11M12 11V4.5a1.5 1.5 0 0 1 3 0V11M15 11V6.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.2A6 6 0 0 1 6 15v-2.5a1.5 1.5 0 0 1 3 0V13"/></svg></button>
+        <span class="mlabel" id="handlabel">Raise</span></div>
+      <div><button class="circ sm" id="gmore" aria-label="More"><svg width="22" height="22" viewBox="0 0 24 24"
+        fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg></button>
+        <span class="mlabel">More</span></div>
+    </div>
+  </section>
+  <!-- call ended -->
+  <section class="screen ended" data-s="ended">
+    <div class="check"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h2>Call ended.</h2>
+    <p class="sub">What went wrong?</p>
+    <button class="rrow" data-reason="inappropriate">Inappropriate<span>›</span></button>
+    <button class="rrow" data-reason="left">They left early<span>›</span></button>
+    <button class="rrow" data-reason="technical">Technical problem<span>›</span></button>
+    <div class="grow"></div>
+    <button class="btn ghost" id="justleave">Nothing — just leave</button>
+  </section>
+
+  <!-- recap -->
   <section class="screen" data-s="recap">
-    <div class="step">Recap · 30 seconds</div>
+    <div class="step">Recap</div>
     <h2>Good session.</h2>
-    <div class="stat"><span>You spoke</span><span>6:40 of 10:00</span></div>
-    <div class="stat"><span>Utterances</span><span>41</span></div>
-    <div class="stat"><span>Balance</span><span>58 / 42</span></div>
-    <div class="fix"><b>One fix</b>“I am working here since 2020” → “I've been working here since 2020.”</div>
-    <p style="font-size:13.5px;margin-top:14px">Next time: practise past tense in interview answers.</p>
+    <div id="recapbanner" class="banner" hidden></div>
+    <div style="margin-top:22px">
+      <div class="stat"><span>Words used</span><span id="rwords">14</span></div>
+      <div class="stat"><span>New word</span><span id="rword">“Interview”</span></div>
+      <div class="stat"><span>Fluency</span><span id="rfluency">82%</span></div>
+    </div>
     <div class="grow"></div>
     <button class="btn" data-go="home">Done</button>
-    <button class="btn ghost">Save words</button>
   </section>
 
-  <!-- sheet -->
+  <!-- more sheet -->
   <div class="sheet" id="sheet">
+    <button class="x" id="closesheet" style="position:absolute;top:14px;right:20px" aria-label="Close">✕</button>
     <div class="handle"></div>
-    <h3>More</h3>
-    <div class="row" id="correct">Correct something</div>
-    <div class="row">Translate a word</div>
-    <div class="row">Change topic</div>
-    <div class="row danger" id="report">Report</div>
-    <div class="row danger">Block</div>
+    <div class="row" id="correct">Correct something<span class="chev">›</span></div>
+    <div class="row">Change topic<span class="chev">›</span></div>
+    <div style="height:12px"></div>
+    <div class="row danger" id="reportrow">Report<span class="chev">›</span></div>
+    <div class="row danger" id="blockrow">Block<span class="chev">›</span></div>
+  </div>
+
+  <!-- correction cue -->
+  <div class="toast" id="toast" role="group" aria-label="Correction cue" aria-describedby="toastfix toastsai" tabindex="0">
+    <span class="sr" id="toastlive" role="status" aria-live="polite"></span>
+    <div class="toasthead"><b id="toastlabel">Correction</b><span>Tap to dismiss</span></div>
+    <p class="fix" id="toastfix">Try: “I've been working there since 2020.”</p>
+    <p class="said" id="toastsai">You said: “I work there since 2020.”</p>
   </div>
 </div>
 
 <aside class="side">
-  <h4>What to notice</h4>
-  <p><b>One action per screen.</b> Every step has a single filled button. The ghost options are secondary and never compete.</p>
-  <p><b>No hierarchy.</b> Two equal presence circles. No host, no audience, no badges.</p>
-  <p><b>The balance bar</b> is the only pedagogical nudge — it turns amber if one person speaks for 90 seconds.</p>
-  <p><b>Corrections arrive as a chip</b>, not a modal. They never interrupt the call.</p>
-  <p><b>Recap is private</b> and takes 30 seconds. No confetti, no share prompt.</p>
-  <p style="color:#6b7076;font-size:12.5px;margin-top:18px">Tap <b>More → Report</b> to see the call end and route to recap.</p>
+  <h4>Design notes</h4>
+  <h3 id="noteTitle">One promise, one action</h3>
+  <div id="noteBody"></div>
+  <p class="proto"><b>Prototype controls.</b> “Queue: empty” forces the 10-second no-supply state in 1:1 so the AI fallback is reachable. “Queue: normal” matches a person in about two seconds.</p>
 </aside>
 </div>
 
 <script>
 const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
-let state = { l1:'English', l2:'Spanish', level:'B1', intent:'Job interview' };
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 let timers = [];
+let idleTimer = null;
+const later = (fn, ms) => { const id = setTimeout(fn, ms); timers.push(id); return id; };
+const every = (fn, ms) => { const id = setInterval(fn, ms); timers.push(id); return id; };
+const clearTimers = () => { timers.forEach(id => { clearTimeout(id); clearInterval(id); }); timers = []; };
 
-function clearTimers(){ timers.forEach(t=>clearInterval(t)); timers=[]; }
+const MIC = '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>';
+const MUTED = MIC + '<path d="M4 4l16 16"/>';
+
+const state = {
+  l1: 'English', l2: 'Spanish', level: 'B1', topic: 'Interview',
+  mode: 'solo', partner: 'human', queueEmpty: true, reported: null
+};
+
+const NOTES = {
+  welcome: { t: 'One promise, one action', p: [
+    'One sentence, one button, no carousel and no login wall. The first tap should test the promise, not postpone it.',
+    'No profile, photo, or bio is collected anywhere in the product. There is no field to put them in.'
+  ]},
+  age: { t: 'A hard gate, not a dark pattern', p: [
+    'Stranger voice chat with minors is the fastest way to end the company. Under-18 access needs a separate supervised product, so it is blocked with a reason rather than a vague error.',
+    'The under-18 button is disabled, not hidden. Telling the truth is cheaper than a support queue.'
+  ]},
+  langs: { t: 'Two labelled rows, no empty queues', p: [
+    'The rows are labelled because two identical chip sets with no labels is a guessing game. Picking a language already in the other row swaps them instead of dead-ending.',
+    'Only pairs with live supply are offered. The app never queues you into a room that cannot fill.'
+  ]},
+  level: { t: 'A matching band, not a test', p: [
+    'The 20-second sample only sets a ±1 matching band. Skipping is free, and there is no score, retake, or stepper.',
+    'The estimate is phrased as “sounds like”, never “you are”. It is metadata for matching, not a judgment.'
+  ]},
+  verify: { t: 'Accountable, not exposed', p: [
+    'A one-time code proves there is a reachable adult behind the account. The number is hashed and never shown; no name, photo, or email is collected.',
+    'The stronger liveness check comes before the third room, when the person has a reason to stay. This screen is the low-friction gate before the first room.'
+  ]},
+  mic: { t: 'Audio is the silent churn', p: [
+    'Most first-call failures are setup, not conversation. Checking the meter here removes the worst first impression: a partner who cannot hear you.',
+    '“Fix audio” gives one concrete next step instead of a dead end.'
+  ]},
+  home: { t: 'One action, quiet defaults', p: [
+    'Talk is the only filled control. Room type and topic are quiet defaults, not a dashboard; nothing here is browsable.',
+    'No follower count, no feed, no “who is online” list. The card reports supply and expected wait, nothing about status.'
+  ]},
+  match: { t: 'A queue that tells the truth', p: [
+    'No countdown and no fake “someone is typing”. At ten seconds the fallback appears inline, not as a modal, so the screen never dead-ends.',
+    'The AI is the secondary choice: a person is still the product. Keeping a human as the primary action is what protects the network, not the AI.'
+  ]},
+  room: { t: 'No hierarchy, no chrome', p: [
+    'Two equal circles, one balance bar, three controls. Nobody is the host and there is no audience.',
+    'Controls fade after six seconds of stillness; any tap brings them back. Report ends the call first, then asks why.'
+  ]},
+  group: { t: 'A table, not a stage', p: [
+    'Four equal circles in a cluster. There is no seat at the front, no speaker panel, and no audience count.',
+    'The three dots show recent speaking, not rank. The nudge appears only when one voice takes three of the last four turns.'
+  ]},
+  ai: { t: 'The machine is labelled', p: [
+    'Ana is marked “AI partner” in the room and by a badge on the circle. A prototype that hides the machine teaches users the product is fake.',
+    'The AI holds the room; it never pretends to be the human the person waited for.'
+  ]},
+  ended: { t: 'End first, ask second', p: [
+    'Reporting drops the call before it asks a question. The person is out of the room before they have to explain why.',
+    'Inappropriate goes to Trust & Safety. “They left early” and “Technical problem” are feedback, not reports, and never enter the moderation queue.'
+  ]},
+  recap: { t: 'Proof, not a scoreboard', p: [
+    'Three facts: what you used, one new word, one fluency number. No confetti, no badge, no share prompt, no history chart.',
+    'Fluency is one number, not a grade. The single button is Done — the session is over, not a growth loop.'
+  ]}
+};
+
+/* Correction cues: one at a time, in the language being learned, matching the topic.
+   The mistake is always a B1-level one and never labelled “wrong”. */
+const FIXES = {
+  interview: [
+    ['I work there since 2020.', "I've been working there since 2020."],
+    ['I have five years experience.', "I have five years' experience."],
+    ['I am responsible of the team.', "I'm responsible for the team."],
+    ['I want apply for this job.', 'I want to apply for this role.']
+  ],
+  everyday: [
+    ['I go to the gym yesterday.', 'I went to the gym yesterday.'],
+    ['I am living here since two years.', "I've been living here for two years."],
+    ["He don't like coffee.", "He doesn't like coffee."],
+    ["I'm agree with you.", 'I agree with you.']
+  ],
+  exam: [
+    ['In my opinion, I think it is important.', 'In my opinion, it is important.'],
+    ['It depends of the situation.', 'It depends on the situation.'],
+    ["I didn't went there.", "I didn't go there."]
+  ]
+};
+let fixIndex = {};
+let toastTimer = null;
+
+function hideCorrection(){
+  clearTimeout(toastTimer);
+  toastTimer = null;
+  $('#toast').classList.remove('on');
+  $('#toastlive').textContent = '';
+}
+
+function showCorrection(){
+  const key = state.topic === 'Interview' ? 'interview' : state.topic === 'Exam' ? 'exam' : 'everyday';
+  const list = FIXES[key];
+  fixIndex[key] = ((fixIndex[key] === undefined ? -1 : fixIndex[key]) + 1) % list.length;
+  const [said, fix] = list[fixIndex[key]];
+
+  $('#toastlabel').textContent = state.partner === 'ai' ? "Ana's correction" : 'Correction';
+  $('#toastfix').textContent = 'Try: “' + fix + '”';
+  $('#toastsai').textContent = 'You said: “' + said + '”';
+
+  clearTimeout(toastTimer);
+  $('#toast').classList.add('on');
+  toastTimer = setTimeout(hideCorrection, 6000);
+  $('#toastlive').textContent = 'Correction. Try: ' + fix;
+  wake();
+}
+
+/* The sheet row names the language being learned, so the cue is something you asked for. */
+function syncCorrectRow(){
+  $('#correct').firstChild.textContent = 'Correct my ' + state.l2;
+}
+
+function updateNotes(name){
+  const n = NOTES[name] || NOTES.home;
+  $('#noteTitle').textContent = n.t;
+  $('#noteBody').innerHTML = n.p.map(x => '<p>' + x + '</p>').join('');
+}
 
 function show(name){
   clearTimers();
-  $$('.screen').forEach(e=>e.classList.toggle('on', e.dataset.s===name));
-  $('#sheet').classList.remove('on');
-  if(name==='match') startMatching();
-  if(name==='room') startRoom();
+  clearTimeout(idleTimer);
+  $$('.screen').forEach(el => el.classList.toggle('on', el.dataset.s === name));
+  $$('.sheet').forEach(el => el.classList.remove('on'));
+  $$('.controls').forEach(el => el.classList.remove('idle'));
+  hideCorrection();
+  syncCorrectRow();
+  updateNotes(name);
+  if(name === 'match') startMatch();
+  if(name === 'room') startRoom();
+  if(name === 'group') startGroup();
+  if(name === 'mic') micAnim();
+  if(name === 'home') renderHome();
+  if(name === 'recap') renderRecap();
+  if(name === 'verify') resetVerify();
+  if(name === 'level') resetLevel();
 }
 
-/* chips */
-function chipGroup(sel, single, onChange){
-  const el = $(sel); if(!el) return;
-  el.addEventListener('click', e=>{
-    const b = e.target.closest('.chip'); if(!b || b.disabled) return;
-    if(single){ el.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed','false')); }
-    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed')==='true' ? 'false':'true');
-    if(onChange) onChange([...el.querySelectorAll('.chip[aria-pressed="true"]')].map(c=>c.textContent.trim()));
-  });
+function renderHome(){
+  $('#homepair').textContent = state.l1 + ' ↔ ' + state.l2;
+  $('#modesolo').setAttribute('aria-pressed', String(state.mode === 'solo'));
+  $('#modegroup').setAttribute('aria-pressed', String(state.mode === 'group'));
+  $('#talkbtn').textContent = state.mode === 'solo' ? 'Talk' : 'Join a table';
+  $('#livecount').textContent = state.mode === 'solo' ? '14 people online' : '9 people online · tables of 3–6';
+  $('#livewait').textContent = state.mode === 'solo' ? 'Usually matched in 9 seconds' : 'Usually seated in 8 seconds';
 }
-chipGroup('#l1', true, v=>state.l1=v[0]||'English');
-chipGroup('#l2', true, v=>state.l2=v[0]||'Spanish');
-chipGroup('#intent', true, v=>state.intent=v[0]||'Job interview');
 
-/* level screen: fake recorder */
-let lvOn=false;
-$('#lvring').addEventListener('click', ()=>{
-  lvOn=!lvOn;
-  $('#lvring').classList.toggle('live', lvOn);
-  $('#lvcopy').textContent = lvOn ? 'Recording… say the sentence' : 'Tap to record 20 seconds';
-  clearInterval(window.__lv);
-  if(lvOn){
-    window.__lv = setInterval(()=>{
-      const bars=$('#lvbars').children;
-      for(const b of bars) b.style.height = (6 + Math.random()*30)+'px';
-    },110);
-    setTimeout(()=>{
-      if(!lvOn) return;
-      lvOn=false; $('#lvring').classList.remove('live');
-      $('#lvnext').textContent='Sounds like B1 · Looks right';
-      $('#lvcopy').textContent='Estimated from your recording. You can change it.';
-    },2600);
+function renderRecap(){
+  const sets = {
+    human: { w: '14', word: '“Interview”', f: '82%' },
+    ai:    { w: '11', word: '“Deadline”',  f: '76%' },
+    group: { w: '9',  word: '“Colleague”', f: '74%' }
+  };
+  const r = sets[state.partner] || sets.human;
+  $('#rwords').textContent = r.w;
+  $('#rword').textContent = r.word;
+  $('#rfluency').textContent = r.f;
+  const b = $('#recapbanner');
+  if(state.reported === 'inappropriate'){
+    b.hidden = false;
+    b.textContent = 'Report sent · a person reviews this within 24 hours.';
+  } else if(state.reported === 'technical'){
+    b.hidden = false;
+    b.textContent = 'Thanks — we will look at the audio.';
+  } else {
+    b.hidden = true;
   }
-});
-$('#lvnext').addEventListener('click', ()=>{
-  clearInterval(window.__lv);
-  $('#lvnext').textContent='Looks right';
-  show('intent');
-});
-
-/* mic bars */
-const mb = $('#micbars'); for(let i=0;i<14;i++) mb.appendChild(document.createElement('i'));
-timers.push(setInterval(()=>{ /* replaced per screen */ }, 9999));
-clearTimers();
-function micAnim(){
-  const id=setInterval(()=>{
-    [...mb.children].forEach(b=>b.style.height=(6+Math.random()*28)+'px');
-  },110);
-  timers.push(id);
 }
 
-/* matching */
-function startMatching(){
-  let t=0;
-  const id=setInterval(()=>{
-    t++;
-    if(t===4) $('#matchcopy').textContent='Still looking… 2 people just came online';
-    if(t===6){ clearInterval(id); show('room'); }
-  },700);
-  timers.push(id);
+function startMatch(){
+  $('#fallback').hidden = true;
+  $('#pulse').classList.remove('done');
+  $('#matchstep').textContent = state.mode === 'group' ? 'Finding a table' : 'Finding someone';
+  $('#matchtitle').textContent = state.mode === 'group'
+    ? 'Finding a table of 3–6…'
+    : 'Finding a ' + state.l2 + ' speaker…';
+  $('#matchsub').textContent = 'Usually under 10 seconds';
+
+  if(state.mode === 'group'){
+    later(() => { state.partner = 'group'; state.reported = null; show('group'); }, 4500);
+    return;
+  }
+  if(state.queueEmpty){
+    later(showFallback, 10000);
+  } else {
+    later(openHuman, 2200);
+  }
 }
 
-/* room */
-let secs=0, speaking='them', balance=50;
+function showFallback(){
+  $('#pulse').classList.add('done');
+  $('#matchtitle').textContent = 'No one free right now.';
+  $('#matchsub').textContent = 'Ana can practise with you until a person arrives.';
+  $('#fallback').hidden = false;
+}
+
+function openHuman(){
+  state.partner = 'human';
+  state.reported = null;
+  show('room');
+}
+
+function openAI(){
+  state.partner = 'ai';
+  state.reported = null;
+  show('room');
+}
+
 function startRoom(){
-  secs=0; balance=50;
-  $('#timer').textContent='00:00';
-  $('#toast').classList.remove('on');
+  const ai = state.partner === 'ai';
+  const interview = !ai && state.topic === 'Interview';
+
+  $('#roompair').textContent = state.l1 + ' ↔ ' + state.l2 +
+    (ai ? ' · AI practice' : interview ? ' · Interview practice' : '');
+  $('#jobbadge').hidden = !interview;
+  $('#aibadge').hidden = !ai;
+  $('#themletter').textContent = ai ? 'A' : 'M';
+  $('#themname').textContent = ai ? 'Ana · AI partner' : 'Mateo · B1';
+  $('#reportrow').hidden = ai;
+  $('#blockrow').hidden = ai;
+  $('#prompttext').textContent = ai
+    ? 'Tell Ana about a job you want.'
+    : interview ? 'Ask about their previous work experience.' : 'Ask about a job he wants.';
+  $('#promptmore').innerHTML = interview
+    ? '· What did you do before this role?<br>· What are you looking for next?<br>· What would your first week look like?'
+    : ai ? '· Tell Ana what the job is.<br>· What would you say first?<br>· What are you worried about?'
+    : '· What would your first week look like?<br>· What is the hardest part of that job?<br>· Why do you want it?';
+
+  $('#timer').textContent = '00:00';
   $('#prompt').classList.remove('open');
   $('#balance').classList.remove('warm');
+  $('#me').classList.remove('speaking');
+  $('#thempc').classList.add('speaking');
+  $('#micicon').innerHTML = MIC;
+  $('#mute').classList.remove('muted');
+  $('#mute').setAttribute('aria-pressed', 'false');
+  $('#mlabel').textContent = 'Mute';
+  $('#sr').textContent = ai ? 'Connected to Ana, your AI partner.' : 'Connected. Mateo is speaking.';
 
-  const tick=setInterval(()=>{
+  let secs = 0;
+  let balance = 50;
+  let speaking = 'them';
+
+  every(() => {
     secs++;
-    const m=String(Math.floor(secs/60)).padStart(2,'0'), s=String(secs%60).padStart(2,'0');
-    $('#timer').textContent=m+':'+s;
-    if(secs>=600){ clearInterval(tick); endCall(); }
-  },1000);
-  timers.push(tick);
+    $('#timer').textContent = String(Math.floor(secs / 60)).padStart(2, '0') + ':' + String(secs % 60).padStart(2, '0');
+    if(secs >= 600) endCall(null);
+  }, 1000);
 
-  const swap=setInterval(()=>{
-    speaking = speaking==='them' ? 'me':'them';
-    $('#me').classList.toggle('speaking', speaking==='me');
-    $('#them').classList.toggle('speaking', speaking==='them');
-    balance = Math.max(20, Math.min(80, balance + (speaking==='me'?6:-6)));
-    $('#balance .you').style.width = balance+'%';
-    $('#balance .them').style.width = (100-balance)+'%';
-    if(balance>75 || balance<25) $('#balance').classList.add('warm'); else $('#balance').classList.remove('warm');
-  },3200);
-  timers.push(swap);
+  every(() => {
+    speaking = speaking === 'them' ? 'me' : 'them';
+    $('#me').classList.toggle('speaking', speaking === 'me');
+    $('#thempc').classList.toggle('speaking', speaking === 'them');
+    balance = Math.max(20, Math.min(80, balance + (speaking === 'me' ? 6 : -6)));
+    $('#balance .you').style.width = balance + '%';
+    $('#balance .them').style.width = (100 - balance) + '%';
+    $('#balance').classList.toggle('warm', balance > 75 || balance < 25);
+    $('#sr').textContent = speaking === 'me' ? 'You are speaking' : (ai ? 'Ana is speaking' : 'Mateo is speaking');
+  }, 3200);
+
+  armIdle();
+}
+let gdots = [0,0,0,0], glast = [], gpos = 0, ghand = false;
+const GNAMES = ['You', 'Mateo', 'Lucía', 'Kenji'];
+
+function startGroup(){
+  state.partner = 'group';
+  $('#grouppair').textContent = state.l1 + ' ↔ ' + state.l2 + ' · Table of 4';
+  $('#gtimer').textContent = '00:00';
+  $('#turnhint').hidden = true;
+  $('#gprompt').classList.remove('open');
+  $('#gmicicon').innerHTML = MIC;
+  $('#gmute').classList.remove('muted');
+  $('#gmute').setAttribute('aria-pressed', 'false');
+  $('#gmlabel').textContent = 'Mute';
+  gdots = [0,0,0,0]; glast = []; gpos = 0; ghand = false;
+  updateHand();
+  renderDots();
+  $$('.gpc').forEach(el => { el.classList.remove('speaking','dominant'); });
+  $('#sr').textContent = 'Table connected. Four people.';
+
+  let secs = 0;
+  every(() => {
+    secs++;
+    $('#gtimer').textContent = String(Math.floor(secs / 60)).padStart(2, '0') + ':' + String(secs % 60).padStart(2, '0');
+    if(secs >= 600) endCall(null);
+  }, 1000);
+
+  const seq = [1,1,2,1,3,0,2,1,3,0];
+  const turn = () => {
+    let i = seq[gpos++ % seq.length];
+    if(ghand){ i = 0; ghand = false; updateHand(); }
+    setSpeaker(i);
+  };
+  turn();
+  every(turn, 3200);
+  armIdle();
 }
 
-function endCall(){
+function setSpeaker(i){
+  $$('.gpc').forEach((el, j) => el.classList.toggle('speaking', j === i));
+  $('#sr').textContent = i === 0 ? 'You are speaking' : GNAMES[i] + ' is speaking';
+  for(let j = 0; j < 4; j++) gdots[j] = j === i ? Math.min(3, gdots[j] + 1) : Math.max(0, gdots[j] - 1);
+  renderDots();
+  glast.push(i);
+  if(glast.length > 4) glast.shift();
+  const dominant = glast.length === 4 && glast.filter(x => x === i).length >= 3;
+  if(dominant){
+    $$('.gpc').forEach((el, j) => el.classList.toggle('dominant', j === i));
+    if($('#turnhint').hidden){
+      $('#turnhint').hidden = false;
+      later(() => {
+        $('#turnhint').hidden = true;
+        $$('.gpc').forEach(el => el.classList.remove('dominant'));
+      }, 10000);
+    }
+  } else {
+    $$('.gpc').forEach(el => el.classList.remove('dominant'));
+  }
+}
+
+function renderDots(){
+  for(let j = 0; j < 4; j++){
+    $$('#d' + j + ' i').forEach((dot, k) => dot.classList.toggle('on', k < gdots[j]));
+  }
+}
+
+function updateHand(){
+  $('#hand').classList.toggle('raised', ghand);
+  $('#hand').setAttribute('aria-pressed', String(ghand));
+  $('#handlabel').textContent = ghand ? 'Raised' : 'Raise';
+}
+
+function endCall(reason){
   clearTimers();
-  $$('.pc').forEach(e=>e.classList.remove('speaking'));
-  show('recap');
+  clearTimeout(idleTimer);
+  $$('.pc,.gpc').forEach(el => el.classList.remove('speaking','dominant'));
+  $('#turnhint').hidden = true;
+  $('#controls').classList.remove('idle');
+  $('#gcontrols').classList.remove('idle');
+  if(reason === 'report'){
+    state.reported = null;
+    show('ended');
+  } else {
+    state.reported = null;
+    show('recap');
+  }
 }
 
-$('#mute').addEventListener('click', ()=>{
-  const b=$('#mute'); const on=b.classList.toggle('muted');
-  $('#micicon').innerHTML = on
-    ? '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/><path d="M4 4l16 16"/>'
-    : '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>';
-  $('#mlabel').textContent = on ? 'Muted' : 'Mute';
-  if('vibrate' in navigator) navigator.vibrate(8);
-  b.setAttribute('aria-pressed', on?'true':'false');
-});
-
-$('#prompt').addEventListener('click', ()=> $('#prompt').classList.toggle('open'));
-$('#prompt').addEventListener('keydown', e=>{ if(e.key===' '||e.key==='Enter'){ e.preventDefault(); $('#prompt').click(); }});
-
-$('#more').addEventListener('click', ()=> $('#sheet').classList.add('on'));
-$('#sheet').addEventListener('click', e=>{ if(e.target.id==='sheet') $('#sheet').classList.remove('on'); });
-$('#correct').addEventListener('click', ()=>{
+function currentControls(){
+  return $('.screen.on[data-s="group"]') ? $('#gcontrols') : $('#controls');
+}
+function armIdle(){
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => {
+    if($('.sheet.on')) return;
+    currentControls().classList.add('idle');
+  }, 6000);
+}
+function wake(){
+  currentControls().classList.remove('idle');
+  armIdle();
+}
+function closeSheet(){
   $('#sheet').classList.remove('on');
-  $('#toast').classList.add('on');
-  setTimeout(()=> $('#toast').classList.remove('on'), 6000);
-});
-$('#report').addEventListener('click', ()=>{ $('#sheet').classList.remove('on'); endCall(); });
-$('#leave').addEventListener('click', endCall);
+  wake();
+}
 
-/* nav */
-document.addEventListener('click', e=>{
-  const g=e.target.closest('[data-go]');
-  if(g){ show(g.dataset.go); if(g.dataset.go==='mic') micAnim(); }
+function resetVerify(){
+  const b = $('#vbtn');
+  b.dataset.stage = '';
+  b.textContent = 'Send code';
+  $('#phone').value = '';
+  $('#phone').readOnly = false;
+  $('#vhint').textContent = 'One code by SMS. No marketing.';
+}
+
+function resetLevel(){
+  clearInterval(window.__lv);
+  $('#lvring').classList.remove('live');
+  $('#lvcopy').textContent = 'Tap to record 20 seconds';
+  $('#lvnext').textContent = 'Skip for now';
+  recording = false;
+}
+
+function micAnim(){
+  $('#fixhint').hidden = true;
+  const bars = $('#micbars');
+  if(!bars.children.length){
+    for(let i = 0; i < 14; i++) bars.appendChild(document.createElement('i'));
+  }
+  every(() => {
+    [...bars.children].forEach(b => b.style.height = (6 + Math.random() * 28) + 'px');
+  }, 110);
+}
+
+/* single-select chip groups */
+function group(sel, onChange){
+  const el = $(sel);
+  if(!el) return;
+  el.addEventListener('click', e => {
+    const b = e.target.closest('.chip');
+    if(!b || b.disabled) return;
+    el.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+    if(onChange) onChange(b.textContent.trim());
+  });
+}
+
+/* language rows never share a language: picking a clash swaps the other row */
+function langGroup(sel, otherSel, key, otherKey){
+  const el = $(sel), other = $(otherSel);
+  el.addEventListener('click', e => {
+    const b = e.target.closest('.chip');
+    if(!b || b.disabled) return;
+    const prev = el.querySelector('.chip[aria-pressed="true"]');
+    el.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed','false'));
+    b.setAttribute('aria-pressed','true');
+    const clash = other.querySelector('.chip[aria-pressed="true"]');
+    if(clash && prev && clash.textContent.trim() === b.textContent.trim()){
+      other.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === prev ? 'true' : 'false'));
+    }
+    state[key] = b.textContent.trim();
+    state[otherKey] = other.querySelector('.chip[aria-pressed="true"]').textContent.trim();
+  });
+}
+
+langGroup('#l1', '#l2', 'l1', 'l2');
+langGroup('#l2', '#l1', 'l2', 'l1');
+group('#topic', v => { state.topic = v; });
+/* level recorder */
+let recording = false;
+$('#lvring').addEventListener('click', () => {
+  if(recording) return;
+  recording = true;
+  $('#lvring').classList.add('live');
+  $('#lvcopy').textContent = 'Recording… say the sentence';
+  const id = every(() => {
+    [...$('#lvbars').children].forEach(b => b.style.height = (6 + Math.random() * 30) + 'px');
+  }, 110);
+  later(() => {
+    clearInterval(id);
+    recording = false;
+    $('#lvring').classList.remove('live');
+    $('#lvcopy').textContent = 'Sounds like B1. Tap continue.';
+    $('#lvnext').textContent = 'Continue';
+  }, 2600);
 });
 
-/* theme + reset */
-$('#theme').addEventListener('click', ()=>{
-  const html=document.documentElement;
-  const light = html.getAttribute('data-theme')==='light';
-  html.setAttribute('data-theme', light?'dark':'light');
-  $('#theme').textContent = light ? 'Light theme' : 'Dark theme';
+/* verify: phone -> code -> mic */
+$('#vbtn').addEventListener('click', () => {
+  const b = $('#vbtn');
+  if(b.dataset.stage === 'code'){
+    show('mic');
+    return;
+  }
+  if(!$('#phone').value.trim()) $('#phone').value = '+1 555 000 4417';
+  b.dataset.stage = 'code';
+  $('#phone').value = '••• ••• 4417';
+  $('#phone').readOnly = true;
+  $('#vhint').textContent = 'Code sent. It expires in five minutes.';
+  b.textContent = 'Verify and continue';
 });
-$('#reset').addEventListener('click', ()=> show('welcome'));
+
+/* home */
+$('#modesolo').addEventListener('click', () => { state.mode = 'solo'; renderHome(); });
+$('#modegroup').addEventListener('click', () => { state.mode = 'group'; renderHome(); });
+$('#talkbtn').addEventListener('click', () => { state.reported = null; show('match'); });
+
+/* matching */
+$('#keepwaiting').addEventListener('click', () => {
+  clearTimers();
+  $('#fallback').hidden = true;
+  $('#pulse').classList.remove('done');
+  $('#matchtitle').textContent = 'Mateo is joining…';
+  $('#matchsub').textContent = 'One moment.';
+  later(openHuman, 1800);
+});
+$('#tryai').addEventListener('click', openAI);
+
+/* mute */
+function wireMute(btnSel, iconSel, labelSel){
+  const b = $(btnSel), ic = $(iconSel), lb = $(labelSel);
+  b.addEventListener('click', () => {
+    const on = !b.classList.contains('muted');
+    b.classList.toggle('muted', on);
+    b.setAttribute('aria-pressed', String(on));
+    ic.innerHTML = on ? MUTED : MIC;
+    lb.textContent = on ? 'Muted' : 'Mute';
+    $('#sr').textContent = on ? 'Muted' : 'Microphone on';
+    if('vibrate' in navigator) navigator.vibrate(8);
+    wake();
+  });
+}
+wireMute('#mute', '#micicon', '#mlabel');
+wireMute('#gmute', '#gmicicon', '#gmlabel');
+
+/* group hand */
+$('#hand').addEventListener('click', () => {
+  ghand = !ghand;
+  updateHand();
+  $('#sr').textContent = ghand ? 'Hand raised. You will speak next.' : 'Hand lowered.';
+  wake();
+});
+
+/* prompts */
+[['#prompt'], ['#gprompt']].forEach(([sel]) => {
+  const el = $(sel);
+  el.addEventListener('click', () => el.classList.toggle('open'));
+  el.addEventListener('keydown', e => {
+    if(e.key === ' ' || e.key === 'Enter'){ e.preventDefault(); el.click(); }
+  });
+});
+
+/* more sheet */
+function openSheet(){
+  $('#sheet').classList.add('on');
+  clearTimeout(idleTimer);
+  currentControls().classList.remove('idle');
+}
+$('#more').addEventListener('click', openSheet);
+$('#gmore').addEventListener('click', openSheet);
+$('#closesheet').addEventListener('click', closeSheet);
+
+$('#correct').addEventListener('click', () => {
+  closeSheet();
+  later(showCorrection, 1200);
+});
+
+/* the cue dismisses on tap or key, and holds while hovered or focused */
+const toastEl = $('#toast');
+toastEl.addEventListener('click', hideCorrection);
+toastEl.addEventListener('keydown', e => {
+  if(e.key === 'Enter' || e.key === ' ' || e.key === 'Escape'){
+    e.preventDefault();
+    hideCorrection();
+  }
+});
+toastEl.addEventListener('pointerenter', () => clearTimeout(toastTimer));
+toastEl.addEventListener('pointerleave', () => {
+  if(toastEl.classList.contains('on')) toastTimer = setTimeout(hideCorrection, 2500);
+});
+toastEl.addEventListener('focusin', () => clearTimeout(toastTimer));
+toastEl.addEventListener('focusout', () => {
+  if(toastEl.classList.contains('on')) toastTimer = setTimeout(hideCorrection, 2500);
+});
+
+/* report ends the call first, then asks why */
+$('#reportrow').addEventListener('click', () => {
+  $('#sheet').classList.remove('on');
+  endCall('report');
+});
+$('#blockrow').addEventListener('click', () => {
+  $('#sheet').classList.remove('on');
+  endCall(null);
+});
+
+/* leave */
+$('#leave').addEventListener('click', () => endCall(null));
+$('#gleave').addEventListener('click', () => endCall(null));
+
+/* mic helper */
+$('#fixaudio').addEventListener('click', () => { $('#fixhint').hidden = false; });
+
+/* ended reasons */
+$$('.rrow').forEach(b => {
+  b.addEventListener('click', () => {
+    state.reported = b.dataset.reason;
+    show('recap');
+  });
+});
+$('#justleave').addEventListener('click', () => { state.reported = null; show('recap'); });
+
+/* controls fade after 6s of stillness; any tap wakes them */
+['room','group'].forEach(name => {
+  const el = $('.screen[data-s="' + name + '"]');
+  el.addEventListener('click', e => {
+    if(e.target.closest('#more, #gmore')){ wake(); return; }
+    if($('#sheet').classList.contains('on')) $('#sheet').classList.remove('on');
+    wake();
+  });
+});
+
+/* theme */
+$('#theme').addEventListener('click', () => {
+  const html = document.documentElement;
+  const light = html.getAttribute('data-theme') === 'light';
+  html.setAttribute('data-theme', light ? 'dark' : 'light');
+  $('#theme').textContent = light ? 'Light' : 'Dark';
+});
+
+/* prototype control: empty vs normal 1:1 queue */
+$('#queue').addEventListener('click', () => {
+  state.queueEmpty = !state.queueEmpty;
+  $('#queue').textContent = state.queueEmpty ? 'Queue: empty' : 'Queue: normal';
+});
+
+/* restart */
+$('#reset').addEventListener('click', () => {
+  clearTimers();
+  clearTimeout(idleTimer);
+  Object.assign(state, {
+    l1: 'English', l2: 'Spanish', level: 'B1', topic: 'Interview',
+    mode: 'solo', partner: 'human', queueEmpty: true, reported: null
+  });
+  $$('#l1 .chip').forEach(c => c.setAttribute('aria-pressed', String(c.textContent.trim() === 'English')));
+  $$('#l2 .chip').forEach(c => c.setAttribute('aria-pressed', String(c.textContent.trim() === 'Spanish')));
+  $$('#topic .chip').forEach(c => c.setAttribute('aria-pressed', String(c.textContent.trim() === 'Interview')));
+  $('#queue').textContent = 'Queue: empty';
+  $('#fallback').hidden = true;
+  $('#phone').value = '';
+  $('#phone').readOnly = false;
+  show('welcome');
+});
+
+/* simple navigation */
+document.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]');
+  if(g){ e.preventDefault(); show(g.dataset.go); }
+});
+
+show('welcome');
+
 </script>
 </body>
 </html>

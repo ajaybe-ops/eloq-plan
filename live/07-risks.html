@@ -11,7 +11,7 @@
 <div class="layout">
 <nav>
   <div class="brand">Live</div>
-  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.1 · 2026-11-18</div>
   <a href="index.html">Start here</a>
   <hr>
   <a href="01-concept.html">01 · Concept & thesis</a>
@@ -21,6 +21,7 @@
   <a href="05-monetization.html">05 · Pricing</a>
   <a href="06-mvp.html">06 · MVP scope</a>
   <a href="07-risks.html" class="on">07 · Risks</a>
+  <a href="08-launch-plan.html">08 · Launch plan</a>
   <a href="prototype.html">▶ Prototype</a>
   <hr>
   <a href="../index.html">← Eloq plan (other set)</a>
@@ -52,7 +53,7 @@
 </tr>
 <tr>
 <td><strong>Mitigation</strong></td>
-<td>18+ hard gate; phone + liveness verification before room 2; no identifiers or location; one-tap report that ends the call; 60s device-local evidence buffer; 24/5 human review; 2 FTE at launch; permanent, device-level bans</td>
+<td>18+ hard gate; phone before room 1, liveness before room 3; no identifiers or location; one-tap report that ends the call; 60s device-local evidence buffer; 24/5 human review; 2 FTE at launch; permanent, device-level bans</td>
 </tr>
 <tr>
 <td><strong>Residual risk</strong></td>
@@ -90,11 +91,11 @@
 </tr>
 <tr>
 <td><strong>Mitigation</strong></td>
-<td>Launch <strong>two pairs only</strong>, in three timezone clusters; paid <strong>seed hosts</strong> (native speakers paid $8–12/hour to be available at peak, disclosed as "Community host"); AI fallback so the queue is never empty; reciprocity credits for "giver" sessions; soft peak-hour promotion on Home (not a schedule requirement); 6-person tables as a liquidity sink when 1:1 cannot fill</td>
+<td>Launch <strong>one pair only</strong>, in one time-zone corridor, during four concentrated evening hours; unpaid <strong>founding speakers</strong> (free Career, three sessions/week) instead of paid hosts; AI fallback so the queue is never empty; reciprocity minutes for "giver" sessions; tables only after 1:1 liquidity is proven</td>
 </tr>
 <tr>
 <td><strong>Cost of mitigation</strong></td>
-<td>Seed hosts ~$6–10k/month at launch; this is the single largest growth expense and it is worth it</td>
+<td>Recruiting 600 founding speakers (300 per side) and two campus ambassadors per city: ~$3–5k/month. No payments for presence — a paid host creates a two-class room and does not scale</td>
 </tr>
 <tr>
 <td><strong>Kill signal</strong></td>
@@ -102,7 +103,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Why AI fallback is not the answer to liquidity:</strong> it protects the <em>individual</em> experience but destroys the <em>network</em> value. If 40% of rooms are AI, users learn the product is a chatbot with extra steps. Target: AI fallback &lt; 15% of rooms; if it exceeds 25% for two weeks, liquidity is failing and seeding must increase or the pair must be cut.</p>
+<p><strong>Why AI fallback is not the answer to liquidity:</strong> it protects the <em>individual</em> experience but destroys the <em>network</em> value. If 40% of minutes are AI, users learn the product is a chatbot with extra steps. Target: AI fallback ≤ 15% of minutes; if it exceeds 20% for two weeks, liquidity is failing and seeding must increase or the pair must be cut.</p>
 <hr />
 <h2 id="3-audio-quality-the-silent-churn">3. Audio quality (the silent churn)</h2>
 <p><strong>What it looks like:</strong> one side hears "you're breaking up", the call ends politely, and neither user reports it. Churn looks like disinterest; it is actually jitter.</p>
@@ -202,7 +203,7 @@
 </tr>
 <tr>
 <td><strong>Mitigation</strong></td>
-<td>Verification only before room 2 (not at install); re-verification only on suspicion; reviewer tooling that triages by pattern rather than reading every report; tighter free cap if COGS drifts; annual plans to fund verification upfront</td>
+<td>Verification only before room 3 (not at install); re-verification only on suspicion; reviewer tooling that triages by pattern rather than reading every report; tighter free cap if COGS drifts; annual plans to fund verification upfront</td>
 </tr>
 <tr>
 <td><strong>Target</strong></td>
@@ -272,7 +273,7 @@
 </table>
 <p><strong>The pattern:</strong> risks 2–4 all present as "people don't come back." The only way to tell them apart is instrumentation — time-to-match, call setup, and second-room-within-7-days must be measured from day one, separately, or every diagnosis will be wrong.</p>
 <p><strong>What we do not do:</strong> add features to fix a retention problem. Features are what Clubhouse added on the way down.</p>
-<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+<footer>Live v1.1 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
 </main>
 </div>
 </body>

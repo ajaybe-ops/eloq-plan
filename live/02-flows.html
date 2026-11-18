@@ -11,7 +11,7 @@
 <div class="layout">
 <nav>
   <div class="brand">Live</div>
-  <div class="ver">Voice rooms for language exchange<br>v1.0 · 2026-11-16</div>
+  <div class="ver">Voice rooms for language exchange<br>v1.1 · 2026-11-18</div>
   <a href="index.html">Start here</a>
   <hr>
   <a href="01-concept.html">01 · Concept & thesis</a>
@@ -21,6 +21,7 @@
   <a href="05-monetization.html">05 · Pricing</a>
   <a href="06-mvp.html">06 · MVP scope</a>
   <a href="07-risks.html">07 · Risks</a>
+  <a href="08-launch-plan.html">08 · Launch plan</a>
   <a href="prototype.html">▶ Prototype</a>
   <hr>
   <a href="../index.html">← Eloq plan (other set)</a>
@@ -29,9 +30,9 @@
 <p><strong>Rule for this document:</strong> if a screen has two primary actions, it is wrong. Every screen below has exactly one thing to press.</p>
 <hr />
 <h2 id="1-the-four-flows">1. The four flows</h2>
-<h3 id="11-first-run-target-75-seconds-to-first-room">1.1 First run (target: 75 seconds to first room)</h3>
-<pre><code>Welcome ──► Age gate ──► Your language ──► Practise language ──► Level ──► Intent ──► Mic check ──► Home ──► Matching
-  10s          5s            10s                10s              20s         10s         10s          —        —
+<h3 id="11-first-run-launch-target-60-seconds-to-first-audio">1.1 First run (launch target: 60 seconds to first audio)</h3>
+<pre><code>Welcome ──► Age gate ──► Your language ──► Practise language ──► Level ──► Verify ──► Mic check ──► Home ──► Matching
+  10s          5s            10s                10s              20s        20s         10s          —        —
 </code></pre>
 <table>
 <thead>
@@ -65,19 +66,19 @@
 <td>Practise language</td>
 <td>Taps one chip</td>
 <td>Sets <code>L2</code> and pair</td>
-<td>Only pairs with live supply are shown</td>
+<td>Only pairs with live supply are shown; the two rows can never hold the same language</td>
 </tr>
 <tr>
 <td>Level</td>
-<td>Speaks for 20 seconds</td>
-<td>Estimates A1–C1, shows the estimate and lets them adjust one notch</td>
+<td>Speaks for 20 seconds, or skips</td>
+<td>Estimates A1–C1 as a <strong>matching band</strong>, not a grade; costs nothing to skip</td>
 <td>Self-report alone is noisy; audio alone is scary</td>
 </tr>
 <tr>
-<td>Intent</td>
-<td>Taps one chip (Interview / Everyday / Exam / Just talking)</td>
-<td>Sets topic defaults</td>
-<td>Drives room content</td>
+<td>Verify</td>
+<td>Enters a phone number, receives one code</td>
+<td>Sends an OTP, binds the number to the device (hashed); no name, photo, or email</td>
+<td>Every room has a reachable adult behind it</td>
 </tr>
 <tr>
 <td>Mic check</td>
@@ -93,15 +94,17 @@
 </tr>
 </tbody>
 </table>
-<p><strong>No account creation before value.</strong> Sign-in (Apple/Google/email) happens <em>after</em> the first room, framed as "save your progress". Phone verification is required only before the second room — that is the point where a bad actor costs someone real time.</p>
+<p><strong>No profile before value.</strong> There is no password, email, bio, or photo before the first room. A phone number, verified in about 20 seconds, is the only gate — and it is never shown to anyone. Apple/Google sign-in after the first room is optional and only saves progress across devices. The selfie liveness check comes before the third room, once the person has a reason to stay (<code>04</code> §3).</p>
+<p><strong>Launch variant (v1).</strong> The six screens below are the full set. The launch path drops the level screen (it moves after room 1 and is inferred from the first call) and folds the mic check into matching, so the tap path is <strong>Welcome → Age → Language → Phone → Home → Talk</strong> — five taps plus a phone number and a code (<code>08</code> §4). The full flow remains the reference for what the product does; the launch funnel is what gets a stranger into a room in under a minute.</p>
+<p><strong>Level is not a test.</strong> The estimate only sets the matching band (±1 level), so being one band off is harmless. There is no stepper, no score, and no retake; it can be changed later in Settings.</p>
 <h3 id="12-matching">1.2 Matching</h3>
 <pre><code>Tap Talk
-  └─► Finding (0–12s) ──────────────► Room
+  └─► Finding (0–10s) ──────────────► Human room
         │
-        ├─ at 12s: &quot;No one free right now&quot;
-        │     ├─► Practise with AI while waiting ──► AI room; human handover when available
-        │     └─► Change topic / language ──► back to Finding
-        └─ at 45s: offer to join a table or leave the queue
+        └─ at 10s: &quot;No one free right now&quot; (inline, never a modal)
+              ├─► Keep waiting for a person ──► human room in ~2s
+              ├─► Practise with AI while waiting ──► AI room; human handover in &lt; 3s
+              └─► Cancel ──► Home
 </code></pre>
 <table>
 <thead>
@@ -130,12 +133,12 @@
 <tr>
 <td><strong>Handover</strong></td>
 <td>Partner card slides in mid-call</td>
-<td>"A person just arrived. Switch? 10s" — never forced</td>
+<td>"Mateo is free — handing over in 3s" · <em>Stay with Ana</em></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Why the 12-second rule:</strong> a queue that feels infinite reads as broken. Twelve seconds is long enough for a real match and short enough to believe. The AI fallback means the queue can never produce dead time — but the person must always be told which one they are talking to.</p>
-<p><strong>Matching inputs, in priority order:</strong> language pair → level band (±1) → intent/topic → recent partner history (never repeat the same person twice in 24h unless both opt in) → reciprocity balance.</p>
+<p><strong>Why the 10-second rule:</strong> a queue that feels infinite reads as broken. Ten seconds is long enough for a real match and short enough to believe. The AI fallback means the queue can never produce dead time — but the person must always be told which one they are talking to.</p>
+<p><strong>Matching inputs, in priority order:</strong> language pair → level band (±1) → topic → recent partner history (never repeat the same person twice in 24h unless both opt in) → reciprocity balance.</p>
 <h3 id="13-the-11-room">1.3 The 1:1 room</h3>
 <pre><code>        ┌─────────────────────────────┐
         │ English ↔ Spanish   04:12   │   ← pair, elapsed
@@ -170,8 +173,8 @@
 </tr>
 <tr>
 <td>Connection dot</td>
-<td>Green / amber / red; tap for a one-line diagnosis</td>
-<td>Audio problems are the #1 silent churn cause</td>
+<td>Green / amber / red <strong>plus the word "Connected"</strong>; tap for a one-line diagnosis</td>
+<td>Audio problems are the #1 silent churn cause; colour is never the only signal</td>
 </tr>
 <tr>
 <td>Presence</td>
@@ -200,18 +203,19 @@
 </tr>
 <tr>
 <td>More</td>
-<td>Correct cue, translate a word, report, block</td>
+<td>Correct my Spanish, change topic, report, block</td>
 <td>Destructive actions are one level deeper, never in the thumb's path</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Correction cue (the differentiator that must stay light):</strong>
-1. Long-press the "…" → <strong>Correct something</strong>.
-2. The last 10 seconds of transcript appear as tappable phrases.
-3. Tap the phrase, type or accept a suggested version.
-4. Partner sees a small chip: <em>"Try: 'I've been working there since 2020'"</em> — no interruption, no modal, dismissible.
-5. Chip is saved to their recap automatically.</p>
-<p><strong>Translation:</strong> tap a word in the live caption strip → one-word gloss, 2-second display, then gone. No full-sentence translation — that turns practice into reading.</p>
+1. Tap the "…" → <strong>Correct my Spanish</strong> (the row names the language you are learning).
+2. Your last sentence is captured silently in the background. Nothing is repeated back to you first.
+3. About a second later one cue arrives, inline, above the controls: <em>Try: "I've been working there since 2020."</em> — with <em>You said: "I work there since 2020."</em> underneath.
+4. Tone rules: the label says <code>Correction</code>, never "wrong"; the accent is <code>warm</code>; one cue at a time; no score, no replay button, no lesson.
+5. Tap the cue, press Enter, or wait six seconds to dismiss. Hovering or focusing it holds it open.
+6. The corrected phrase is kept for the recap's word bank. The cue never interrupts the conversation and never opens a sheet.</p>
+<p><strong>Translation (gloss):</strong> live captions are off by default. When they are on, tap a word in the caption strip → one-word gloss, 2-second display, then gone. There is no sentence translation and no "translate" action in the room menu — reading replaces speaking.</p>
 <h3 id="14-group-table-36">1.4 Group table (3–6)</h3>
 <pre><code>Join table ──► 3-min round ──► rotate speaker ──► 3-min round ──► … ──► recap
 </code></pre>
@@ -300,15 +304,15 @@
 <td>4</td>
 <td>Level check</td>
 <td>Record 20s</td>
-<td>Skip (defaults A2)</td>
-<td>Shows estimate, allows ±1 adjustment</td>
+<td>Skip</td>
+<td>A matching band, not a grade; no stepper, no retake. <strong>v1: moves after room 1</strong></td>
 </tr>
 <tr>
 <td>5</td>
-<td>Intent</td>
-<td>Continue</td>
+<td>Verify</td>
+<td>Send code</td>
 <td>—</td>
-<td>4 chips</td>
+<td>Phone only, never displayed; liveness before room 3 (<code>04</code> §3)</td>
 </tr>
 <tr>
 <td>6</td>
@@ -321,8 +325,8 @@
 <td>7</td>
 <td>Home</td>
 <td><strong>Talk</strong></td>
-<td>Join a table</td>
-<td>One live card: "14 people online for English ↔ Spanish"</td>
+<td>—</td>
+<td>One live card: "14 people online for English ↔ Spanish"; topic chips</td>
 </tr>
 <tr>
 <td>8</td>
@@ -343,14 +347,14 @@
 <td>Table</td>
 <td>Mute</td>
 <td>Leave / Next speaker</td>
-<td>3–6 tiles, round timer</td>
+<td>3–6 tiles, round timer; v1.1</td>
 </tr>
 <tr>
 <td>11</td>
-<td>Report sheet</td>
-<td>Submit</td>
-<td>Cancel</td>
-<td>Reason chips + optional 20s note</td>
+<td>Call ended</td>
+<td>Inappropriate / Left early / Technical</td>
+<td>Nothing — just leave</td>
+<td>Ends first, asks second; only Inappropriate opens a T&amp;S case</td>
 </tr>
 <tr>
 <td>12</td>
@@ -374,7 +378,7 @@
 <tbody>
 <tr>
 <td>Partner leaves mid-sentence</td>
-<td>5-second "Mateo left" state → immediate requeue with the same topic, no penalty, no explanation required</td>
+<td>AI takes over in under 2s with the same topic and timer; "Talk again" is one tap; no penalty, no requeue wait, no explanation required</td>
 </tr>
 <tr>
 <td>You lose connection</td>
@@ -406,15 +410,12 @@
 <hr />
 <h2 id="4-navigation-model">4. Navigation model</h2>
 <p>Three destinations, not five:</p>
-<pre><code>                 ┌──────────────┐
-                 │    Home      │  ← Talk, table, online count
-                 └──────┬───────┘
-        ┌───────────────┼───────────────┐
-     Recap           Room            Settings
-   (from a call)   (modal, full)    (gear, top-right)
+<pre><code>Home ──Talk──► Room ──leave/report──► Recap ──Done──► Home
+  └─ Settings (gear; never during a call)
 </code></pre>
+<p>Settings is a leaf, not a tab. Nothing in the map is a feed and nothing is public.</p>
 <p>No tab bar during a call. No persistent bottom nav. The back gesture always means "leave the room", and it always asks nothing.</p>
-<footer>Live v1.0 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+<footer>Live v1.1 · design and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
 </main>
 </div>
 </body>
