@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>11 — Build and launch: 12 weeks, one city, one switch — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for high-signal conversation<br>v6.0 · 2026-11-18</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="08-launch-plan.html">08 · Launch plan</a>
+  <a href="09-v5-master-plan.html">09 · v5 master plan</a>
+  <a href="10-execution-lock.html">10 · Execution lock</a>
+  <a href="11-build-and-launch.html" class="on">11 · Build & launch</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p><strong>Version 6.0 · 2026-11-18 · Owner: VP Eng + Head of Growth</strong></p>
+<p>This is the execution document. It assumes <code>10</code> is locked: sampled ASR, $3.50 marginal CAC, one prime topic per evening, 6.5% conversion with Pro above 30%.</p>
+<p>It contains four things that can be built from and one that can be argued with: the ASR migration, the Austin density plan, the sprint map, and the hard-stop runbook. <strong>§2.1 argues with the $50,000 budget</strong>, because spending it the obvious way fails the CAC test by 4×.</p>
+<hr />
+<h2 id="0-the-plan-on-one-page">0. The plan on one page</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Decision</th>
+<th>Number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ASR</strong></td>
+<td>API until 2.5M speaker-min/month (~65k MAU), then self-hosted L4s</td>
+<td>$90k → $12k/month at 400k MAU</td>
+</tr>
+<tr>
+<td><strong>Cutover</strong></td>
+<td>4 weeks shadow, then 5% → 25% → 100% by room hash</td>
+<td>WER delta &lt; 1.5 points before cutover</td>
+</tr>
+<tr>
+<td><strong>Launch</strong></td>
+<td>Austin, one prime topic per night, 19:30 doors / 20:00 first room</td>
+<td>2,000 DAU by D90</td>
+</tr>
+<tr>
+<td><strong>Supply</strong></td>
+<td>120 → 250 → 400 → 600 rostered speakers</td>
+<td>30% of DAU rostered</td>
+</tr>
+<tr>
+<td><strong>Spend</strong></td>
+<td><strong>$28k of the $50k in 90 days</strong>, $12k of it variable acquisition</td>
+<td>Launch CAC ~$9, not $3.50</td>
+</tr>
+<tr>
+<td><strong>Onboarding</strong></td>
+<td>5 taps, 3 uncapped rooms in 48h, no price until a limit</td>
+<td>Activate ≥ 70%</td>
+</tr>
+<tr>
+<td><strong>Safety</strong></td>
+<td>Vibe Check removes the participant, not the room</td>
+<td>2 weighted reports = 2.0</td>
+</tr>
+<tr>
+<td><strong>Team</strong></td>
+<td>4 engineers, 1 designer, 1 QA/ops</td>
+<td>6 two-week sprints</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1-self-hosted-asr-when-to-switch-what-to-buy-how-not-to-break-the-recap">1. Self-hosted ASR: when to switch, what to buy, how not to break the recap</h2>
+<h3 id="11-the-premise-correction">1.1 The premise correction</h3>
+<p>"Route audio to our own GPUs without degrading latency" assumes audio is transcribed live. <strong>It is not, and that is the entire cost model.</strong> Audio is captured on-device, VAD-gated, and uploaded <strong>after the room ends</strong> as a 6-minute window plus a 5% sample. There is no live transcription path in v1, so there is no live latency to degrade.</p>
+<p>The two latency budgets that do exist:</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Budget</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recap appears after room end</td>
+<td><strong>P90 ≤ 20s</strong> (upload 3s + ASR 7s + LLM 6s + render 4s)</td>
+<td>The user is reading a summary, not waiting on a call</td>
+</tr>
+<tr>
+<td>Report clip upload</td>
+<td><strong>P90 ≤ 1.5s</strong></td>
+<td>The user is upset; the clip must leave the device before they change their mind</td>
+</tr>
+</tbody>
+</table>
+<p>The 1.5s target belongs to the report, not the recap. Anyone who puts live captions in the v1 scope has re-created the $0.35/room cost trap with a nicer name.</p>
+<h3 id="12-the-flip-threshold">1.2 The flip threshold</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Volume trigger</strong></td>
+<td><strong>2.5M speaker-minutes/month sustained for 4 weeks</strong> (~65k MAU at 38.9 min/MAU)</td>
+</tr>
+<tr>
+<td><strong>Cost trigger</strong></td>
+<td>API ASR spend &gt; <strong>$14.5k/month</strong> for 2 consecutive months</td>
+</tr>
+<tr>
+<td><strong>Build trigger</strong></td>
+<td><strong>1.2M speaker-minutes/month</strong> (~30k MAU) — start the shadow deployment here</td>
+</tr>
+<tr>
+<td><strong>Payback</strong></td>
+<td>$150k build ÷ ($14.5k − $2.8k monthly saving) ≈ <strong>13 months</strong> at the trigger point</td>
+</tr>
+</tbody>
+</table>
+<p>Below 2.5M minutes the API is cheaper <strong>once you charge the build to the P&amp;L</strong>. Above it, self-hosting wins on every month thereafter. The mistake to avoid is building at 10k MAU because "it will be cheaper at scale" — it will be, and it will also be a $150k distraction while the product is unproven.</p>
+<h3 id="13-hardware">1.3 Hardware</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Spec</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GPU</strong></td>
+<td><strong>NVIDIA L4, 24 GB</strong> (<code>g6.xlarge</code>, 4 vCPU, 16 GB RAM)</td>
+<td>Best price/perf for Whisper inference; FP8 support; $0.805/hr on-demand, ~$0.35 spot</td>
+</tr>
+<tr>
+<td><strong>Minimum cluster</strong></td>
+<td><strong>3 GPUs across 2 AZs</strong> (1 warm spare)</td>
+<td>One AZ failure must not stop recaps</td>
+</tr>
+<tr>
+<td><strong>At 200k MAU</strong></td>
+<td>8 + 2 spare = <strong>10</strong></td>
+<td>~7.8M speaker-min/month</td>
+</tr>
+<tr>
+<td><strong>At 400k MAU</strong></td>
+<td>16 + 2 spare = <strong>18</strong></td>
+<td>~15.5M speaker-min/month</td>
+</tr>
+<tr>
+<td><strong>Model</strong></td>
+<td><code>distil-whisper-large-v3</code> via CTranslate2, int8; <code>large-v3</code> for segments with confidence below threshold</td>
+<td>~6× faster than large-v3 at ~1–2 WER points worse on clean audio</td>
+</tr>
+<tr>
+<td><strong>Batching</strong></td>
+<td>8 segments, 30s chunks, VAD-segmented</td>
+<td>Fills the GPU without padding silence</td>
+</tr>
+<tr>
+<td><strong>Throughput</strong></td>
+<td>~40× realtime per L4 at batch 8</td>
+<td>1.0M minutes/month at 60% utilisation</td>
+</tr>
+<tr>
+<td><strong>Orchestration</strong></td>
+<td>EKS + Karpenter; 3 on-demand base, spot for burst</td>
+<td>Spot interruptions drain the queue, not the request</td>
+</tr>
+<tr>
+<td><strong>Queue</strong></td>
+<td>SQS, visibility 300s, DLQ at 3 attempts</td>
+<td>Recap is async; retries are free</td>
+</tr>
+<tr>
+<td><strong>Storage</strong></td>
+<td>S3 (audio, 7-day lifecycle), Postgres (transcripts), no audio in the DB</td>
+<td>Cheapest correct split</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why not A10G:</strong> the L4 is ~15% slower per token but ~25% cheaper per hour and supports FP8. At this volume that is $2–3k/month. <strong>Why not a single big A100:</strong> utilisation would sit below 20% at launch, and a single GPU is a single point of failure for every recap in the product.</p>
+<h3 id="14-migration-path">1.4 Migration path</h3>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>When</th>
+<th>What happens</th>
+<th>Exit criterion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0 — Build</strong></td>
+<td>30k MAU</td>
+<td>Queue, worker, model serving, S3 lifecycle, dashboards</td>
+<td>1,000 test minutes processed</td>
+</tr>
+<tr>
+<td><strong>1 — Shadow</strong></td>
+<td>30–65k MAU</td>
+<td>5% of rooms transcribed by <strong>both</strong> API and self-hosted; compare WER, cost, p95 job time</td>
+<td>WER delta <strong>&lt; 1.5 points</strong> on a 500-room eval set, for 4 weeks</td>
+</tr>
+<tr>
+<td><strong>2 — Ramp</strong></td>
+<td>At trigger</td>
+<td>5% → 25% → 100% by <code>hash(room_id)</code>, 2 weeks per step</td>
+<td>No regression in recap quality score (thumbs, not stars)</td>
+</tr>
+<tr>
+<td><strong>3 — Fallback</strong></td>
+<td>30 days after 100%</td>
+<td>API kept as cold fallback; one flag flips a room back</td>
+<td>Zero recap failures above 0.5%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Quality gate, not just cost:</strong> the recap is the paid artifact. A 2-point WER regression on accented English is worth more than the $77k/month saved, so the eval set is 500 rooms stratified by accent (US, Mexican Spanish-influenced, Indian English, Nigerian English) and topic. If distil fails one cohort, route that cohort to <code>large-v3</code> on the same GPUs.</p>
+<h3 id="15-the-one-thing-that-will-go-wrong">1.5 The one thing that will go wrong</h3>
+<p><strong>Queue backlog at peak.</strong> Rooms end in bursts at :00 and :15. 400 concurrent rooms ending within two minutes is 400 jobs × 6 minutes of audio. At 40× realtime and 18 GPUs, that clears in ~3.5 minutes — acceptable, but only if autoscaling is warm. Pre-scale on a schedule at 19:00–23:00 local, and set the recap copy for a slow night: <em>"Your recap is still being written — it'll be here in a minute."</em> No spinner.</p>
+<hr />
+<h2 id="2-the-austin-playbook">2. The Austin playbook</h2>
+<h3 id="21-the-50k-problem">2.1 The $50k problem</h3>
+<p>The brief says $50k for launch. Run the CAC test on it before spending a dollar:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Target at D90</td>
+<td>2,000 DAU ≈ <strong>5,000 MAU</strong></td>
+</tr>
+<tr>
+<td>Payers at 6.5%</td>
+<td>325</td>
+</tr>
+<tr>
+<td>LTV per payer (<code>10</code> §5.5)</td>
+<td>$93</td>
+</tr>
+<tr>
+<td><strong>Cohort LTV</strong></td>
+<td><strong>$30,225</strong></td>
+</tr>
+<tr>
+<td>Spend $50,000</td>
+<td><strong>LTV/CAC = 0.6×</strong> ❌</td>
+</tr>
+<tr>
+<td>Spend $14,000</td>
+<td><strong>2.2×</strong> ⚠️</td>
+</tr>
+<tr>
+<td>Spend $10,000</td>
+<td><strong>3.0×</strong> ✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Spending the full $50k to reach 2,000 DAU destroys value.</strong> It is a 4× overspend against the cohort it buys. The 90-day plan therefore spends <strong>$10–14k on variable acquisition</strong> and holds the rest.</p>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>90-day spend</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2 campus ambassadors (UT + ACC), $2k/mo × 3</td>
+<td>$12,000</td>
+<td>Fixed, but the main activation engine</td>
+</tr>
+<tr>
+<td>6 meetup nights (food, venue, AV)</td>
+<td>$4,800</td>
+<td>Brand/density</td>
+</tr>
+<tr>
+<td>Video + photo for ASO and LinkedIn</td>
+<td>$3,500</td>
+<td>Content</td>
+</tr>
+<tr>
+<td>Swag and coffee</td>
+<td>$2,500</td>
+<td>Density</td>
+</tr>
+<tr>
+<td>Tools (Cal.com, email, analytics)</td>
+<td>$1,200</td>
+<td>Ops</td>
+</tr>
+<tr>
+<td><strong>Total committed</strong></td>
+<td><strong>$24,000</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>Held for weeks 13–24 or a second campus</td>
+<td><strong>$26,000</strong></td>
+<td>Do not spend in Q1</td>
+</tr>
+</tbody>
+</table>
+<p><strong>CAC at launch is ~$8–9, not $3.50.</strong> That is honest and it is fine: the constraint applies at steady state, when referral and organic dominate. The model amendment: Y1 blended CAC $9, not $3.50 → Y1 net moves from −$1.24M to <strong>−$1.46M</strong>. Y2 and Y3 are unchanged because they are referral-led.</p>
+<p>Anyone who reports $3.50 CAC in month one is dividing total spend by signups they did not pay for.</p>
+<h3 id="22-week-04-the-first-120-speakers">2.2 Week 0–4: the first 120 speakers</h3>
+<p><strong>Where they come from, in order of yield:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Target</th>
+<th>Why it works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UT Austin — Texas AI/ML Society</strong></td>
+<td>30</td>
+<td>Highest topic density; members already argue about models</td>
+</tr>
+<tr>
+<td><strong>UT Austin — Undergraduate Philosophy Society + Debate</strong></td>
+<td>25</td>
+<td>Philosophy night needs people who enjoy disagreement</td>
+</tr>
+<tr>
+<td><strong>UT Austin — Longhorn Startup / McCombs Tech Club</strong></td>
+<td>20</td>
+<td>Career rooms; they will pay for Pro later</td>
+</tr>
+<tr>
+<td><strong>Austin AI Alliance + Deep Learning Austin meetups</strong></td>
+<td>25</td>
+<td>Practitioners, 25+, the Person A the product needs</td>
+</tr>
+<tr>
+<td><strong>Capital Factory / Austin Tech Happy Hour</strong></td>
+<td>10</td>
+<td>Founders and engineers; high willingness to speak</td>
+</tr>
+<tr>
+<td><strong>Targeted LinkedIn (200 DMs)</strong></td>
+<td>10</td>
+<td>"AI engineer, Austin" — convert at ~5%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The ask (exact copy, LinkedIn or in person):</strong></p>
+<blockquote>
+<p>We're building a small live-audio room for AI and philosophy in Austin. Fifteen minutes, four people, no audience, no recording, no DMs afterwards.</p>
+<p>We're inviting 120 people to be <strong>Founding Speakers</strong> before we open to everyone. You pick a night; we fill the other three seats with people who actually want to talk about your topic.</p>
+<p>Three months of Pro, free. Two sessions a week for eight weeks — four hours total. Interested?</p>
+</blockquote>
+<p><strong>The incentive is status, access, and a small obligation — not cash.</strong> Paying speakers creates a two-class room and a perverse incentive to fill silence. Founding Speakers get: Pro free, a title on their profile-less profile (a line on the recap only), topic veto, and a monthly dinner with the other speakers.</p>
+<p><strong>Screening:</strong> a 10-minute call. Can they hold a conversation on one topic for fifteen minutes without dominating? If they talk for eight of the ten minutes, they are not a speaker, they are a risk.</p>
+<p><strong>Week 0–4 targets:</strong> 120 confirmed, 60% show rate on any given night, 3 nights/week (Mon AI, Wed Philosophy, Thu Tech careers), 50 completed rooms.</p>
+<h3 id="23-week-58-making-the-schedule-real">2.3 Week 5–8: making the schedule real</h3>
+<p>A schedule only works if it is a promise, not a suggestion.</p>
+<table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>One prime topic per night</strong></td>
+<td>Monday AI · Tuesday Philosophy · Wednesday Tech careers · Thursday Science · Friday open. Published in-app seven days ahead</td>
+</tr>
+<tr>
+<td><strong>Doors 19:30, first room 20:00</strong></td>
+<td>The room card appears at 19:30 with a live seat count. No countdown, no urgency copy</td>
+</tr>
+<tr>
+<td><strong>Roster confirmation</strong></td>
+<td>Cal.com shift sheet; confirm 24h ahead; <strong>1.5× backup</strong> rostered for every night</td>
+</tr>
+<tr>
+<td><strong>Thin-night rule</strong></td>
+<td>Fewer than 3 confirmed speakers at 18:00 → <strong>cancel the night in-app</strong> ("No room tonight. Thursday is on."). Never run a thin night</td>
+</tr>
+<tr>
+<td><strong>Speaker nudge</strong></td>
+<td>One push at 19:15 to confirmed speakers only. One. No streak, no guilt</td>
+</tr>
+<tr>
+<td><strong>Failure mode</strong></td>
+<td>If a night cancels twice in a row, merge topics for that week rather than cancel twice</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Week 5–8 targets:</strong> 250 → 400 speakers, 700 DAU by D60, P90 fill ≤ 45s, 4% conversion.</p>
+<p><strong>What to measure nightly:</strong> seats filled at 20:00, rooms started, P90 fill time, rooms with an AI participant, speaker show rate. One dashboard, reviewed at 09:00.</p>
+<h3 id="24-week-912-listeners-into-speakers">2.4 Week 9–12: listeners into speakers</h3>
+<p>The 5:1 ratio means 600 speakers behind 3,000 participants. Speakers are the scarce side; listeners convert by being asked once, at the right moment.</p>
+<table>
+<thead>
+<tr>
+<th>Trigger</th>
+<th>Ask</th>
+<th>Conversion expectation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>After a user's <strong>second completed room</strong></td>
+<td>Recap line: <em>"Want to lead Thursday's AI room? One tap."</em></td>
+<td>8–12% tap</td>
+</tr>
+<tr>
+<td>After a <strong>third room in the same topic</strong></td>
+<td><em>"You've been in three AI rooms. Take a seat on the roster."</em></td>
+<td>15%</td>
+</tr>
+<tr>
+<td>After a <strong>recap they shared</strong></td>
+<td><em>"That was a good one. Lead one?"</em></td>
+<td>20%</td>
+</tr>
+<tr>
+<td>In-room, at 12:00</td>
+<td>Nothing. Never ask mid-conversation</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Speaker onboarding is 15 minutes, not an application:</strong> a prompt card for their topic, a mic check, the three rules (one question at a time, yield after 90 seconds, no recording), and a human on call for their first session.</p>
+<p><strong>Week 9–12 targets:</strong> 600 speakers, 2,000 DAU, P90 ≤ 30s, 5.5% conversion, Pro ≥ 30% of new subscriptions.</p>
+<hr />
+<h2 id="3-day-0-five-taps-and-no-price">3. Day 0: five taps and no price</h2>
+<h3 id="31-the-flow">3.1 The flow</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Screen</th>
+<th>Copy</th>
+<th>Taps</th>
+<th>Seconds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Install → open</td>
+<td>—</td>
+<td>0</td>
+<td>3</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Welcome</td>
+<td><strong>"Fifteen minutes. One topic. Three to five people."</strong> <code>Get started</code></td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Topic</td>
+<td><strong>"What do you want to think about?"</strong> <code>AI</code> <code>Science</code> <code>Philosophy</code> <code>Tech careers</code> <code>Practice English</code></td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Age</td>
+<td><strong>"Eloq is for adults, 18 and over."</strong> <code>I'm 18 or older</code> · <em>Why we ask</em></td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Phone</td>
+<td><strong>"One number, so everyone is reachable. It's never shown."</strong> <code>Send code</code> → 6 digits, auto-submit</td>
+<td>1 + typing</td>
+<td>20–30</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Home</td>
+<td><strong>"AI · tonight, 20:00 · 4 seats"</strong> <code>Join</code></td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Matching</td>
+<td>Mic check inline: <em>"Say hi — checking your mic."</em> No screen, no button</td>
+<td>0</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Five taps, one phone number.</strong> The OS microphone permission is the only system dialog, and it appears at the moment of joining, not at launch.</p>
+<p><strong>Verification without friction:</strong> phone OTP before room 1 (accountability), liveness before room 3 (after value). No name, no photo, no email, no location, no goals form. Display name is assigned (<code>Alex · B1</code>) and editable in Settings.</p>
+<h3 id="32-the-first-room-guarantee">3.2 The first-room guarantee</h3>
+<p>A new user's first room must be full, on-topic, and at peak. Three mechanisms, in order:</p>
+<ol>
+<li><strong>Trusted-only pairing for rooms 1–2.</strong> A new account is only placed in a room that already contains at least one speaker with 10+ completed rooms and zero upheld reports. If none is available, the user waits — up to 90 seconds.</li>
+<li><strong>Speaker ping.</strong> At 60 seconds of waiting, rostered speakers for tonight's topic who are online get one silent in-app line: <em>"A new person is waiting for the AI room."</em> One tap to take the seat, +1 match priority for the night.</li>
+<li><strong>AI third seat.</strong> At 90 seconds, if two people are waiting, the AI co-host takes the third seat for up to 3 minutes (D4). It is labelled. <strong>No fake humans, ever.</strong></li>
+</ol>
+<p><strong>What we do not do:</strong> pad the room with bots that pretend to be people, seed fake "4 talking" counts, or hold a new user for a "better" match beyond 90 seconds. The first room is the product promise; faking it is how the promise dies.</p>
+<h3 id="33-the-mid-room-limit">3.3 The mid-room limit</h3>
+<p>The user crosses 30 minutes inside a room. <strong>Nothing happens.</strong> No toast, no colour change, no timer warning. The room ends at 15:00 like every other room.</p>
+<p><strong>Recap copy, exact:</strong></p>
+<pre><code>Session complete · 15:00
+
+Three things you said
+  1. …
+  2. …
+  3. …
+
+Words you reached for   14
+New phrase              stakeholder
+
+That was your last room on Free today.
+
+              [ Done ]
+
+        Plus keeps this going ›
+</code></pre>
+<p>One filled button (<strong>Done</strong>). One text link. No modal, no red, no countdown. Tapping the link opens the paywall sheet; tapping Done goes Home, where the only change is a single muted line under the room card.</p>
+<p><strong>The next Join is the paywall.</strong> Not the recap, not the app open. The user is told the fact once, calmly, and then given a choice at the moment they act.</p>
+<h3 id="34-paywall-sheet-exact-copy">3.4 Paywall sheet, exact copy</h3>
+<pre><code>                        ×
+
+You've used your 30 minutes
+for today.
+
+Keep talking.
+
+Plus · $9.99/mo
+Unlimited rooms, expert rooms,
+and every recap.
+
+        [ Continue ]
+
+Not now
+
+7 days free, then $9.99.
+Cancel anytime in Settings.
+</code></pre>
+<p><code>Continue</code> → native purchase sheet → Face ID. <strong>Two taps and a biometric.</strong> Restore purchase sits in Settings only, so the sheet stays to one action.</p>
+<p><strong>Annual upsell is a single line, not a second button:</strong> <em>"Or $79.99/year — two months free."</em> Tapping it switches the sheet's price in place.</p>
+<hr />
+<h2 id="4-safety-engineering">4. Safety engineering</h2>
+<h3 id="41-vibe-check-removing-a-person-without-ending-the-room">4.1 Vibe Check: removing a person without ending the room</h3>
+<pre><code>Client A ── vibe_check(target=B) ──┐
+Client C ── vibe_check(target=B) ──┤→ Redis: ZADD vibe:{room}:{B} score member=A|C
+                                   │   (score = reporter weight, TTL 20 min)
+                                   ▼
+                        weight ≥ 2.0 ?
+                                   │ yes
+                                   ▼
+             LiveKit RemoveParticipant(room, B)   ← server-side, 40ms
+             revoke B's token · unpublish B's tracks
+                                   │
+                                   ▼
+        Room A/C continue. No renegotiation, no gap, no notification to B
+        beyond &quot;You left the room.&quot;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Detail</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reporter weight</strong></td>
+<td>1.0 if in the room &gt; 3 minutes and has spoken; 0.5 if joined &lt; 60s ago; 0 if flagged for prior false reports</td>
+</tr>
+<tr>
+<td><strong>Threshold</strong></td>
+<td><strong>2.0</strong> — two normal reporters, or one normal and two drive-bys</td>
+</tr>
+<tr>
+<td><strong>Window</strong></td>
+<td>20 minutes, cleared when the room ends</td>
+</tr>
+<tr>
+<td><strong>Rate limit</strong></td>
+<td>3 Vibe Checks per user per day; 10 per month; abuse review at 5</td>
+</tr>
+<tr>
+<td><strong>What B sees</strong></td>
+<td><em>"You left the room."</em> No accusation, no reporter identity, no room re-entry for 24h</td>
+</tr>
+<tr>
+<td><strong>What A/C see</strong></td>
+<td>The circle greys and disappears. No banner, no confirmation, no "thanks for reporting"</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td><strong>Unchanged.</strong> A <code>vibe_check</code> event is logged; only an upheld report moves the score</td>
+</tr>
+<tr>
+<td><strong>Appeal</strong></td>
+<td>Any access restriction beyond the room triggers a review; the restricted user gets one screen with the reason and an <code>Appeal</code> button, 72h SLA</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why server-side removal:</strong> the client cannot be trusted to drop a participant, and a client-side "mute" leaves the offender's audio flowing. <code>RemoveParticipant</code> is atomic and works even if the offender's app is unresponsive.</p>
+<p><strong>The failure mode to design for:</strong> two friends removing a third. The weight system and the 3-minute speaking requirement raise the cost, but do not eliminate it. That is why the <em>room</em> action is instant and the <em>account</em> action is not — one is reversible, the other is not.</p>
+<h3 id="42-the-60-second-buffer">4.2 The 60-second buffer</h3>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Capture</td>
+<td><code>AVAudioEngine</code> tap on the <strong>output mix</strong> (local mic + remote tracks summed), so the clip contains what the reporter heard — including the offender</td>
+</tr>
+<tr>
+<td>Codec</td>
+<td>Opus, 24 kbps, 20ms frames → ~180 KB for 60s</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td>Memory only. AES-GCM with a session key in iOS Keychain / Android Keystore. <strong>Never written to disk</strong></td>
+</tr>
+<tr>
+<td>Ring</td>
+<td>60s circular buffer, overwritten continuously</td>
+</tr>
+<tr>
+<td>On report</td>
+<td>Prompt: <em>"Attach the last 30 seconds? It helps us review."</em> Default on, one tap to decline</td>
+</tr>
+<tr>
+<td>If yes</td>
+<td>Decrypt → presigned S3 PUT → zero the buffer → server stores 30 days → access-logged</td>
+</tr>
+<tr>
+<td>If no</td>
+<td>Zero the buffer immediately. Nothing uploaded</td>
+</tr>
+<tr>
+<td>If force-quit / OS kill</td>
+<td>Buffer is gone. Nothing persisted, nothing recoverable</td>
+</tr>
+<tr>
+<td>If backgrounded &gt; 30s</td>
+<td>iOS suspends audio; the buffer contains a gap. The clip is marked <code>has_gap=true</code>; reviewers see a waveform with the gap marked</td>
+</tr>
+<tr>
+<td>Retention</td>
+<td>Audio 30 days → deleted; transcript kept 24 months; case metadata 24 months</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The honest limitation, stated to the reviewer and in the policy:</strong> the clip is the reporter's device view. If the offender spoke while the reporter was muted, or the report is filed after the app was killed, there is no clip. The case then rests on the 5% sample, the score history, and prior reports. A report without a clip is still investigated — it is just slower.</p>
+<p><strong>Disclosure, one line at room start, no modal:</strong> <em>"If you report someone, the last 30 seconds can be attached. Nothing is recorded otherwise."</em></p>
+<hr />
+<h2 id="5-the-12-week-engineering-map">5. The 12-week engineering map</h2>
+<p><strong>Team:</strong> 4 engineers (2 backend, 2 mobile), 1 designer, 1 QA/ops. Six two-week sprints. One release train, TestFlight every Friday.</p>
+<h3 id="51-stack">5.1 Stack</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Choice</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Client</td>
+<td><strong>React Native + Expo</strong>, bare workflow</td>
+<td>One codebase, LiveKit SDK is mature, native modules for VAD/audio tap are contained</td>
+</tr>
+<tr>
+<td>Audio/SFU</td>
+<td><strong>LiveKit</strong> (Cloud for alpha, self-hosted at 10k MAU)</td>
+<td><code>RemoveParticipant</code>, data channels, simulcast, Apache-2.0 self-host path. Agora is cheaper at low volume but gives no server-side participant control; Daily's mobile SDK is heavier</td>
+</tr>
+<tr>
+<td>VAD</td>
+<td><strong>Silero VAD v5 via ONNX Runtime Mobile</strong></td>
+<td>1.8 MB, &lt;1% CPU, no vendor</td>
+</tr>
+<tr>
+<td>ASR</td>
+<td><strong>faster-whisper / CTranslate2</strong> on L4</td>
+<td>40× realtime at batch 8, int8</td>
+</tr>
+<tr>
+<td>Backend</td>
+<td><strong>TypeScript (NestJS)</strong></td>
+<td>Speed of hiring and iteration; typed contracts with the client</td>
+</tr>
+<tr>
+<td>DB</td>
+<td><strong>Postgres</strong> (RDS, Multi-AZ)</td>
+<td>Relational fits rooms/reports/entitlements; JSONB for takeaways</td>
+</tr>
+<tr>
+<td>Cache/queue</td>
+<td><strong>Redis</strong> (vibe checks, rate limits), <strong>SQS</strong> (ASR jobs)</td>
+<td>Redis for sub-ms counters; SQS for durable retries</td>
+</tr>
+<tr>
+<td>Storage</td>
+<td><strong>S3</strong>, 7-day audio lifecycle</td>
+<td>Cheap, lifecycle-enforced</td>
+</tr>
+<tr>
+<td>Payments</td>
+<td><strong>StoreKit 2</strong> + <strong>Play Billing 7</strong>, server-side validation</td>
+<td><code>10</code> §9</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td><strong>PostHog self-hosted</strong></td>
+<td>No ad SDKs; event ownership</td>
+</tr>
+<tr>
+<td>Flags</td>
+<td><strong>Unleash</strong> self-hosted</td>
+<td>Cutover ramps without deploys</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>OpenTelemetry → Grafana; Sentry</td>
+<td>One trace from join → recap</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-sprints">5.2 Sprints</h3>
+<table>
+<thead>
+<tr>
+<th>Sprint</th>
+<th>Weeks</th>
+<th>Ships</th>
+<th>Exit criteria</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0 — Spike</strong></td>
+<td>−2→0</td>
+<td>LiveKit spike, phone auth, CI, TestFlight</td>
+<td>4-person room on 3 devices, &lt;300ms added latency</td>
+</tr>
+<tr>
+<td><strong>1 — VAD + onboarding</strong></td>
+<td>1–2</td>
+<td>Silero VAD, 5-tap onboarding, OTP, age gate, Home</td>
+<td>Install → Home in &lt;45s; VAD precision &gt;95% on 50 recordings</td>
+</tr>
+<tr>
+<td><strong>2 — Rooms</strong></td>
+<td>3–4</td>
+<td>4–6 person rooms, timer, mute, leave, reconnect, balance meter</td>
+<td>50 test rooms; crash-free &gt;99.5%; join &lt;1.5s</td>
+</tr>
+<tr>
+<td><strong>3 — ASR pipeline</strong></td>
+<td>5–6</td>
+<td>Upload window, 30s bucket scoring, DP selection, SQS workers, summary</td>
+<td>Recap P90 &lt;20s; summary quality ≥4/5 on 30 rooms</td>
+</tr>
+<tr>
+<td><strong>4 — Paywall</strong></td>
+<td>7–8</td>
+<td>Entitlements, StoreKit 2, Play Billing, caps, sheet, restore</td>
+<td>Sandbox purchase → entitlement in &lt;2s; restore works; 0 double-charges</td>
+</tr>
+<tr>
+<td><strong>5 — Safety</strong></td>
+<td>9–10</td>
+<td>Vibe Check removal, buffer, report flow, T&amp;S console v0</td>
+<td>Removal &lt;100ms; buffer zeroed on decline (verified); 20 drilled reports</td>
+</tr>
+<tr>
+<td><strong>6 — Density + hardening</strong></td>
+<td>11–12</td>
+<td>Roster, prime-topic schedule, speaker pings, analytics, kill-signal dashboard</td>
+<td>2,000-user load test; all D30 metrics on one screen</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Deliberately not in the 12 weeks:</strong> group tables beyond 6, live captions, the practice record, voice feedback, referrals, Android tablet layout, dark/light theming beyond system default.</p>
+<h3 id="53-schema-the-parts-that-matter">5.3 Schema, the parts that matter</h3>
+<pre><code class="language-sql">users(id uuid pk, phone_hash bytea unique, display_name text,
+      birth_year int, score smallint default 60, score_updated_at timestamptz,
+      created_at timestamptz)
+
+rooms(id uuid pk, topic text, night date, started_at timestamptz,
+      ended_at timestamptz, ai_participant bool, prime bool)
+
+room_participants(room_id uuid, user_id uuid, joined_at, left_at,
+      speak_ms int, turns int, left_reason text,
+      primary key (room_id, user_id))
+
+vibe_checks(id bigserial, room_id uuid, reporter_id uuid, target_id uuid,
+      weight numeric, created_at)          -- index (room_id, target_id)
+
+reports(id uuid pk, room_id uuid, reporter_id uuid, target_id uuid,
+      category text,               -- inappropriate | left_early | technical
+      clip_s3_key text, has_gap bool, status text,
+      reviewed_by uuid, decided_at timestamptz)
+
+transcripts(id uuid pk, room_id uuid, window_start int, window_end int,
+      text text, model text, avg_logprob numeric, cost_usd numeric)
+
+summaries(id uuid pk, room_id uuid, takeaways jsonb,
+      highlight_s3_key text, model text, cost_usd numeric)
+
+subscriptions(user_id uuid, platform text, product_id text,
+      original_txn_id text unique, expires_at timestamptz, status text)
+
+entitlements(user_id uuid, feature text, source text, expires_at timestamptz)
+
+roster(id uuid pk, user_id uuid, night date, topic text,
+      confirmed bool, attended bool, backup bool)
+</code></pre>
+<p><strong>Partitioning:</strong> <code>reports</code> and <code>transcripts</code> by month. <strong>Indexes:</strong> <code>rooms(night, topic)</code>, <code>reports(status, created_at)</code>, <code>vibe_checks(room_id, target_id)</code>, <code>subscriptions(expires_at)</code>.</p>
+<p><strong>Entitlements are server-side, always.</strong> The client never decides whether a user is Plus; it asks, and the server answers from <code>entitlements</code>.</p>
+<hr />
+<h2 id="6-infrastructure-cost-api-vs-gpu">6. Infrastructure cost: API vs GPU</h2>
+<p><strong>Basis:</strong> 38.9 speaker-minutes per MAU per month (5.4 rooms × 7.2 minutes). GPU = L4 at $0.805/hr, 1.0M minutes/GPU/month at 60% utilisation, plus 2 spare. API = $0.0058/speaker-minute.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>50k MAU</strong></th>
+<th><strong>200k MAU</strong></th>
+<th><strong>400k MAU</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Speaker-minutes / month</td>
+<td>1.94M</td>
+<td>7.78M</td>
+<td>15.55M</td>
+</tr>
+<tr>
+<td><strong>API ASR</strong></td>
+<td><strong>$11,275</strong></td>
+<td><strong>$45,100</strong></td>
+<td><strong>$90,190</strong></td>
+</tr>
+<tr>
+<td>GPUs required (incl. 2 spare)</td>
+<td>4</td>
+<td>10</td>
+<td>18</td>
+</tr>
+<tr>
+<td><strong>GPU ASR</strong></td>
+<td><strong>$3,540</strong></td>
+<td><strong>$7,340</strong></td>
+<td><strong>$12,410</strong></td>
+</tr>
+<tr>
+<td>SFU / egress</td>
+<td>$1,944</td>
+<td>$7,776</td>
+<td>$15,552</td>
+</tr>
+<tr>
+<td>Summaries (LLM)</td>
+<td>$1,350</td>
+<td>$5,400</td>
+<td>$10,800</td>
+</tr>
+<tr>
+<td>DB / Redis / S3 / queue</td>
+<td>$1,900</td>
+<td>$3,100</td>
+<td>$4,700</td>
+</tr>
+<tr>
+<td><strong>Total, API stack</strong></td>
+<td><strong>$16,469</strong></td>
+<td><strong>$61,376</strong></td>
+<td><strong>$121,242</strong></td>
+</tr>
+<tr>
+<td><strong>Total, GPU stack</strong></td>
+<td><strong>$8,734</strong></td>
+<td><strong>$23,616</strong></td>
+<td><strong>$43,462</strong></td>
+</tr>
+<tr>
+<td><strong>Per MAU, API</strong></td>
+<td>$0.33</td>
+<td>$0.31</td>
+<td>$0.30</td>
+</tr>
+<tr>
+<td><strong>Per MAU, GPU</strong></td>
+<td>$0.17</td>
+<td>$0.12</td>
+<td>$0.11</td>
+</tr>
+<tr>
+<td><strong>Monthly saving</strong></td>
+<td>$7,735</td>
+<td>$37,760</td>
+<td><strong>$77,780</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Where the flip pays:</strong> at 50k MAU the saving is $7.7k/month against a $12.5k/month build amortisation — <strong>negative until month 13</strong>. At 200k it is $37.8k/month, which pays the build back in four months. The trigger in §1.2 (2.5M minutes, ~65k MAU) sits between those points and is the conservative choice.</p>
+<p><strong>Reconciliation to the model:</strong> <code>10</code> §5.2 carries <strong>$0.40/MAU</strong> at 400k. This table is $0.11 of infrastructure. The gap is moderation ($0.14), support and verification ($0.07), and an <strong>$0.08 peak reserve</strong> for egress variance, retries, and the nightly burst. The reserve is not padding — it is the difference between a model that survives a bad Tuesday and one that does not.</p>
+<hr />
+<h2 id="7-the-hard-stop">7. The hard stop</h2>
+<h3 id="71-trigger">7.1 Trigger</h3>
+<p><strong>D90: DAU &lt; 800 AND D7 &lt; 20%.</strong> Both, not either. DAU alone can be a marketing miss; D7 alone can be a small-cohort artifact. Together they mean the group format has not found a habit.</p>
+<h3 id="72-the-runbook">7.2 The runbook</h3>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Action</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>Freeze all acquisition spend and ambassador hiring. Post in <code>#launch</code>: "Hard stop triggered, decision in 10 days."</td>
+<td>Growth</td>
+</tr>
+<tr>
+<td><strong>0</strong></td>
+<td>Snapshot the dashboard, export the cohort data, cancel the next two prime-topic nights</td>
+<td>Eng</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>20 user interviews: 10 churned, 10 retained. One question: "What did you expect that you did not get?"</td>
+<td>Product</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>Cohort analysis: retention by first-room type (AI vs Philosophy), by speaker presence, by time-to-room</td>
+<td>Data</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>Cost teardown: actual COGS per room vs $0.068; actual moderation hours per 1k rooms</td>
+<td>Finance</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>Written recommendation to the board: pivot, narrow, or stop. One page, three options, one recommendation</td>
+<td>Founders</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>Board decision. If pivot: 30-day plan. If stop: wind-down plan</td>
+<td>Board</td>
+</tr>
+<tr>
+<td><strong>10</strong></td>
+<td>Communicate to the team and to users (if stopping, 30 days' notice)</td>
+<td>Founders</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What we do not do in the 10 days:</strong> ship features, run a discount, hire, or announce anything publicly. Panic-shipping during a hard stop is how a 10-day decision becomes a 6-month one.</p>
+<h3 id="73-the-pivot-b2b2c-cohorts">7.3 The pivot: B2B2C cohorts</h3>
+<p>The honest read of a D90 miss is usually <strong>density, not demand</strong>: the product works when a room is full, and a consumer app cannot guarantee a full room at 2,000 DAU. A buyer who supplies the density fixes the only broken variable.</p>
+<p><strong>The pitch (exact copy, to a bootcamp or university career centre):</strong></p>
+<blockquote>
+<p>Your students can pass the technical screen and still fail the interview, because they have never said the answer out loud to another person.</p>
+<p>Eloq is a live-audio room: four students, fifteen minutes, one interview question, an AI recap with three fixes. No video, no recording, no DMs.</p>
+<p>We run a four-week pilot with 24 of your students. Two sessions a week, 20:00, facilitated by our Founding Speakers. You get completion and confidence data; we get a reference cohort.</p>
+<p><strong>$2,500 for the pilot.</strong> If completion is above 70%, we talk about a per-seat licence.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Buyer</strong></td>
+<td>Bootcamp career services, university career centre, corporate L&amp;D for non-native hires</td>
+</tr>
+<tr>
+<td><strong>Price</strong></td>
+<td>$2,500 / 4-week pilot / 24 seats; $49/seat/month after</td>
+</tr>
+<tr>
+<td><strong>What we supply</strong></td>
+<td>Rooms, speakers, schedule, recap, completion reporting</td>
+</tr>
+<tr>
+<td><strong>What they supply</strong></td>
+<td>24 motivated students and a 20:00 slot</td>
+</tr>
+<tr>
+<td><strong>Why it works</strong></td>
+<td>Density is bought, not manufactured; the buyer already has the cohort</td>
+</tr>
+<tr>
+<td><strong>Why it might not</strong></td>
+<td>Sales cycle, procurement, and a product that becomes a service business with 40% margins</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decision rule:</strong> if three of five pilot conversations convert to a paid pilot within 30 days, pivot. If not, the problem is the product, and a B2B wrapper will not save it.</p>
+<h3 id="74-the-stop">7.4 The stop</h3>
+<p>If neither the consumer product nor the cohort pilot shows demand at D120: stop matching, notify users 30 days out, export their data, delete all audio within 7 days, and return remaining capital. <strong>The one thing we do not do is keep a small team running a quiet app to avoid admitting the answer.</strong></p>
+<hr />
+<h2 id="8-what-would-make-me-wrong">8. What would make me wrong</h2>
+<table>
+<thead>
+<tr>
+<th>Assumption</th>
+<th>If it breaks</th>
+<th>Early signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2,000 DAU fills a room in 30s</td>
+<td>Rooms wait 2+ minutes; users leave before matching</td>
+<td>P90 fill &gt; 60s at D45</td>
+</tr>
+<tr>
+<td>6.5% conversion</td>
+<td>Payers plateau at 3%; Pro at 15%</td>
+<td>Trial start &lt; 5% by D60</td>
+</tr>
+<tr>
+<td>$3.50 marginal CAC</td>
+<td>Referral loop does not fire; CAC sits at $9</td>
+<td>Organic share of activations &lt; 30% by D60</td>
+</tr>
+<tr>
+<td>5.4 rooms per MAU</td>
+<td>Usage is 12 rooms; free COGS doubles</td>
+<td>Free COGS &gt; $0.70/MAU</td>
+</tr>
+<tr>
+<td>Self-hosted ASR saves 70%</td>
+<td>WER regression forces large-v3 everywhere; saving halves</td>
+<td>Eval delta &gt; 3 points on one accent cohort</td>
+</tr>
+<tr>
+<td>600 speakers is enough</td>
+<td>Show rate is 30%, not 60%</td>
+<td>Confirmed-but-absent &gt; 40% for two weeks</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The plan is designed to fail early and loudly.</strong> Every gate above fires before the money is spent, which is the only kind of plan worth writing.</p>
+<footer>Live v6.0 · product, monetization, and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>
