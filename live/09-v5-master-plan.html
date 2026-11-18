@@ -1,0 +1,1265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>09 — v5: the high-signal room network, and how it pays for itself — Live</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Live</div>
+  <div class="ver">Voice rooms for high-signal conversation<br>v5.0 · 2026-11-18</div>
+  <a href="index.html">Start here</a>
+  <hr>
+  <a href="01-concept.html">01 · Concept & thesis</a>
+  <a href="02-flows.html">02 · Flows & screens</a>
+  <a href="03-design-system.html">03 · Design system</a>
+  <a href="04-safety.html">04 · Safety</a>
+  <a href="05-monetization.html">05 · Pricing</a>
+  <a href="06-mvp.html">06 · MVP scope</a>
+  <a href="07-risks.html">07 · Risks</a>
+  <a href="08-launch-plan.html">08 · Launch plan</a>
+  <a href="09-v5-master-plan.html" class="on">09 · v5 master plan</a>
+  <a href="prototype.html">▶ Prototype</a>
+  <hr>
+  <a href="../index.html">← Eloq plan (other set)</a>
+</nav>
+<main>
+<p><strong>Version 5.0 · 2026-11-18 · Status: supersedes the pricing and room model in <code>05</code> and <code>08</code></strong></p>
+<p>Eloq v1–v4 was a language-exchange product. <strong>v5 changes the core object: the room is now a topic, not a person.</strong> Science, tech, philosophy, AI, careers — three to six people, fifteen minutes, one subject. Language practice and interview prep survive as two room families inside it.</p>
+<p>That is a real pivot, not a repositioning, and it changes the economics in both directions: group rooms cost more per session than 1:1s, but they are the only format where "high-signal discussion" is a product rather than a promise.</p>
+<p>This document is the monetization and growth plan. It answers what is free, where the paywall sits, how StoreKit and Play Billing are wired, what each minute of audio actually costs, and whether the business scales. It ends with what I think will kill it.</p>
+<p><strong>Number tags:</strong> <strong>(V)</strong> verified · <strong>(D)</strong> derived from a stated assumption · <strong>(H)</strong> hypothesis with a test.</p>
+<hr />
+<h2 id="0-what-carries-over-what-changes-what-dies">0. What carries over, what changes, what dies</h2>
+<table>
+<thead>
+<tr>
+<th>From v1.1</th>
+<th>Verdict</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No DMs, no profiles, no follows, no contact exchange</td>
+<td><strong>Carries over, unchanged</strong></td>
+<td>This is the anti-harassment moat. It is also the reason group rooms work: there is nowhere else to go.</td>
+</tr>
+<tr>
+<td>One primary action per screen</td>
+<td><strong>Carries over</strong></td>
+<td>The paywall and the room both depend on it.</td>
+</tr>
+<tr>
+<td>Report ends the call first, then three options</td>
+<td><strong>Carries over</strong></td>
+<td>It is the only safety flow I have seen that a victim can use while shaken.</td>
+</tr>
+<tr>
+<td>10-minute 1:1, 12-minute table</td>
+<td><strong>Changes → 15 minutes, all rooms</strong></td>
+<td>A topic needs 15 minutes to get past the opening. Cost per session rises 50%; see §6.</td>
+</tr>
+<tr>
+<td>1:1 as the core, tables gated</td>
+<td><strong>Reverses → group-first</strong></td>
+<td>The topic is the product now. This is 3–4× harder on liquidity (§8).</td>
+</tr>
+<tr>
+<td>Language exchange as the whole product</td>
+<td><strong>Narrows → one room family</strong></td>
+<td>"Practice" rooms. Interview prep becomes "Career" rooms.</td>
+</tr>
+<tr>
+<td>Free 20 human min/day · Plus $12.99 · Career $24.99</td>
+<td><strong>Replaced → Free 30 min/day · Plus $9.99 · Pro $19.99</strong></td>
+<td>The brief's prices. §6 shows what has to be true for them to work.</td>
+</tr>
+<tr>
+<td>Recap: words used / new word / fluency</td>
+<td><strong>Extends → 3 takeaways + highlight</strong></td>
+<td>Topic rooms need takeaways, not vocabulary counts.</td>
+</tr>
+<tr>
+<td>AI as a 1:1 fallback partner</td>
+<td><strong>Changes → AI as a third participant</strong></td>
+<td>10–20× more expensive per minute. It can never be free (§6.4).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What dies:</strong> the "instant 1:1 stranger" promise as the headline, the language-pair liquidity model, and the assumption that a free tier can be generous because audio is cheap. Audio is cheap; <strong>transcription and inference are not.</strong></p>
+<hr />
+<h2 id="1-the-product-in-one-page">1. The product in one page</h2>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Room</strong></td>
+<td>3–6 people, 15:00 hard, one topic, no stage, no host role</td>
+</tr>
+<tr>
+<td><strong>Entry</strong></td>
+<td>One tap on one recommended room. No browse grid at launch</td>
+</tr>
+<tr>
+<td><strong>Intent</strong></td>
+<td>One topic chip, not an onboarding form</td>
+</tr>
+<tr>
+<td><strong>Matching</strong></td>
+<td>Two-tower retrieval + gradient-boosted ranker + explore/exploit bandit. Score is a multiplier, never a gate</td>
+</tr>
+<tr>
+<td><strong>Moderation</strong></td>
+<td>On-device VAD + keyword spotting, server ASR on a sample plus a 60s report buffer, 2-report "Vibe Check" drop</td>
+</tr>
+<tr>
+<td><strong>Score</strong></td>
+<td>Hidden, behavioural, appealable, never used for pricing or public ranking</td>
+</tr>
+<tr>
+<td><strong>Recap</strong></td>
+<td>Three takeaways, one 30-second highlight, one next prompt. No confetti, no streak</td>
+</tr>
+<tr>
+<td><strong>Money</strong></td>
+<td>Subscription + two consumables. No ads, no data sale, no "boost your profile"</td>
+</tr>
+<tr>
+<td><strong>Paywall</strong></td>
+<td>After the recap, never mid-room. One sheet, one filled button</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The one-sentence strategy:</strong> be the only live-audio app where the room is worth the fifteen minutes, the people are filtered by behaviour rather than vibes, and nobody can message you afterwards.</p>
+<hr />
+<h2 id="2-the-recommendation-engine-described-honestly">2. The recommendation engine, described honestly</h2>
+<p>"Deep learning matches you to productive rooms" is true but unremarkable. Every consumer app has a ranker. What matters is <strong>what it optimises</strong> and <strong>what it refuses to optimise</strong>.</p>
+<h3 id="21-the-five-second-intent">2.1 The five-second intent</h3>
+<p>There is no five-second inference screen. Inference at that speed means either always-on listening or a form — both are wrong. Instead:</p>
+<ol>
+<li><strong>One chip</strong> on Home: <em>AI · Science · Philosophy · Tech careers · Practice English</em>. That is the intent, in one tap.</li>
+<li><strong>A stored profile</strong> built from the topics of rooms the user completed, embedded offline. No raw audio is kept.</li>
+<li><strong>A decayed prior</strong> so last month's interest does not own this month's recommendations.</li>
+</ol>
+<p>Five seconds is the budget for the <em>tap</em>, not for a model to guess. Guessing wrong is worse than asking once.</p>
+<h3 id="22-the-ranking-stack">2.2 The ranking stack</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>What it does</th>
+<th>Model</th>
+<th>Latency budget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Candidate retrieval</td>
+<td>200 rooms → 40</td>
+<td>Two-tower embeddings (topic text + user history), ANN index</td>
+<td>15 ms</td>
+</tr>
+<tr>
+<td>Ranker</td>
+<td>40 → 6</td>
+<td>Gradient-boosted trees on 30 features</td>
+<td>10 ms</td>
+</tr>
+<tr>
+<td>Exploration</td>
+<td>1 of 6 slots</td>
+<td>Thompson sampling per topic cluster</td>
+<td>1 ms</td>
+</tr>
+<tr>
+<td>Safety filter</td>
+<td>Remove excluded pairs, minors, quarantined accounts</td>
+<td>Rules, evaluated first</td>
+<td>1 ms</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Features that matter:</strong> topic match, language fit, room age, seat count, expected speaking time for this user, partner completion rate, prior room overlap, time-of-day cohort.</p>
+<p><strong>Features that must not exist:</strong> gender, nationality, accent, inferred age beyond the 18+ gate, photo, follower count, spend. A ranker that learns "this user joins rooms with women" is a harassment engine with a loss function.</p>
+<h3 id="23-the-productivity-score">2.3 The Productivity Score</h3>
+<p>The brief asks for a hidden score from speaking ratio, sentiment, and report frequency. Two of those three are traps:</p>
+<ul>
+<li><strong>Speaking-to-listening ratio</strong> punishes quiet people, non-native speakers, and anyone in a room with a dominant speaker. It measures extroversion, not value.</li>
+<li><strong>Sentiment analysis of speech</strong> is unreliable across accents and cultures, and "negative sentiment" is often just disagreement — which is the point of a philosophy room.</li>
+<li><strong>Report frequency</strong> is gameable in both directions: brigading inflates it, fear suppresses it.</li>
+</ul>
+<p><strong>What the score actually uses:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Weight</th>
+<th>Why it is defensible</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Room completion (stayed to 15:00)</td>
+<td>30%</td>
+<td>The cleanest proxy for "this was worth the time"</td>
+</tr>
+<tr>
+<td>7-day return after a room</td>
+<td>25%</td>
+<td>Value remembered beats value rated</td>
+</tr>
+<tr>
+<td>Turns taken vs. airtime share</td>
+<td>15%</td>
+<td>Rewards participation, not domination</td>
+</tr>
+<tr>
+<td><strong>Upheld</strong> reports (not raw reports)</td>
+<td>20%</td>
+<td>Only adjudicated harm moves the score</td>
+</tr>
+<tr>
+<td>On-topic semantic score</td>
+<td>10%</td>
+<td>Measured on the sampled transcript, not continuously</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Range 0–100, starting at 60, 30-day half-life, ±1.5× matching multiplier.</strong> It never sets price, never appears publicly, never gates the free tier.</p>
+<p><strong>Three guardrails that are non-negotiable:</strong></p>
+<ol>
+<li><strong>No automated decision with a significant effect without human review.</strong> An access restriction longer than 7 days requires a person. (GDPR Art. 22; also basic fairness.)</li>
+<li><strong>Explainability on request:</strong> "Your access to Expert rooms is paused — two upheld reports in 30 days. Appeal." One screen, one button.</li>
+<li><strong>Brigading resistance:</strong> two Vibe Checks drop the <em>room</em> immediately, but only adjudicated reports move the <em>score</em>. Otherwise two friends can delete a third person's account.</li>
+</ol>
+<h3 id="24-the-cold-start-fix-and-its-limit">2.4 The cold-start fix, and its limit</h3>
+<p>At low density the backend generates 3–5 seed topics from trending sources and opens them as rooms with an <strong>AI co-host in the third seat</strong> — not a host on stage. The AI asks one question at a time, yields, and leaves the moment a third human joins.</p>
+<p>The limit, stated plainly: <strong>a seed room makes the app look alive; it does not make the network alive.</strong> If more than 35% of room-minutes have an AI participant, the product is a podcast with a chat box. The gate is in §9.</p>
+<hr />
+<h2 id="3-end-to-end-journey">3. End-to-end journey</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Moment</th>
+<th>What the user sees</th>
+<th>What the system does</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Open</td>
+<td>One line: <em>"What do you want to think about?"</em> + one recommended room</td>
+<td>Ranker runs on the stored profile; no login wall</td>
+<td>0:00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Intent</td>
+<td>Five topic chips</td>
+<td>Sets the retrieval cluster</td>
+<td>0:03</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Join</td>
+<td>One card: topic, 4 talking, 9 min left, who is in it</td>
+<td>Pre-flight mic check runs <em>here</em>, with a live meter</td>
+<td>0:08</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Room</td>
+<td>4 circles, no stage. A hairline timer. Controls fade at 6s</td>
+<td>Turn tracking, balance meter, safety buffer rolling</td>
+<td>0:12</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Dominance</td>
+<td>Only the dominant speaker sees: <em>"Give someone else a turn?"</em> for 10s</td>
+<td>Airtime share &gt; 45% or 3 of last 4 turns</td>
+<td>mid</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Vibe Check</td>
+<td>Long-press a circle → <em>"Something wrong?"</em> → 2 options</td>
+<td>2 reports = offender dropped, room continues for the rest</td>
+<td>mid</td>
+</tr>
+<tr>
+<td>6</td>
+<td>End</td>
+<td><em>"Session complete"</em> → recap</td>
+<td>15:00 hard, soft two-note chime, no cut</td>
+<td>15:00</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Recap</td>
+<td>3 takeaways · 30s highlight · one next prompt · <strong>Done</strong></td>
+<td>LLM summary on the transcript window</td>
+<td>15:05</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Limit</td>
+<td><strong>Paywall sheet</strong>, only if a limit was hit</td>
+<td>See §5</td>
+<td>15:10</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Return</td>
+<td>One line, one tap, next room</td>
+<td>48-hour practice window, opt-in</td>
+<td>next day</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Where the paywall never appears:</strong> before the first room, during a room, on app open, on the recap itself, or as an interruption to a conversation.</p>
+<hr />
+<h2 id="4-productive-vs-toxic-the-four-people">4. Productive vs. toxic: the four people</h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th><strong>A — the Expert</strong></th>
+<th><strong>D — the user</strong></th>
+<th><strong>C — the time-waster</strong></th>
+<th><strong>B — the creep</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Onboarding</strong></td>
+<td>Topic chips; "I can host" is not a role, only a signal</td>
+<td>Prefilled topic; one tap</td>
+<td>Same; no friction to punish</td>
+<td>Same; phone gate applies to everyone</td>
+</tr>
+<tr>
+<td><strong>Intent</strong></td>
+<td>Picks 1–2 deep topics</td>
+<td>Picks one</td>
+<td>Picks whatever is trending</td>
+<td>Picks the most social topic available</td>
+</tr>
+<tr>
+<td><strong>Matching</strong></td>
+<td>Ranked into rooms needing depth; gets a "deep" room first</td>
+<td>Matched to A's room; 1.5× multiplier</td>
+<td>Routed to low-density rooms and AI co-host seats, never dropped</td>
+<td>Quarantined: matched only with other low-score accounts and AI, and <strong>told</strong> access is restricted</td>
+</tr>
+<tr>
+<td><strong>In-room</strong></td>
+<td>Balance meter protects their airtime too — they can be nudged</td>
+<td>Gets 3–4 minutes of speech</td>
+<td>Round structure gives them one turn; the nudge is private</td>
+<td>No DMs, no profiles, no photos; voice is the only surface, and it is witnessed</td>
+</tr>
+<tr>
+<td><strong>Dominance</strong></td>
+<td>Nudged like anyone</td>
+<td>Protected by the round</td>
+<td>Nudged at 45% airtime; auto-mute only in timed rounds, after a 3s warning</td>
+<td>Repeat dominance feeds the score</td>
+</tr>
+<tr>
+<td><strong>Exit</strong></td>
+<td>Room ends at 15:00</td>
+<td>Room ends; recap</td>
+<td>Room ends; no infinite room to loiter in</td>
+<td>Vibe Check drops them; the room continues for everyone else</td>
+</tr>
+<tr>
+<td><strong>Post-room</strong></td>
+<td>Invited to a Pro "Expert room" (paid, opt-in)</td>
+<td>3 takeaways; next prompt</td>
+<td>Next prompt offers a <em>topic</em>, not a person</td>
+<td>Score drops only after adjudication; appeal available; no notification to the reporter</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The asymmetry that matters:</strong> C is <em>convertible</em> — a time-waster who finds one good room becomes D. B is <em>contained</em> — the design goal is not reform, it is removing the surface. Treating both the same is how products become either cruel or unsafe.</p>
+<p><strong>On "shadow-ban":</strong> I will not build a silent global ban. It protects the one person who complained and feeds the offender to the next room. The quarantine above is <strong>disclosed, bounded, and reviewed</strong> — functionally isolating, legally defensible, and it does not require lying to the user.</p>
+<hr />
+<h2 id="5-monetization">5. Monetization</h2>
+<h3 id="51-the-matrix">5.1 The matrix</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Free</strong></th>
+<th><strong>Plus — $9.99/mo · $79.99/yr</strong></th>
+<th><strong>Pro — $19.99/mo · $199/yr</strong></th>
+<th><strong>One-off</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Live rooms</td>
+<td><strong>30 min/day, 90 min/week</strong></td>
+<td>Unlimited, fair use 120 min/day</td>
+<td>Unlimited, fair use 180 min/day</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Standard rooms (AI, Science, Philosophy, Tech)</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Expert rooms</strong> (verified practitioner, capped at 6)</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Priority matching</td>
+<td>—</td>
+<td>2× queue weight</td>
+<td>4× queue weight</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>AI recap</strong></td>
+<td>1 per week</td>
+<td>Unlimited</td>
+<td>Unlimited + action items</td>
+<td><strong>$0.99</strong> single</td>
+</tr>
+<tr>
+<td>Transcript / full analysis</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅ + export</td>
+<td>$0.99</td>
+</tr>
+<tr>
+<td>Career rooms (Mock Interview, Negotiation)</td>
+<td>1 trial room</td>
+<td>✅</td>
+<td>✅ + voice feedback</td>
+<td>—</td>
+</tr>
+<tr>
+<td>"Practice" rooms (language)</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅ + pronunciation detail</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Topic Boost</strong> (AI seed room, 15 min, public)</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td><strong>$1.99</strong></td>
+</tr>
+<tr>
+<td>Host a "Seed Room"</td>
+<td>—</td>
+<td>—</td>
+<td>✅ (2/month)</td>
+<td>$1.99</td>
+</tr>
+<tr>
+<td>Themes / accessibility</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Safety tools</strong></td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td><strong>never</strong></td>
+</tr>
+<tr>
+<td>Ads</td>
+<td><strong>None</strong></td>
+<td>None</td>
+<td>None</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What is never sold:</strong> safety, reporting, blocking, leaving a room, the ability to see who is in a room before joining, or the three recap takeaways. Those are the product, not the upsell.</p>
+<h3 id="52-why-30-minutes-a-day-and-90-a-week">5.2 Why 30 minutes a day, and 90 a week</h3>
+<p>The daily cap sounds generous and is. The weekly cap is the one that controls cost, because the expensive user is not the person who does 30 minutes on Tuesday — it is the person who does 30 minutes every day. 90 minutes/week ≈ six rooms, which is exactly the "three sessions a week" habit the product wants, doubled for enthusiasm.</p>
+<p>Both limits are shown in the same place: a 4px hairline under the room count on Home. No counter, no percentage, no guilt copy.</p>
+<h3 id="53-the-paywall-ux-in-full">5.3 The paywall UX, in full</h3>
+<p><strong>Trigger 1 — the cap.</strong> After the recap, not before it. The recap is the value; the ask comes after the value lands.</p>
+<pre><code>┌─────────────────────────────┐
+│                          ×  │
+│                             │
+│  You've used your 30        │
+│  minutes for today.         │
+│                             │
+│  Keep talking.              │
+│                             │
+│  Plus · $9.99/mo            │
+│  Unlimited rooms, expert    │
+│  rooms, and every recap.    │
+│                             │
+│  ┌───────────────────────┐  │
+│  │      Continue         │  │  ← the only filled button
+│  └───────────────────────┘  │
+│                             │
+│  Not now                    │
+│                             │
+│  7 days free, then $9.99.   │
+│  Cancel anytime in Settings.│
+└─────────────────────────────┘
+</code></pre>
+<p><strong>Trigger 2 — an Expert room.</strong> The sheet names the room, not the tier: <em>"Expert rooms are part of Plus."</em> Same layout, same one button.</p>
+<p><strong>Trigger 3 — a summary.</strong> <em>"Keep this conversation."</em> → Plus, or $0.99 for this one. Two prices on one sheet is a mistake; the one-off is a text link, not a second button.</p>
+<p><strong>Trigger 4 — Topic Boost.</strong> Only after the user has searched a topic with no live room: <em>"No room on quantum computing right now. Open one for 15 minutes — $1.99."</em> The room is public; the buyer gets the topic and the time, not privacy.</p>
+<p><strong>The rules, as constraints on the designer:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Three taps maximum</td>
+<td>Locked action → sheet → Continue → Face ID. Two taps, one biometric</td>
+</tr>
+<tr>
+<td>One primary action</td>
+<td>One filled button. Dismiss is a text row, never a second button</td>
+</tr>
+<tr>
+<td>No fake urgency</td>
+<td>No countdown, no "3 left", no crossed-out price</td>
+</tr>
+<tr>
+<td>Honest renewal</td>
+<td>Price, period, and cancellation path in 12px under the button</td>
+</tr>
+<tr>
+<td>No mid-room interruption</td>
+<td>A cap that is reached mid-room lets the room finish</td>
+</tr>
+<tr>
+<td>Restore</td>
+<td>"Restore purchase" on the sheet and in Settings</td>
+</tr>
+<tr>
+<td>Cancel</td>
+<td>Deep-link to the OS subscription manager. We never claim to cancel for them</td>
+</tr>
+</tbody>
+</table>
+<h3 id="54-micro-transactions-the-maths-that-makes-them-honest">5.4 Micro-transactions: the maths that makes them honest</h3>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Price</th>
+<th>Store fee</th>
+<th>Net</th>
+<th>Cost to serve</th>
+<th>Margin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI recap + full transcript</td>
+<td>$0.99</td>
+<td>15–30%</td>
+<td>$0.69–0.84</td>
+<td>$0.01–0.04</td>
+<td>~95%</td>
+</tr>
+<tr>
+<td>Topic Boost, 15-min AI seed room</td>
+<td>$1.99</td>
+<td>15–30%</td>
+<td>$1.39–1.69</td>
+<td>$0.45–0.90</td>
+<td>35–73%</td>
+</tr>
+<tr>
+<td>Extra Seed Room (Pro host)</td>
+<td>$1.99</td>
+<td>15–30%</td>
+<td>$1.39–1.69</td>
+<td>$0.45–0.90</td>
+<td>35–73%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The Boost is priced against AI inference, not against perceived value.</strong> A 15-minute room with an AI participant costs $0.03–0.06 per minute <strong>(H)</strong> → $0.45–0.90. At $1.99 the margin survives a 30% fee and a fully-attended room. At $0.99 it does not. That is the whole pricing argument.</p>
+<p><strong>Two design constraints on Boosts:</strong></p>
+<ol>
+<li><strong>The room is public.</strong> "Invite up to 5 people" is a private room with a payment attached — that is a DM with extra steps, and it recreates the exact surface v5 exists to remove. The buyer publishes a topic; the first five people in the queue join.</li>
+<li><strong>One Boost per user per day.</strong> Otherwise it becomes a pay-to-monopolise-the-queue feature for anyone with $20.</li>
+</ol>
+<h3 id="55-why-999-if-1299-was-the-number-that-worked">5.5 Why $9.99 if $12.99 was the number that worked</h3>
+<p>$9.99 is an acquisition price. It sits under ChatGPT Plus, matches the consumer mental model, and makes the annual ($79.99) a visible 33% saving. But §6 shows it does not cover a generous free tier on its own. <strong>The business is Pro, not Plus.</strong> Plus exists to convert; Pro exists to pay for the free tier. That is why the Pro tier gets the interview rooms, the voice feedback, and the host seats — the things a person with an interview in three weeks will pay double for.</p>
+<p><strong>The number to watch:</strong> share of new subscriptions that choose Pro. Below 25%, the model in §7 does not close.</p>
+<hr />
+<h2 id="6-unit-economics">6. Unit economics</h2>
+<h3 id="61-what-a-minute-actually-costs">6.1 What a minute actually costs</h3>
+<p>A 15-minute room with four speakers is <strong>60 speaker-minutes</strong>. That is the number that breaks naive cost models.</p>
+<table>
+<thead>
+<tr>
+<th>Line</th>
+<th>Rate</th>
+<th>Naive (ASR on everything)</th>
+<th>Recommended (sampled)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SFU audio relay</td>
+<td>$0.00012 / participant-min <strong>(H)</strong></td>
+<td>$0.007</td>
+<td>$0.007</td>
+</tr>
+<tr>
+<td>ASR</td>
+<td>$0.0058 / speaker-min <strong>(H)</strong></td>
+<td><strong>$0.348</strong> (60 min)</td>
+<td><strong>$0.042</strong> (7.2 min: 6-min summary window + 5% safety sample)</td>
+</tr>
+<tr>
+<td>Scoring / classification LLM</td>
+<td>$0.0004 / room-min</td>
+<td>$0.006</td>
+<td>$0.006</td>
+</tr>
+<tr>
+<td>Summary LLM</td>
+<td>$0.012 / room</td>
+<td>$0.012</td>
+<td>$0.012</td>
+</tr>
+<tr>
+<td>Storage, analytics</td>
+<td>—</td>
+<td>$0.001</td>
+<td>$0.001</td>
+</tr>
+<tr>
+<td><strong>Per 15-min room</strong></td>
+<td></td>
+<td><strong>$0.374</strong></td>
+<td><strong>$0.068</strong></td>
+</tr>
+<tr>
+<td><strong>Per room-minute</strong></td>
+<td></td>
+<td><strong>$0.025</strong></td>
+<td><strong>$0.0045</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>This is the single most important table in the document.</strong> Continuous transcription of a four-person room costs <strong>$0.35</strong>, which is 5.5× the sampled architecture. At 40 rooms a month, a continuous-ASR user costs $14 — more than the $9.35 net from Plus. The product would lose money on every heavy user while claiming 90% margins.</p>
+<p><strong>The architecture that makes the price work:</strong></p>
+<ul>
+<li><strong>On-device VAD and keyword spotting</strong> — free, always on, no audio leaves the phone.</li>
+<li><strong>A 6-minute transcribed window per room</strong> for the recap (highest-energy segment, not the first six minutes).</li>
+<li><strong>A 5% random safety sample</strong>, plus <strong>the 60-second rolling buffer uploaded only on report</strong>.</li>
+<li><strong>Batch the scoring</strong>, never per-token real-time.</li>
+</ul>
+<p>The cost of this choice is honest: <strong>proactive detection gets weaker.</strong> The Vibe Check becomes the primary signal, with sampling as a backstop. That trade is defensible for adults in public rooms; it would not be for 1:1s with minors, which is one more reason the 18+ gate is absolute.</p>
+<h3 id="62-cost-per-user">6.2 Cost per user</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Free MAU</th>
+<th>Plus subscriber</th>
+<th>Pro subscriber</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rooms / month</td>
+<td>5.4</td>
+<td>14</td>
+<td>18</td>
+</tr>
+<tr>
+<td>Live + ASR + scoring</td>
+<td>$0.30</td>
+<td>$0.78</td>
+<td>$1.00</td>
+</tr>
+<tr>
+<td>Recaps</td>
+<td>$0.02</td>
+<td>$0.17</td>
+<td>$0.22</td>
+</tr>
+<tr>
+<td>Moderation (allocated)</td>
+<td>$0.16</td>
+<td>$0.20</td>
+<td>$0.20</td>
+</tr>
+<tr>
+<td>Infra, support, verification amortised</td>
+<td>$0.09</td>
+<td>$0.09</td>
+<td>$0.09</td>
+</tr>
+<tr>
+<td><strong>Total / month</strong></td>
+<td><strong>$0.57</strong></td>
+<td><strong>$1.24</strong></td>
+<td><strong>$1.51</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A Plus subscriber at 120 minutes/day (the fair-use ceiling) would cost ~$9.60 — the cap exists precisely for that tail. At the median, <strong>Plus runs at 87% gross margin and Pro at 89%</strong> after store fees. The tier is not the problem; the 95% of users paying nothing is.</p>
+<h3 id="63-break-even-conversion">6.3 Break-even conversion</h3>
+<p>Revenue per MAU = conversion × net ARPP. Cost per MAU = $0.57.</p>
+<table>
+<thead>
+<tr>
+<th>Net ARPP</th>
+<th>Break-even conversion</th>
+<th>Margin at 5%</th>
+<th>Margin at 7%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$8.49 (all Plus, 15% fee)</td>
+<td><strong>6.7%</strong></td>
+<td>−$0.15</td>
+<td>+$0.02</td>
+</tr>
+<tr>
+<td>$9.35 (20% Pro mix)</td>
+<td><strong>6.1%</strong></td>
+<td>−$0.10</td>
+<td>+$0.08</td>
+</tr>
+<tr>
+<td>$10.87 (35% Pro mix)</td>
+<td><strong>5.2%</strong></td>
+<td>−$0.03</td>
+<td>+$0.19</td>
+</tr>
+<tr>
+<td>$12.40 (50% Pro mix, 15% fee)</td>
+<td><strong>4.6%</strong></td>
+<td>+$0.05</td>
+<td>+$0.30</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The brief's 3–5% target is at or below break-even.</strong> At 3% the product loses $0.29 per MAU per month — $72k/month at 250k MAU. At 5% it is roughly flat. <strong>The plan only works at 6%+ with a Pro mix above 30%</strong>, or at a materially lower cost per room.</p>
+<p>Three levers, in order of leverage:</p>
+<ol>
+<li><strong>Pro mix</strong> (biggest): moving 20% → 40% Pro adds $0.30/MAU of revenue at the same conversion.</li>
+<li><strong>ASR discipline</strong>: the difference between 12% and 5% sampling is $0.02/room, ~$0.10/MAU, ~1.8 points of break-even conversion.</li>
+<li><strong>Free cap</strong>: from 30 min/day to 20 min/day moves the <em>average</em> by less than 5% — most free users never hit the cap. It protects the tail, not the P&amp;L. Anyone who tells you the cap is the main lever is guessing.</li>
+</ol>
+<h3 id="64-the-ai-participant-trap">6.4 The AI-participant trap</h3>
+<p>An AI co-host speaking for 15 minutes costs <strong>$0.45–0.90</strong> — 7–13× an entire human room. It cannot be part of the free tier, and it cannot be "always available" without a per-room budget.</p>
+<table>
+<thead>
+<tr>
+<th>Placement</th>
+<th>Cost</th>
+<th>Who pays</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free rooms, always available</td>
+<td>$0.45–0.90/room</td>
+<td>Nobody</td>
+<td><strong>Never</strong></td>
+</tr>
+<tr>
+<td>Free rooms, after 60s of a 2-person stall, max 5 min</td>
+<td>$0.15–0.30</td>
+<td>Nobody</td>
+<td>Cap at 1/room/day; watch AI share</td>
+</tr>
+<tr>
+<td>Boost room (paid)</td>
+<td>$0.45–0.90</td>
+<td>$1.69 net</td>
+<td>✅ The only structurally sound use</td>
+</tr>
+<tr>
+<td>Pro Seed Room (2/month)</td>
+<td>$0.45–0.90</td>
+<td>$19.99</td>
+<td>✅ Within margin</td>
+</tr>
+</tbody>
+</table>
+<p><strong>If AI participation exceeds 35% of room-minutes, the product is subsidising a chatbot.</strong> Gate in §9.</p>
+<hr />
+<h2 id="7-the-three-year-model">7. The three-year model</h2>
+<p><strong>Assumptions:</strong> 15-minute rooms, 4.2 average speakers, sampled ASR, $0.57 → $0.45 cost per MAU as the stack matures; 15% store fee in Y1 (Small Business Program), 17% Y2, 22% Y3 as the $1M threshold is crossed and the subscription-year discount only partly offsets it; 9% → 7% monthly churn; Pro mix 20% → 28% → 35%.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>Year 1</strong></th>
+<th><strong>Year 2</strong></th>
+<th><strong>Year 3</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>End MAU</td>
+<td>40,000</td>
+<td>220,000</td>
+<td>800,000</td>
+</tr>
+<tr>
+<td>Average MAU</td>
+<td>15,000</td>
+<td>110,000</td>
+<td>400,000</td>
+</tr>
+<tr>
+<td>Paid conversion (end)</td>
+<td>4.2%</td>
+<td>5.8%</td>
+<td>7.0%</td>
+</tr>
+<tr>
+<td>Average paying subs</td>
+<td>520</td>
+<td>5,600</td>
+<td>24,500</td>
+</tr>
+<tr>
+<td>Gross ARPP / month</td>
+<td>$11.00</td>
+<td>$11.60</td>
+<td>$12.20</td>
+</tr>
+<tr>
+<td>Blended store fee</td>
+<td>15%</td>
+<td>17%</td>
+<td>22%</td>
+</tr>
+<tr>
+<td><strong>Net ARPP / month</strong></td>
+<td><strong>$9.35</strong></td>
+<td><strong>$9.63</strong></td>
+<td><strong>$9.52</strong></td>
+</tr>
+<tr>
+<td>Subscription revenue</td>
+<td>$58k</td>
+<td>$647k</td>
+<td>$2.80M</td>
+</tr>
+<tr>
+<td>Micro-transactions</td>
+<td>$6k</td>
+<td>$70k</td>
+<td>$360k</td>
+</tr>
+<tr>
+<td><strong>Total revenue</strong></td>
+<td><strong>$64k</strong></td>
+<td><strong>$717k</strong></td>
+<td><strong>$3.16M</strong></td>
+</tr>
+<tr>
+<td>Cost per MAU / month</td>
+<td>$0.62</td>
+<td>$0.59</td>
+<td>$0.56</td>
+</tr>
+<tr>
+<td>Variable COGS</td>
+<td>$112k</td>
+<td>$779k</td>
+<td>$2.69M</td>
+</tr>
+<tr>
+<td><strong>Gross profit</strong></td>
+<td><strong>−$48k</strong></td>
+<td><strong>−$62k</strong></td>
+<td><strong>+$470k</strong></td>
+</tr>
+<tr>
+<td><strong>Gross margin</strong></td>
+<td><strong>−75%</strong></td>
+<td><strong>−9%</strong></td>
+<td><strong>15%</strong></td>
+</tr>
+<tr>
+<td>CAC spend</td>
+<td>$70k</td>
+<td>$520k</td>
+<td>$1.60M</td>
+</tr>
+<tr>
+<td>Fixed (team, T&amp;S, tooling)</td>
+<td>$1.05M</td>
+<td>$1.95M</td>
+<td>$3.40M</td>
+</tr>
+<tr>
+<td><strong>Net</strong></td>
+<td><strong>−$1.17M</strong></td>
+<td><strong>−$2.53M</strong></td>
+<td><strong>−$4.53M</strong></td>
+</tr>
+<tr>
+<td>Cumulative</td>
+<td>−$1.17M</td>
+<td>−$3.70M</td>
+<td>−$8.23M</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Read that table honestly.</strong> It scales revenue 49× in two years and still loses $4.5M in year three. Gross margin reaches 15%, not 80%, because this is a voice-AI business with a free tier — not a SaaS product with near-zero marginal cost.</p>
+<p><strong>Sensitivity at 400k MAU, monthly:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Conversion</th>
+<th>Revenue / MAU</th>
+<th>Cost / MAU</th>
+<th>Gross / MAU</th>
+<th>Annual gross</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3%</td>
+<td>$0.29</td>
+<td>$0.56</td>
+<td>−$0.27</td>
+<td><strong>−$1.32M</strong></td>
+</tr>
+<tr>
+<td>5%</td>
+<td>$0.48</td>
+<td>$0.56</td>
+<td>−$0.08</td>
+<td><strong>−$0.40M</strong></td>
+</tr>
+<tr>
+<td>6.5%</td>
+<td>$0.62</td>
+<td>$0.56</td>
+<td>+$0.06</td>
+<td><strong>+$0.28M</strong></td>
+</tr>
+<tr>
+<td>8%</td>
+<td>$0.76</td>
+<td>$0.56</td>
+<td>+$0.20</td>
+<td><strong>+$0.97M</strong></td>
+</tr>
+<tr>
+<td>10%</td>
+<td>$0.95</td>
+<td>$0.56</td>
+<td>+$0.39</td>
+<td><strong>+$1.88M</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="71-ltv-and-cac">7.1 LTV and CAC</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Year 1</th>
+<th>Year 2</th>
+<th>Year 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blended CAC</td>
+<td>$18</td>
+<td>$24</td>
+<td>$32</td>
+</tr>
+<tr>
+<td>Monthly churn</td>
+<td>9%</td>
+<td>8%</td>
+<td>7%</td>
+</tr>
+<tr>
+<td>Lifetime (months)</td>
+<td>11</td>
+<td>12.5</td>
+<td>14</td>
+</tr>
+<tr>
+<td>Net ARPP</td>
+<td>$9.35</td>
+<td>$9.63</td>
+<td>$9.52</td>
+</tr>
+<tr>
+<td>Contribution margin</td>
+<td>55%</td>
+<td>62%</td>
+<td>70%</td>
+</tr>
+<tr>
+<td><strong>LTV</strong></td>
+<td><strong>$57</strong></td>
+<td><strong>$75</strong></td>
+<td><strong>$93</strong></td>
+</tr>
+<tr>
+<td><strong>LTV / CAC</strong></td>
+<td><strong>3.2×</strong></td>
+<td><strong>3.1×</strong></td>
+<td><strong>2.9×</strong></td>
+</tr>
+<tr>
+<td><strong>Payback</strong></td>
+<td><strong>3.5 mo</strong></td>
+<td><strong>4.0 mo</strong></td>
+<td><strong>4.8 mo</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Those are healthy ratios, and they are the reason the business is fundable at all. But they depend on CAC staying under $35 — which depends on the channel mix in §10 staying community-led rather than auction-led. <strong>At a $60 CAC the ratio falls to 1.5× and the model stops working.</strong></p>
+<h3 id="72-what-must-be-true">7.2 What must be true</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Condition</th>
+<th>If false</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Paid conversion ≥ 6.5% by month 24</td>
+<td>The free tier is a charity; cut it to 15 min/day</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Pro ≥ 30% of new subscriptions</td>
+<td>Raise Plus to $11.99 and accept lower volume</td>
+</tr>
+<tr>
+<td>3</td>
+<td>ASR ≤ 8 speaker-min/room</td>
+<td>COGS rises ~$0.10/MAU; break-even conversion +1.8 pts</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Blended CAC ≤ $35</td>
+<td>Kill paid acquisition; stay in community channels</td>
+</tr>
+<tr>
+<td>5</td>
+<td>AI participation ≤ 25% of room-minutes</td>
+<td>The "live network" claim is false; stop scaling</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Gross margin ≥ 35% by month 30</td>
+<td>The business is a pass-through; reprice or exit the consumer market</td>
+</tr>
+</tbody>
+</table>
+<p><strong>This is a $6–8M, four-year path to a profitable $10–15M ARR company — not a two-year rocket.</strong> Anyone modelling 80% gross margins on live AI audio has not priced transcription.</p>
+<hr />
+<h2 id="8-cold-start-for-group-rooms-specifically">8. Cold-start, for group rooms specifically</h2>
+<p>Group-first is harder than 1:1, and the earlier plan said so. The arithmetic:</p>
+<ul>
+<li>A 4-person room consumes <strong>four</strong> users for 15 minutes to serve one session. A 1:1 consumes two.</li>
+<li>With <strong>N</strong> users online and 15-minute sessions, a room forms roughly every <code>N/4</code> arrivals — but only among users whose topics overlap.</li>
+<li>Split across five topics, a 300-concurrent network gives ~60 per topic. Enough for a room every few seconds; not enough to guarantee <em>depth</em> in any one of them.</li>
+<li><strong>Topic skew is worse than headcount.</strong> 300 concurrent users spread over 40 niche topics is 7 people per topic. This is why the topic taxonomy is capped at <strong>five</strong> at launch, with niche topics behind a Boost.</li>
+</ul>
+<p><strong>Three mitigations, in order:</strong></p>
+<ol>
+<li><strong>Concentrate hours.</strong> 18:00–23:00 in one corridor. Same as before, more important now.</li>
+<li><strong>Start at three, cap at six, allow joins until 8:00.</strong> A room that waits for six never starts. A room that starts at three and accepts late joins fills itself.</li>
+<li><strong>AI co-host as the third seat</strong> — only for Plus/Pro rooms or paid Boosts, only after 60 seconds of a stall, maximum five minutes. Free rooms wait, or the user opens a Boost.</li>
+</ol>
+<p><strong>The trap to avoid:</strong> using AI seed rooms to make the app look full at launch. It works for a week, then the first real user arrives, finds four bots, and never returns. <strong>AI can be the third participant; it can never be the majority of the room.</strong></p>
+<hr />
+<h2 id="9-app-store-compliance-checklist">9. App Store compliance checklist</h2>
+<h3 id="91-payments">9.1 Payments</h3>
+<ul>
+<li>[ ] <strong>StoreKit 2</strong> for iOS: <code>Product.products(for:)</code>, <code>product.purchase()</code>, <code>Transaction.updates</code> listener at launch, <code>VerificationResult</code> JWS check, <code>AppStore.sync()</code> for Restore.</li>
+<li>[ ] <strong>Google Play Billing Library 7+</strong>: <code>queryProductDetailsAsync</code>, <code>launchBillingFlow</code>, acknowledge within 3 days, real-time developer notifications to the backend.</li>
+<li>[ ] <strong>Server-side validation</strong> for every transaction; entitlements in our database, never trusted from the client.</li>
+<li>[ ] <strong>One subscription group</strong> so Plus ↔ Pro upgrades prorate correctly instead of double-charging.</li>
+<li>[ ] <strong>Consumables</strong> (summary, Boost) granted server-side, idempotent on transaction ID, with a refund clawback path.</li>
+<li>[ ] <strong>No external payment links in-app</strong> (Guideline 3.1.1). The US external-link entitlement exists but is jurisdiction-specific and not worth building the business on.</li>
+</ul>
+<h3 id="92-store-economics">9.2 Store economics</h3>
+<ul>
+<li>[ ] Enrol in <strong>Apple Small Business Program</strong> (15% while prior-year proceeds &lt; $1M). Re-apply annually.</li>
+<li>[ ] Apple's <strong>subscription discount</strong>: 15% applies after 12 months of continuous paid service for a given subscriber. Model it; it is worth ~4 points of margin by Y3.</li>
+<li>[ ] Google Play: <strong>15% on subscriptions</strong>; 15% on the first $1M of all earnings. Confirm current terms at build time <strong>(V at implementation)</strong>.</li>
+<li>[ ] Set prices in <strong>store price points</strong>, not converted FX. A $9.99 US price is not $9.99 in Mexico.</li>
+<li>[ ] Model the <strong>fee cliff</strong>: crossing $1M resets iOS to 30% until the following year. The Y3 margin in §7 already assumes it.</li>
+</ul>
+<h3 id="93-trials-renewals-refunds">9.3 Trials, renewals, refunds</h3>
+<ul>
+<li>[ ] <strong>7-day free trial</strong> via an introductory offer, one per subscriber per subscription group.</li>
+<li>[ ] Paywall shows: price, period, trial length, renewal terms, cancellation path. All four, in the sheet, not behind a link.</li>
+<li>[ ] <strong>No pre-selected consent</strong>, no "continue" that silently subscribes, no trial that converts without an email/receipt.</li>
+<li>[ ] <strong>Restore Purchases</strong> on the paywall and in Settings (required).</li>
+<li>[ ] <strong>Manage subscription</strong> deep-links to the OS settings page. We never say "cancel here".</li>
+<li>[ ] <strong>Refunds</strong> are handled by Apple/Google. In-app copy: "Refunds are handled by the App Store." No promises, no support tickets we cannot action.</li>
+<li>[ ] <strong>Price increases</strong> require consent on Apple. Never migrate a user to a higher tier silently.</li>
+</ul>
+<h3 id="94-app-review-and-privacy">9.4 App review and privacy</h3>
+<ul>
+<li>[ ] <strong>Account deletion in-app</strong> (Guideline 5.1.1(v)) — and it must delete audio, transcripts, and the score.</li>
+<li>[ ] <strong>Sign in with Apple</strong> if any third-party sign-in exists (4.8). At launch: phone OTP only, so this does not apply until Google/Apple sign-in ships.</li>
+<li>[ ] <strong>Privacy labels</strong>: Audio Data, Usage Data, Diagnostics, Purchase History. Declare "Used for App Functionality" and "Not Linked to You" only where true. Audio used for moderation <em>is</em> linked.</li>
+<li>[ ] <strong>18+ rating</strong>, no unrestricted web access, no user-generated public profiles.</li>
+<li>[ ] <strong>Report/block reachable in one tap from the room</strong> — reviewers test this.</li>
+<li>[ ] <strong>Demo account</strong> with an active subscription for review, plus a note explaining the 15-minute room (reviewers time out otherwise).</li>
+</ul>
+<h3 id="95-the-one-that-gets-apps-rejected">9.5 The one that gets apps rejected</h3>
+<p><strong>Selling "expert access" without delivering it.</strong> If the Expert room is empty at review time, the reviewer sees a paid feature that does nothing. Ship a seeded Expert room during review hours and document it in the review notes. This is the most common rejection for marketplace-style apps.</p>
+<hr />
+<h2 id="10-go-to-market-briefly">10. Go-to-market, briefly</h2>
+<p>The full GTM is in <code>08</code> §6 and still applies, with one change: the wedge is <strong>topic</strong>, not language pair.</p>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Motion</th>
+<th>Why it fits v5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Universities</strong> (CS, philosophy, debate societies)</td>
+<td>"One room, fifteen minutes, one question"</td>
+<td>Topic-native; high density of Person A and D</td>
+</tr>
+<tr>
+<td><strong>Bootcamps / career centres</strong></td>
+<td>Mock interview rooms, Pro seats for cohorts</td>
+<td>The Pro tier's reason to exist</td>
+</tr>
+<tr>
+<td><strong>Technical communities</strong> (HN, Discord, r/MachineLearning)</td>
+<td>AMAs <em>in</em> rooms, not ads</td>
+<td>Demonstrates the product by using it</td>
+</tr>
+<tr>
+<td><strong>LinkedIn</strong></td>
+<td>Founder posts on hiring bias against non-native speakers</td>
+<td>Career segment, high intent</td>
+</tr>
+<tr>
+<td><strong>ASO</strong></td>
+<td>"practice English speaking", "mock interview", "AI discussion"</td>
+<td>Three intents, three keywords</td>
+</tr>
+<tr>
+<td><strong>PR</strong></td>
+<td>The anti-HelloTalk safety story + the transparency report</td>
+<td>The only durable differentiator</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Not at launch:</strong> TikTok/Reels (retention is unproven), paid social (CAC &gt; $35 until proven), influencer hosts (reintroduces hierarchy).</p>
+<hr />
+<h2 id="11-what-i-think-will-kill-this">11. What I think will kill this</h2>
+<p>Ordered by how fast it does the job.</p>
+<p><strong>1. Group-first liquidity (most likely).</strong> Four people per session across five topics is a hard matching problem. If P90 time-to-room stays above 45 seconds, the "instant" promise dies and the app becomes a scheduled event product. <em>Signal: P90 &gt; 45s at week 6. Action: cut to three topics, add AI co-host to free rooms, or move to scheduled tables.</em></p>
+<p><strong>2. The $9.99 trap.</strong> At 5% conversion the product is roughly break-even before fixed costs; at 3% it loses $72k/month at 250k MAU. The brief's conversion target is below the break-even line. <em>Signal: conversion &lt; 6% at month 12. Action: reprice Plus to $11.99 before cutting the free tier — price is the honest lever, and the cap mostly hits enthusiasts.</em></p>
+<p><strong>3. The Productivity Score.</strong> Hidden behavioural scoring invites three failures: bias against quiet and non-native speakers, brigading by two coordinated reporters, and a GDPR problem the moment an access restriction is automated. <em>Signal: score-affected users appeal at &gt;2%/month, or upheld-report rate diverges by accent/nationality in audit. Action: freeze score-based gating, move to human review only.</em></p>
+<p><strong>4. A safety incident that the sample missed.</strong> Sampled ASR means we do not hear most rooms. A viral clip of harassment in a "safe" app is worse than the same clip in an unsafe one, because the brand is the promise. <em>Signal: any P1 with no prior report. Action: raise sampling in the affected cohort immediately; publish the change.</em></p>
+<p><strong>5. Two products in one.</strong> Topic rooms and language practice have different retention curves, different content, and different price sensitivity. The pivot keeps both, and the risk is that neither gets enough density. <em>Signal: "Practice" rooms &lt; 15% of minutes by month 6. Action: fold them into Career rooms or spin them out.</em></p>
+<p><strong>6. AI cost drift.</strong> A model upgrade, a longer summary, or an always-on co-host can double COGS in a sprint. <em>Signal: free AI COGS &gt; $0.10/MAU/month. Action: the cap and the sampling rate are the circuit breakers; they are config, not code.</em></p>
+<p><strong>The one thing I would not compromise:</strong> no DMs. Every other decision here can be revisited with data. The absence of a private channel is the reason a woman can join a room with five strangers at 11pm, and it is the only feature HelloTalk cannot copy without dismantling its own retention loop.</p>
+<hr />
+<h2 id="12-open-decisions">12. Open decisions</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Decision</th>
+<th>My recommendation</th>
+<th>Why it is not obvious</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Free cap: 30 min/day + 90/week vs. 20/day</td>
+<td><strong>30/day + 90/week</strong></td>
+<td>The daily number is marketing; the weekly number is the cost control</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Pro at $19.99 vs $24.99</td>
+<td><strong>$19.99 at launch, test $24.99 at month 6</strong></td>
+<td>$19.99 anchors under a human coach; $24.99 needs the record + voice feedback shipped first</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Vibe Check: 2 reports drop the room, or 2 reports + audio review</td>
+<td><strong>Drop the room instantly; score only after review</strong></td>
+<td>Instant safety, no brigading</td>
+</tr>
+<tr>
+<td>4</td>
+<td>AI co-host in free rooms</td>
+<td><strong>No at launch; paid Boosts and Pro only</strong></td>
+<td>It is the single largest variable cost and the fastest way to fake liquidity</td>
+</tr>
+<tr>
+<td>5</td>
+<td>15-minute rooms vs. 10</td>
+<td><strong>15 for topic rooms, 10 for Practice</strong></td>
+<td>Topics need the runway; language drills do not, and the cost difference is 50%</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>The standard this plan is held to:</strong> a 27-year-old opens the app at 9:40pm with a question about AI safety, is in a room with three other people by 9:41, speaks for four minutes, hears one idea that changes their mind, gets three takeaways at 9:56, and comes back Thursday without a notification. If that works six times in ten, the economics in §7 are reachable. If it works twice, no price will save it.</p>
+<footer>Live v5.0 · product, monetization, and build plan. Numbers tagged (H) are hypotheses with a test; nothing here is a forecast.</footer>
+</main>
+</div>
+</body>
+</html>
