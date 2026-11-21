@@ -1,139 +1,211 @@
-# Eloq — AI English Fluency Coach
+# Eloq
 
-**Version:** 2.0 · 2026-11-16
+**Small, timeboxed voice rooms for conversations worth having.**
 
-**Status:** publish-ready plan, pre-build. Every number is either verified, derived, or tagged as a hypothesis with a test.
-**Scope:** English learners 16+, students and job seekers. English only; L1 support for Mandarin, Spanish, Portuguese, Hindi, Vietnamese, Arabic.
+> Tap once, get a room worth fifteen minutes with three to five other people — and no way for anyone to message you afterwards.
 
----
-
-## The pitch
-
-HelloTalk sold the dream of "talk to real people and learn a language." What it actually delivers is a scheduling lottery: you wait for a partner, hope they are patient, hope they show up, and hope their corrections are useful. Fluency is a skill, and skills need reps, feedback, and progression — not luck.
-
-Eloq is the reliable version of that dream. An AI tutor that is always available, never ghosts, and — critically — **measures you**. Every session produces phoneme-level pronunciation scores, grammar diagnostics, and a review queue built from your actual mistakes. Add CEFR-aligned paths and a job-interview simulator, and you get the one thing HelloTalk cannot promise: *evidence that you are getting better.*
-
-**Thesis**
-
-1. **Reliability beats randomness.** 24/7 availability with consistent pedagogy removes the #1 reason language-exchange users churn: waiting.
-2. **Structure beats conversation.** Free chat is pleasant and pedagogically weak. Guided scenarios plus progression produce measurable gains.
-3. **Proof beats promises.** A score you can trend, a report card you can share, and a published validation study are the trust assets in a category built on vibes.
-
-**The wedge:** job seekers preparing for English-language interviews. Highest willingness to pay, clearest ROI, shortest path to a measurable outcome ("I got the offer"). This is a hypothesis with a $2.5k test (T-01), not a fact — and the whole financial model depends on it.
-
-**Beachhead → expansion:** interview prep (M0–12) → university students and career centers (12–24) → professionals and B2B L&D (24+).
+**Plan v6.0 · locked 2026-11-18 · pre-launch, Austin first**
 
 ---
 
-## What changed in v2 — the three material changes
+## Start here
 
-| # | v1 | v2 | Why |
-|---|---|---|---|
-| 1 | Plus $9.99 / $69.99 · Career $19.99 / $149 | **Plus $12.99 / $79.99 · Career $24.99 / $149.99** | HelloTalk VIP is verified at $12.99/$79.99. Parity turns the comparison into "same price, and it answers." |
-| 2 | Conversion 5–8% of MAU · churn 5.5% | **D35 install→paid 1.8% / 2.6% / 6.0% · churn 8%** | RevenueCat 2026 benchmarks: NA median 2.6%, top quartile 5.6%; AI apps churn ~30% faster. Break-even is ≈4.5%. |
-| 3 | In-house GOP pronunciation scoring is the moat | **Phoneme scoring is commodity; license it. Moat = closed loop + outcome data + interview depth** | Speechace sells phoneme scoring as an API; Azure ships prosody as an add-on. A moat anyone can rent is not a moat. |
+| Time | Read | Why |
+| --- | --- | --- |
+| **2 min** | This page | What the product is, what is locked, what it costs |
+| **10 min** | [`live/11`](live/11-build-and-launch.html) §0, then [`live/10`](live/10-execution-lock.html) §1 | The plan on one page, then the five locked decisions |
+| **30 min** | [`live/09`](live/09-v5-master-plan.html) → [`10`](live/10-execution-lock.html) → [`11`](live/11-build-and-launch.html) | Product, monetization, execution |
+| **Building it** | [`live/11`](live/11-build-and-launch.html) §5 | Stack, six two-week sprints, exit criteria |
+| **Funding or operating it** | [`live/10`](live/10-execution-lock.html) §5–6 | Unit economics, break-even, kill signals |
+| **Safety review** | [`live/11`](live/11-build-and-launch.html) §4 | Vibe Check, the report buffer, enforcement |
 
-Plus a correction the model forced: **voice COGS $0.051 → $0.018 per session minute**. v1 charged 100% ASR duty and 100% TTS duty on the same minute, overstating cost ~2.2×.
+The plan is a static site. To read it as intended:
 
----
+```bash
+git clone https://github.com/ajaybe-ops/eloq-plan.git
+cd eloq-plan
+python -m http.server 8000
+# open http://localhost:8000/live/
+```
 
-## Evidence state
-
-The canonical register is [`09-evidence-log.md`](09-evidence-log.md). It holds **46 claim IDs**:
-
-| State | Count | Meaning |
-|---|---|---|
-| **V** verified | 21 | Dated public source, accessed 2026-11-15 (includes 9 RevenueCat benchmarks and 6 competitor facts) |
-| **D** derived | 2 | Arithmetic over verified inputs, recomputable (plus 2 dual-tagged rows) |
-| **H** hypothesis | 15 | No public evidence; each has a test ID (T-xx) in [`11`](11-experiment-backlog.md) |
-| **A** abandoned | 3 | Withdrawn; must not appear publicly |
-| **X** decision/commitment | 5 | Product choice or release gate, not a factual claim |
-
-**What is verified:** HelloTalk and ELSA pricing, features, ratings, age rating, and data collection; Duolingo pricing; Deepgram/ElevenLabs rates; RevenueCat category benchmarks; Apple's 15% commission.
-
-**What is not:** our conversion, churn, CAC, retention, voice cost under our own load, market size, and the validity of our score. Those are (H), and the tests that settle them are dated and costed. No doc in this set quotes an (H) number as if it were a fact.
+No build step is required; the rendered HTML is committed.
 
 ---
 
-## Business model
+## The product in six sentences
 
-| Tier | Price (US) | Core promise |
-|---|---|---|
-| Free | $0 | 3 voice sessions/week (5 min), unlimited text chat, all drills, corrections never metered |
-| Plus | **$12.99/mo · $79.99/yr** | Unlimited practice (fair use 20 min/day), full analytics, study plan, base packs |
-| Career | **$24.99/mo · $149.99/yr** | Interview simulator, JD tailoring, pressure mode, readiness index; human mock at $49 |
-| Packs | $19–$49 one-time | Interview Sprint, Business, Tech, Healthcare, Campus |
-| Campus / B2B | $7–9/seat/mo (min 150) | Career-center dashboards, cohort reporting, SSO |
+1. You open the app and tap one topic.
+2. It puts you in a room with three to five people who chose the same one.
+3. You get fifteen minutes, a prompt if you want one, and a balance meter.
+4. A quiet hairline shows the time; the controls disappear after six seconds.
+5. If someone is a problem, one long-press removes them and the room continues.
+6. At the end you get three takeaways and one question to come back to.
 
-Free tier limits the **expensive** resource (voice minutes), never the **learning** (corrections, review queue, progress). Paywalling feedback would destroy trust in the first session.
+```
+open → pick a topic → match → 15:00 room → recap
+```
 
-The free-tier cap is load-bearing: at 20 min/MAU the free user costs ~$0.26/month against ~$0.81 revenue per free MAU; at 60 min it costs ~$0.78 and goes underwater below ~4% conversion. Tested in T-15.
+No profiles to browse. No follower counts. No stage. No DMs. The room is the whole product.
 
----
+**How a room forms, in order**
 
-## Headline numbers (base case, with wedge as upside)
+1. **Trusted-first.** A new account is only matched into a room that already holds a trusted speaker. Nobody's first room is four strangers who are all also new.
+2. **Rostered ping.** If no room can form, a rostered speaker for that topic gets one silent ping. If they take it, the room opens.
+3. **AI rescue.** After 60 seconds with two people waiting, a labelled AI co-host can join for up to 3 minutes. If the room still has fewer than two humans when the seat expires, it closes rather than runs thin.
 
-| Metric | Downside | Base | Wedge |
-|---|---|---|---|
-| D35 install → paid | 1.8% | 2.6% | 6.0% |
-| ARR at M24 | $2.00M | $2.64M | $5.36M |
-| Gross margin M24 | 52.6% | 56.8% | 63.5% |
-| Cash at M24 | −$1.57M | −$1.21M | +$0.31M |
-| LTV : CAC | 2.4 | 3.2 | 6.5 |
-| Cash-out | M17 | M18 | never |
-
-Break-even D35 conversion: **≈4.5%**. The base case is not a comfortable plan; it is a thesis under test.
-
-Full model, inputs, and sensitivities: [`10-financial-model.md`](10-financial-model.md) and the CSVs. If prose and model disagree, the model wins.
+**What this is not:** a feed, a creator platform, a dating app, or a continuous-recording product. Audio leaves the device only when someone files a report, and then only the last 30 seconds.
 
 ---
 
-## Document index
+## What is locked
 
-| File | Contents | State |
-|---|---|---|
-| [`EXEC-SUMMARY.md`](EXEC-SUMMARY.md) | One page for an investor or hiring manager: thesis, wedge, moat, economics, milestones, risks, ask | New |
-| [`01-product-spec.md`](01-product-spec.md) | Vision, problem, principles, feature specs, acceptance criteria, community layer, non-goals | Updated |
-| [`02-roadmap-prioritization.md`](02-roadmap-prioritization.md) | RICE scoring, MVP vs later phases, cut list, dependencies, timeline, team | Updated |
-| [`03-competitive-positioning.md`](03-competitive-positioning.md) | HelloTalk and ELSA teardowns, comparison table, GTM, **moat rewrite with a durability verdict** | Rewritten |
-| [`04-personas-journeys.md`](04-personas-journeys.md) | Student and job-seeker personas, JTBD, journeys, paywall and churn moments | Updated |
-| [`05-pricing.md`](05-pricing.md) | Tiers, limits, corrected COGS, benchmarked conversion, LTV/CAC, experiments | Rewritten |
-| [`06-metrics.md`](06-metrics.md) | North star, **10 counter-metrics**, definitions, CI targets, outcome study design | Rewritten |
-| [`07-technical.md`](07-technical.md) | Architecture, licensed scoring + in-house loop, LLM orchestration, moderation, offline, cost | Updated |
-| [`08-risks-open-questions.md`](08-risks-open-questions.md) | Risk register, kill criteria, open questions, **assumption resolution map** | Rewritten |
-| [`09-evidence-log.md`](09-evidence-log.md) | **Canonical claim register**, sources, test IDs, never-publish list | New |
-| [`10-financial-model.md`](10-financial-model.md) | Scenarios, cost gate, LTV/CAC, runway, exclusions; reproducible via `build_model.py` | New |
-| [`11-experiment-backlog.md`](11-experiment-backlog.md) | T-01–T-16 with MDE, sample size, cost, owner, kill/scale; ranked by IV/$ | New |
-| [`12-launch-checklist.md`](12-launch-checklist.md) | Dated legal, money, product, content, quality, analytics, safety, ASO, launch runbook | New |
-| [`13-decision-stress-tests.md`](13-decision-stress-tests.md) | Three load-bearing decisions: steelman, rebuttal, flip condition, cost of wrong | New |
-| [`14-pronunciation-validation.md`](14-pronunciation-validation.md) | Rater pool, rubric, ICC, n=600, r ≥ 0.85 gate, L1 subgroups, accent-erasure criteria | New |
+These decisions are closed. Changing one requires a written reversal trigger from [`live/10`](live/10-execution-lock.html).
 
-**Supporting:** [`NEXT-14-DAYS.md`](NEXT-14-DAYS.md) (action list) · `10-financial-model.csv` (monthly P&L, 4 runs) · `10-financial-model-inputs.csv` (every input + status) · `build_model.py` (generator).
+| # | Decision | The short version |
+| --- | --- | --- |
+| **D1** | Free cap | **30 min/day and 90 min/week.** The weekly cap contains cost; the daily cap does not bind for most users. First three rooms (or 48 hours) are uncapped so a new user finishes a conversation before seeing a limit. |
+| **D2** | Pro price | **$19.99/mo · $199/yr at launch.** A $24.99 test waits until the practice record and voice feedback ship. Pro is the business: at a 35% mix, break-even is 4.2%; Plus alone needs 6.7%. |
+| **D3** | Vibe Check | **Remove the person, not the room.** Two weighted reports remove a participant instantly. `productivity_score` moves only after a human upholds an inappropriate-content report. |
+| **D4** | AI co-host | **Paid rooms and a capped free rescue.** After 60 seconds with two people waiting: max 3 minutes, max once per user per day, always labelled. |
+| **D5** | Room length | **15 minutes for topic rooms, 10 for practice.** A topic needs time to get past positions; a drill does not. |
+
+Also closed:
+
+- **18+ at launch.** 16–17 only after a specific safety review. Any confirmed minor in an 18+ room is a hard stop.
+- **Five taps to a room:** Welcome → Topic → 18+ → Phone OTP → Join. No email, name, photo, or profile.
+- **One primary action per screen.** Any screen needing a second decision goes back to design.
+- **No messaging graph.** A room ends and the people in it cannot contact each other. That is the product, not a missing feature.
 
 ---
 
-## How to read the numbers
+## The business
 
-| Tag | Meaning | Where |
-|---|---|---|
-| **V** | Verified against a dated public source | `09` §1–2 |
-| **D** | Derived arithmetic over V inputs | `09` §2–3, `10` |
-| **H** | Hypothesis — no public evidence; has a test | `09` §2, test ID in `11` |
-| **A** | Abandoned — do not publish | `09` §5 |
-| **X** | Decision or commitment, not a fact | `09` §2.5 |
+| | **Free** | **Plus** | **Pro** |
+| --- | --- | --- | --- |
+| **Price** | $0 | **$9.99/mo · $79.99/yr** | **$19.99/mo · $199/yr** |
+| **Live rooms** | 30 min/day · 90 min/week | Unlimited, fair use 120 min/day | Unlimited, fair use 180 min/day |
+| **Standard + Practice rooms** | Yes | Yes | Yes |
+| **Expert rooms** | — | Yes | Yes |
+| **Career / interview rooms** | 1 trial | Yes | Yes + voice feedback |
+| **AI recap** | 1 per week | Unlimited | Unlimited + action items |
+| **Transcript / export** | — | Transcript | Transcript + export |
+| **Priority matching** | — | 2× queue weight | 4× queue weight |
+| **Trial** | — | 7 days on annual only | 7 days on annual only |
 
-**Rule:** nothing tagged H goes into an investor deck, a public comparison page, or an ad without converting to V. The never-publish list is at `09` §5, and it includes "we retain better than HelloTalk," any HelloTalk retention number, and any market-size figure before T-14.
+The free tier limits the **expensive** resource — speaking minutes — never the room itself. A capped user finishes the conversation they are in; safety tools and the three recap takeaways are never sold.
+
+**Unit economics, base case**
+
+| Metric | Value |
+| --- | --- |
+| Cost per 15-minute room | **$0.068** |
+| Maxed free user | **$0.94/month** at 90 min/week |
+| Average free MAU | 5.4 rooms/month (81 minutes) |
+| Break-even conversion | **4.2%** at a 35% Pro mix (5.3% at 28%, 6.5% at 20%) |
+| Planned conversion | **4.2% (Y1) → 5.8% (Y2) → 7.0% (Y3)** |
+| Launch CAC | **~$9**, not $3.50 |
+| Austin 90-day plan | **$24k committed**; variable acquisition capped at **$10–14k** |
+
+The AI co-host costs **$0.03–0.06/minute** — $0.45–0.90 for a 15-minute room, or 7–13× an entire human room. That is why it is paid, capped, and labelled rather than ambient.
+
+Full model and sensitivities: [`live/10`](live/10-execution-lock.html) §5. The one-line version: **Plus exists to convert; Pro exists to pay for the free tier.**
 
 ---
 
-## What is still hypothesis (the honest list)
+## How it is built
 
-1. **Job seekers convert at 2–3× category rates.** T-01, $2.5k, 2 weeks.
-2. **D35 lands in the base band or above.** T-16, 12 weeks, needs live traffic.
-3. **Churn is 8%/month, not 12%.** T-06, 12 weeks.
-4. **Voice cost is $0.018 now and $0.010 by M13.** T-11, 3 weeks.
-5. **Our score correlates r ≥ 0.85 with human raters, per L1.** `14`, 8 weeks, ~$8.1k.
-6. **Practice changes interview outcomes.** T-07, 16 weeks, $6k.
-7. **The free-tier cap is not the growth constraint.** T-15, 8 weeks.
+| Layer | Choice | Why |
+| --- | --- | --- |
+| Client | **React Native + Expo**, bare workflow | One codebase; LiveKit's mobile SDK is mature; native audio work stays contained |
+| Audio / SFU | **LiveKit** | Server-side `RemoveParticipant`, data channels, simulcast, Apache-2.0 self-host path |
+| Backend | **TypeScript (NestJS)** | Typed contracts with the client; fast iteration |
+| Database | **Postgres** | Rooms, reports, entitlements; JSONB for takeaways |
+| Cache / queue | **Redis**, **SQS** | Sub-millisecond counters; durable ASR retries |
+| VAD | **Silero VAD v5** via ONNX Runtime Mobile | 1.8 MB, <1% CPU, no vendor |
+| ASR | **faster-whisper / CTranslate2** on L4 | 40× realtime at batch 8; API until ~2.5M speaker-min/month |
+| Storage | **S3**, 7-day audio lifecycle | Audio never lives in the database |
+| Payments | **StoreKit 2** + **Play Billing 7** | Server-side validation; one subscription group |
+| Analytics / flags | **PostHog** self-hosted, **Unleash** self-hosted | No ad SDKs; event ownership |
+| Observability | **OpenTelemetry → Grafana**, **Sentry** | One trace from join to recap |
 
-If items 1–4 fail, the plan changes shape. If 5–6 fail, the moat claim is withdrawn and the fallback is in `03` §9.8. Both outcomes are written down in advance, which is the point.
+**Four invariants the build must not break**
+
+1. A LiveKit token is minted **only after** the entitlement check passes. The client never decides whether it has minutes.
+2. The mic is **not** continuously transcribed. On-device VAD selects speech; the server transcribes a 6-minute window, a 5% safety sample, and a 30-second clip that exists only if someone reports.
+3. A Vibe Check calls `RemoveParticipant` and adds a room-level deny entry. It never ends the room and never touches a score.
+4. Duration is server truth. A client-reported number is clamped to the server's elapsed time; the LiveKit webhook reconciles the rest.
+
+---
+
+## What is verified — and what is not
+
+Every material figure is sourced, derived, or tagged as a hypothesis with a test:
+
+| Tag | Meaning |
+| --- | --- |
+| **(V)** | Verified against a dated public source |
+| **(D)** | Derived by arithmetic over verified inputs |
+| **(H)** | Hypothesis — no public evidence; has a test ID and a cost |
+| **(X)** | Decision or commitment, not a factual claim |
+
+**Verified:** competitor pricing and features, store fees, ASR/TTS list rates, category subscription benchmarks.
+
+**Not verified — and treated as hypotheses with dated tests:** our conversion, churn, CAC, retention, voice cost under our own load, safety rate at density, and whether the group format forms a habit. The tests that settle them are in the execution plan; none of these is quoted publicly as a fact.
+
+> If a number cannot be traced to a source, a calculation, or a dated test, it does not go in the plan.
+
+---
+
+## What would make us kill it
+
+Written before the build, so it cannot be rationalised later.
+
+| Checkpoint | Threshold | If missed |
+| --- | --- | --- |
+| **Day 30** | P90 time-to-room ≤ 90s · D7 ≥ 25% · reports ≤ 3/1k room-min · zero minor incidents | Concentrate to one topic; freeze growth; stop on any minor incident |
+| **Day 60** | DAU ≥ 700 · P90 ≤ 45s · D7/D30 ≥ 30%/15% · conversion ≥ 4% · Pro share ≥ 25% · CAC ≤ $35 | Drop to three topics; pivot to cohort rooms; kill paid acquisition |
+| **Day 90** | DAU ≥ 2,000 · P90 ≤ 30s · D30 ≥ 18% · conversion ≥ 5.5% · Pro ≥ 30% · GM ≥ 30% | Stop paid growth; collapse Pro; pivot to a cohort/B2B2C product |
+
+**The two hard stops**
+
+1. **Any confirmed minor in an 18+ room.** Matching stops immediately, an external audit follows, and there is no relaunch without a new verification vendor and a public report.
+2. **Day 90 with DAU < 800 and D7 < 20%.** The group format has not found a habit. Stop the consumer product, return remaining capital, or pivot to a cohort model where the buyer supplies the density.
+
+Slow revenue in month one, a competitor launch, or a bad press cycle are **not** kill signals. The numbers above are structure.
+
+---
+
+## Repository map
+
+```
+.
+├─ README.md              ← you are here
+├─ live/                  ← current plan (v6.0), rendered
+│  ├─ index.html          ← start here
+│  ├─ 09-v5-master-plan.html
+│  ├─ 10-execution-lock.html
+│  ├─ 11-build-and-launch.html
+│  └─ prototype.html      ← clickable onboarding → room → recap
+├─ raw/                   ← markdown copies
+│  ├─ README.md           ← this page
+│  ├─ README-v2.md        ← earlier AI-tutor plan overview
+│  ├─ 01-product-spec.md … 14-pronunciation-validation.md
+│  └─ EXEC-SUMMARY.md · NEXT-14-DAYS.md
+├─ *.html                 ← rendered archive of the earlier plan
+└─ style.css · robots.txt
+```
+
+**Two plan sets live here.** The current product is the **live-audio network** in `live/`. The earlier **AI English-tutor** plan in `raw/` (`README-v2.md` and the root HTML files) is retained as record — it is where the safety architecture, the pricing anchors, and the evidence discipline came from, but it is not the product being built. If the two are ever shown to the same person, the live plan is the product and the tutor is a feature (Pro interview rooms).
+
+---
+
+## Status
+
+- **Plan:** locked at v6.0. Open items are listed at the end of [`live/10`](live/10-execution-lock.html) §7 — self-hosted ASR timing and the Pro feature bundle.
+- **Build:** implementation in progress. This repository is the plan of record, not the app source.
+- **Launch:** Austin first, one prime topic per evening, 2,000 DAU target at day 90.
+- **License:** proprietary. All rights reserved. This is an internal planning repository; no license is granted for reuse.
+
+---
+
+<sub>Eloq v6.0 · 2026-11-18 · material figures are verified, derived, or tagged as a hypothesis with a test.</sub>
