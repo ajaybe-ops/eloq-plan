@@ -182,6 +182,7 @@ Slow revenue in month one, a competitor launch, or a bad press cycle are **not**
 ├─ README.md              ← you are here
 ├─ live/                  ← current plan (v6.0), rendered
 │  ├─ index.html          ← start here
+│  ├─ 01-concept.html … 08-launch-plan.html
 │  ├─ 09-v5-master-plan.html
 │  ├─ 10-execution-lock.html
 │  ├─ 11-build-and-launch.html
